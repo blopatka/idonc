@@ -8,6 +8,8 @@ import org.apache.wicket.markup.html.panel.Panel;
  */
 public abstract class ThreeColumnContentPanel extends Panel {
 
+	private static final long serialVersionUID = -2732883599976767871L;
+
 	public ThreeColumnContentPanel(String id) {
 		super(id);
 		add(getLeftColumn("leftColumn"));

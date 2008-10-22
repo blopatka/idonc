@@ -91,7 +91,7 @@ public class DataGenerator implements InitializingBean {
 			address.setWebsite(website);
 			address.setZipCode(randomZipCode());
 			user.setAddress(address);
-			userDao.saveUser(user);
+			userDao.save(user);
 		}
 	}
 

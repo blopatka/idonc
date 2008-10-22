@@ -1,38 +1,23 @@
-/*
- * $Id: HibernateContactFinderQueryBuilder.java 2652 2007-07-10 11:35:13Z kare $
- * $Revision: 2652 $
- * $Date: 2007-07-10 13:35:13 +0200 (Wt, 10 lip 2007) $
- *
- * ==============================================================================
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-package wicket.contrib.phonebook;
+package org.lopatka.idonc.web.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.hibernate.type.NullableType;
+import org.lopatka.idonc.web.model.user.IdoncUser;
+
+import wicket.contrib.phonebook.Contact;
 
 
 /**
  * @author Kare Nuorteva
  */
-public class HibernateContactFinderQueryBuilder {
+public class HibernateIdoncUserFinderQueryBuilder {
 	private List<String> parameters;
 	private List<NullableType> types;
 	private boolean count;
-	private Contact filter = new Contact();
+	private IdoncUser filter = new IdoncUser();
 	private QueryParam queryParam;
 
 	public String buildHql() {
@@ -40,11 +25,17 @@ public class HibernateContactFinderQueryBuilder {
 		types = new ArrayList<NullableType>();
 		StringBuilder hql = new StringBuilder();
 		addCountClause(hql);
-		hql.append("from Contact target where 1=1 ");
-		addMatchingCondition(hql, filter.getFirstname(), "firstname");
-		addMatchingCondition(hql, filter.getLastname(), "lastname");
-		addMatchingCondition(hql, filter.getPhone(), "phone");
-		addMatchingCondition(hql, filter.getEmail(), "email");
+		hql.append("from IdoncUser target where 1=1 ");
+		addMatchingCondition(hql, filter.getUserName(), "userName");
+		addMatchingCondition(hql, filter.getFirstName(), "firstName");
+		addMatchingCondition(hql, filter.getLastName(), "lastName");
+		addMatchingCondition(hql, filter.getAddress().getCity(), "address.city");
+		addMatchingCondition(hql, filter.getAddress().getCountry(), "address.country");
+		addMatchingCondition(hql, filter.getAddress().getEmail(), "address.email");
+		addMatchingCondition(hql, filter.getAddress().getHouseNumber(), "address.houseNumber");
+		addMatchingCondition(hql, filter.getAddress().getStreet(), "address.street");
+		addMatchingCondition(hql, filter.getAddress().getWebsite(), "address.website");
+		addMatchingCondition(hql, filter.getAddress().getZipCode(), "address.zipCode");
 		addOrderByClause(hql);
 		return hql.toString();
 	}
@@ -78,7 +69,7 @@ public class HibernateContactFinderQueryBuilder {
 		this.queryParam = queryParam;
 	}
 
-	public void setFilter(Contact filter) {
+	public void setFilter(IdoncUser filter) {
 		if (filter == null) {
 			throw new IllegalArgumentException("Null value not allowed.");
 		}

@@ -16,9 +16,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package wicket.contrib.phonebook;
+package org.lopatka.idonc.web.utils;
 
 import java.io.Serializable;
+
+import wicket.contrib.phonebook.ContactDao;
 
 /**
  * Encapsulates the Query Paramaters to be passed to {@link ContactDao#find}
