@@ -1,6 +1,10 @@
 package org.lopatka.idonc.web.model.user;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable{
+
+	private static final long serialVersionUID = -8283647876262623680L;
 
 	private String email;
 

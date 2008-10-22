@@ -21,19 +21,21 @@ package wicket.contrib.phonebook;
 import junit.framework.TestCase;
 
 import org.hibernate.Hibernate;
+import org.lopatka.idonc.web.utils.HibernateIdoncUserFinderQueryBuilder;
+import org.lopatka.idonc.web.utils.QueryParam;
 
 /**
  * @author Kare Nuorteva
  */
 public class HibernateContactFinderQueryBuilderTest extends TestCase {
-	private HibernateContactFinderQueryBuilder builder;
+	private HibernateIdoncUserFinderQueryBuilder builder;
 	private Contact filter;
 
 	@Override
 	protected void setUp() throws Exception {
-		builder = new HibernateContactFinderQueryBuilder();
+		builder = new HibernateIdoncUserFinderQueryBuilder();
 		filter = new Contact();
-		builder.setFilter(filter);
+		//builder.setFilter(filter);
 	}
 
 	public void testCountsQueryResultsWhenRequested() throws Exception {

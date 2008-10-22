@@ -35,7 +35,7 @@
     </bean>
 
 	<!--
-		setup contact dao
+		setup dao
 	-->
 	<!-- 
 	<bean id="contactDaoTarget" class="wicket.contrib.phonebook.HibernateContactDao">

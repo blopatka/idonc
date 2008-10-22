@@ -19,7 +19,7 @@ public class IdoncUser implements Serializable {
 	private Address address;
 
 	public IdoncUser() {
-
+		this.address = new Address();
 	}
 
 	public IdoncUser(String userName, String password) {

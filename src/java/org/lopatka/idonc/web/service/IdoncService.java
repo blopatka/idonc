@@ -8,7 +8,7 @@ public interface IdoncService {
 
 	//Us³ugi przeznaczone przede wszystkim dla aplikacji webowej
 
-	//pobiera liste uzytkownikow, wraz i informacjami o nich (dozo danych) :)
+	//pobiera liste uzytkownikow, wraz i informacjami o nich (duzo danych) :)
 	public List<IdoncUser> getUserList(String username, String sessionId);
 
 	//pobiera dane jednego u¿ytkownika

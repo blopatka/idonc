@@ -24,6 +24,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.lopatka.idonc.web.utils.HibernateIdoncUserFinderQueryBuilder;
+import org.lopatka.idonc.web.utils.QueryParam;
 
 /**
  * implements {@link ContactDao}.
@@ -131,9 +133,9 @@ public class HibernateContactDao implements ContactDao {
 	 * @return query object that satisfies the provided criteria
 	 */
 	protected Query buildFindQuery(QueryParam qp, Contact filter, boolean count) {
-		HibernateContactFinderQueryBuilder builder = new HibernateContactFinderQueryBuilder();
+		HibernateIdoncUserFinderQueryBuilder builder = new HibernateIdoncUserFinderQueryBuilder();
 		builder.setQueryParam(qp);
-		builder.setFilter(filter);
+	//	builder.setFilter(filter);
 		builder.setCount(count);
 		Query query = getSession().createQuery(builder.buildHql());
 		query.setParameters(builder.getParameters(), builder.getTypes());

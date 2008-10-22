@@ -21,6 +21,8 @@ package wicket.contrib.phonebook;
 import java.util.Iterator;
 import java.util.List;
 
+import org.lopatka.idonc.web.utils.QueryParam;
+
 /**
  * The implementation-independent DAO interface. Defines the operations required
  * to be supported by an implementation.

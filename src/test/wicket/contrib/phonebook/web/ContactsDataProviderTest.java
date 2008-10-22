@@ -24,10 +24,10 @@ import java.util.Iterator;
 import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
+import org.lopatka.idonc.web.utils.QueryParam;
 
 import wicket.contrib.phonebook.Contact;
 import wicket.contrib.phonebook.ContactDao;
-import wicket.contrib.phonebook.QueryParam;
 
 /**
  * @author Kare Nuorteva
