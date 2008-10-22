@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- beans can't come before imports so have to have these in an import -->
+	<import resource="classpath:common.xml"/>
+
+	<import resource="classpath:persistence.hibernate.xml"/>
+	
+	<!-- setup data generator that will add some data into the db when the app starts up -->
+	<!--
+	<bean id="dataGenerator" class="wicket.contrib.phonebook.DataGenerator">
+		<property name="contactDao" ref="contactDao"/>
+		<property name="count" value="35"/>
+	</bean>
+	-->
+	<bean id="dataGenerator" class="org.lopatka.idonc.web.utils.DataGenerator">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
+    <!-- setup wicket application -->
+    <!-- 
+    <bean id="wicketApplication" class="wicket.contrib.phonebook.web.PhonebookApplication">
+    </bean>
+    -->
+    <bean id="wicketApplication" class="org.lopatka.idonc.web.IdoncApplication">
+    </bean>
+
+</beans>
