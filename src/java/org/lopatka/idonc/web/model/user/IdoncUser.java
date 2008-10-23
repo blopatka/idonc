@@ -9,8 +9,6 @@ public class IdoncUser implements Serializable {
 	private Long id;
 
 	private String userName;
-	
-	private String password;
 
 	private String firstName;
 	
@@ -22,9 +20,9 @@ public class IdoncUser implements Serializable {
 		this.address = new Address();
 	}
 
-	public IdoncUser(String userName, String password) {
+	public IdoncUser(String userName) {
 		this.userName = userName;
-		this.password = password;
+		this.address = new Address();
 	}
 
 	public Address getAddress() {
@@ -65,14 +63,6 @@ public class IdoncUser implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public static long getSerialVersionUID() {

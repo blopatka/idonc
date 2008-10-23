@@ -8,10 +8,7 @@
 	<class name="IdoncUser" table="USERS">
 		<cache usage="read-write"/>
 		<id name="id" column="ID">
-			<!--			
-			<generator class="increment"/>
-			-->
-			<generator class="increment"/>
+			<generator class="native"/>
 		</id>
 		
 		<property name="userName" type="string" length="255" column="USER_NAME" not-null="true"/>

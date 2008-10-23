@@ -18,9 +18,11 @@
  */
 package org.lopatka.idonc.web.utils;
 
+import org.lopatka.idonc.web.dao.UserCredentialDao;
 import org.lopatka.idonc.web.dao.UserDao;
 import org.lopatka.idonc.web.model.user.Address;
 import org.lopatka.idonc.web.model.user.IdoncUser;
+import org.lopatka.idonc.web.model.user.UserCredential;
 import org.springframework.beans.factory.InitializingBean;
 
 public class DataGenerator implements InitializingBean {
@@ -50,10 +52,16 @@ public class DataGenerator implements InitializingBean {
 			"Poranna", "Wieczorna", "Bajkowa", "Filmowa", "Kocia"};
 
 	private UserDao userDao;
+	
+	private UserCredentialDao userCredentialDao;
 
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+	
+	public void setUserCredentialDao(UserCredentialDao credDao) {
+		this.userCredentialDao = credDao;
 	}
 
 
@@ -62,7 +70,7 @@ public class DataGenerator implements InitializingBean {
 		for (String element : USERNAMES) {
 			IdoncUser user = new IdoncUser();
 			user.setUserName(element);
-			user.setPassword(element);
+			//user.setPassword(element);
 			user.setFirstName(randomString(FIRSTNAMES));
 			user.setLastName(randomString(LASTNAMES));
 			Address address = new Address();
@@ -91,7 +99,16 @@ public class DataGenerator implements InitializingBean {
 			address.setWebsite(website);
 			address.setZipCode(randomZipCode());
 			user.setAddress(address);
-			userDao.save(user);
+			user = userDao.save(user);
+			
+			UserCredential cred = new UserCredential();
+			cred.setUser(user);
+			byte[] salt = PasswordHasher.createSalt();
+			byte[] password = PasswordHasher.getHash(1000,element , salt);
+			cred.setSalt(PasswordHasher.byteToBase64(salt));
+			cred.setPassword(PasswordHasher.byteToBase64(password));
+			userCredentialDao.save(cred);
+			
 		}
 	}
 
