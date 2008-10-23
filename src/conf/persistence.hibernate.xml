@@ -67,7 +67,7 @@
 			<props>
 				<prop key="save">PROPAGATION_REQUIRED</prop>
 				<prop key="delete">PROPAGATION_REQUIRED</prop>
-				<prop key="*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED, readOnly</prop>
 				<!-- 
 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
 				 -->
