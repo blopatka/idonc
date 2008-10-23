@@ -32,7 +32,7 @@ import org.apache.wicket.model.IModel;
  */
 public class CheckBoxModel extends AbstractCheckBoxModel
 {
-	private final IModel<Collection<Serializable>> selection;
+	private final IModel selection;
 	private final Serializable token;
 
 	/**
@@ -45,7 +45,7 @@ public class CheckBoxModel extends AbstractCheckBoxModel
 	 *            token whose presense in the collection represents a selection
 	 *            state
 	 */
-	public CheckBoxModel(IModel<Collection<Serializable>> selection, Serializable token)
+	public CheckBoxModel(IModel selection, Serializable token)
 	{
 		super();
 		this.selection = selection;
@@ -55,19 +55,22 @@ public class CheckBoxModel extends AbstractCheckBoxModel
 	@Override
 	public boolean isSelected()
 	{
-		return selection.getObject().contains(token);
+		Collection col = (Collection) selection.getObject();
+		return col.contains(token);
 	}
 
 	@Override
 	public void select()
 	{
-		selection.getObject().add(token);
+		Collection col = (Collection) selection.getObject();
+		col.add(token);
 	}
 
 	@Override
 	public void unselect()
 	{
-		selection.getObject().remove(token);
+		Collection col = (Collection) selection.getObject();
+		col.remove(token);
 	}
 
 }

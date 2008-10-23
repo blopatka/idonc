@@ -22,7 +22,7 @@ public interface UserDao {
 	
 	public void delete(long id);
 	
-	public Iterator<IdoncUser> find(QueryParam qp, IdoncUser filter);
+	public Iterator find(QueryParam qp, IdoncUser filter);
 	
 	public int count(IdoncUser filter);
 	

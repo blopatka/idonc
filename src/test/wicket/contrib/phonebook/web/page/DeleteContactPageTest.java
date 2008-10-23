@@ -45,8 +45,7 @@ public class DeleteContactPageTest extends TestCase {
 			contact.setId(99);
 			contact.setFirstname("Kare");
 			contact.setLastname("Nuorteva");
-			return new DeleteContactPage(new ListContactsPage(), new Model<Contact>(
-					contact));
+			return new DeleteContactPage(new ListContactsPage(), new Model(contact));
 		}
 	}
 

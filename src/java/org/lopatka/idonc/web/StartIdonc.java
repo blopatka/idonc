@@ -26,7 +26,7 @@ import org.mortbay.jetty.webapp.WebAppContext;
 public class StartIdonc {
 	/**
 	 * Main function, starts the jetty server.
-	 *
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {

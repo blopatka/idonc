@@ -42,7 +42,7 @@ import wicket.contrib.phonebook.ContactDao;
  *
  * @author igor
  */
-public class ContactsDataProvider extends SortableDataProvider<Contact>
+public class ContactsDataProvider extends SortableDataProvider
 		implements
 			IFilterStateLocator
 {
@@ -122,9 +122,13 @@ public class ContactsDataProvider extends SortableDataProvider<Contact>
 	 *            The object that needs to be wrapped
 	 * @return The model representation of the object
 	 */
-	public IModel<Contact> model(Contact object)
+	public IModel model(Object object)
 	{
-		return new DetachableContactModel(object, dao);
+		if (object instanceof Contact) {
+			Contact con = (Contact) object;
+			return new DetachableContactModel(con, dao);
+		}
+		throw new IllegalArgumentException("bad parameter type");
 	}
 
 }

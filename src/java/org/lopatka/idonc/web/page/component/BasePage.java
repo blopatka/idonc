@@ -1,6 +1,5 @@
 package org.lopatka.idonc.web.page.component;
 
-import org.apache.wicket.markup.html.panel.Panel;
 import org.lopatka.idonc.web.page.AuthenticatedPage;
 
 /**
@@ -8,18 +7,12 @@ import org.lopatka.idonc.web.page.AuthenticatedPage;
  */
 public abstract class BasePage extends AuthenticatedPage {
 
-	@Override
-	protected void onBeforeRender() {
-		init();
-		super.onBeforeRender();
+	public BasePage() {
+		super();
+		add(new HeaderPanel("header"));
+		add(new FooterPanel("footer"));
 	}
+	
 
-	private void init() {
-		addOrReplace(new HeaderPanel("header"));
-		addOrReplace(getContentPanel("content"));
-		addOrReplace(new FooterPanel("footer"));
-	}
-
-	public abstract Panel getContentPanel(String id);
 }
 

@@ -31,7 +31,7 @@ import wicket.contrib.phonebook.ContactDao;
  *
  * @author ivaynberg
  */
-public class DetachableContactModel extends LoadableDetachableModel<Contact>
+public class DetachableContactModel extends LoadableDetachableModel
 {
 	/**
 	 * database identity of the contact

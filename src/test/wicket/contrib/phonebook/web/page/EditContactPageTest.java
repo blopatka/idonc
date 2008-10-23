@@ -48,8 +48,7 @@ public class EditContactPageTest extends TestCase {
 			contact.setId(99);
 			contact.setFirstname("James");
 			contact.setLastname("Bond");
-			return new EditContactPage(new ListContactsPage(), new Model<Contact>(
-					contact));
+			return new EditContactPage(new ListContactsPage(), new Model(contact));
 		}
 	}
 

@@ -11,7 +11,9 @@ import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.page.detachablemodel.DetachableIdoncUserModel;
 import org.lopatka.idonc.web.utils.QueryParam;
 
-public class IdoncUserDataProvider extends SortableDataProvider<IdoncUser> implements IFilterStateLocator {
+public class IdoncUserDataProvider extends SortableDataProvider implements IFilterStateLocator {
+
+	private static final long serialVersionUID = -2114056413799112584L;
 
 	private final UserDao userDao;
 	
@@ -28,7 +30,7 @@ public class IdoncUserDataProvider extends SortableDataProvider<IdoncUser> imple
 		this.queryParam = qp;
 	}
 	
-	public Iterator<IdoncUser> iterator(int first, int count) {
+	public Iterator iterator(int first, int count) {
 		SortParam sp = getSort();
 		
 		if(queryParam == null) {
@@ -43,8 +45,12 @@ public class IdoncUserDataProvider extends SortableDataProvider<IdoncUser> imple
 		return userDao.find(queryParam, filter);
 	}
 
-	public IModel<IdoncUser> model(IdoncUser object) {
-		return new DetachableIdoncUserModel(object, userDao);
+	public IModel model(Object object) {
+		if (object instanceof IdoncUser) {
+			IdoncUser user = (IdoncUser) object;
+			return new DetachableIdoncUserModel(user, userDao);
+		}
+		throw new IllegalArgumentException("object shoul be IdoncUser type");
 	}
 
 	public int size() {

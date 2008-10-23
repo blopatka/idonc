@@ -9,7 +9,7 @@ import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.page.detachablemodel.DetachableIdoncUserModel;
 import org.lopatka.idonc.web.utils.QueryParam;
 
-public class UserDataProvider implements IDataProvider<IdoncUser> {
+public class UserDataProvider implements IDataProvider {
 
 	private UserDao dao;
 
@@ -21,7 +21,7 @@ public class UserDataProvider implements IDataProvider<IdoncUser> {
 		this.dao = dao;
 	}
 	
-	public Iterator<IdoncUser> iterator(int first, int count) {
+	public Iterator iterator(int first, int count) {
 		if (qp == null) {
 			qp = new QueryParam(first, count);
 		} else {
@@ -31,9 +31,6 @@ public class UserDataProvider implements IDataProvider<IdoncUser> {
 		return dao.find(qp, filter);
 	}
 
-	public IModel<IdoncUser> model(IdoncUser object) {
-		return new DetachableIdoncUserModel(object, dao);
-	}
 
 	public int size() {
 		return dao.count(filter);
@@ -41,5 +38,14 @@ public class UserDataProvider implements IDataProvider<IdoncUser> {
 
 	public void detach() {
 	}
+
+	public IModel model(Object object) {
+		if (object instanceof IdoncUser) {
+			IdoncUser user = (IdoncUser) object;
+			return new DetachableIdoncUserModel(user, dao);
+		}
+		throw new IllegalArgumentException("object shoul be IdoncUser type");
+	}
+
 
 }
