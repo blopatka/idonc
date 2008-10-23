@@ -4,9 +4,13 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
         
-<hibernate-mapping>
-	<class name="org.lopatka.idonc.web.model.user.IdoncUser" table="USERS">
+<hibernate-mapping package="org.lopatka.idonc.web.model.user" default-access="field">
+	<class name="IdoncUser" table="USERS">
+		<cache usage="read-write"/>
 		<id name="id" column="ID">
+			<!--			
+			<generator class="increment"/>
+			-->
 			<generator class="increment"/>
 		</id>
 		

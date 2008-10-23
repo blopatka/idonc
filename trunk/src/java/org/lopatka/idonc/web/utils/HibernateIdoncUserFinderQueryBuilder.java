@@ -7,8 +7,6 @@ import org.hibernate.Hibernate;
 import org.hibernate.type.NullableType;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 
-import wicket.contrib.phonebook.Contact;
-
 
 /**
  * @author Kare Nuorteva

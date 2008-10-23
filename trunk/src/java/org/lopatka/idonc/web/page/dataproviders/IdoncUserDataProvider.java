@@ -28,7 +28,7 @@ public class IdoncUserDataProvider extends SortableDataProvider<IdoncUser> imple
 		this.queryParam = qp;
 	}
 	
-	public Iterator<? extends IdoncUser> iterator(int first, int count) {
+	public Iterator<IdoncUser> iterator(int first, int count) {
 		SortParam sp = getSort();
 		
 		if(queryParam == null) {
