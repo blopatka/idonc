@@ -33,6 +33,7 @@ public class UserListPage extends BasePage {
 				item.add(new Label("username", user.getUserName()));
 				item.add(new Label("firstname", user.getFirstName()));
 				item.add(new Label("lastname", user.getLastName()));
+				item.add(new Label("email", user.getAddress().getEmail()));
 			}		
 		};
 		

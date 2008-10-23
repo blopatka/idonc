@@ -16,6 +16,7 @@
 	-->
 	<bean id="dataGenerator" class="org.lopatka.idonc.web.utils.DataGenerator">
 		<property name="userDao" ref="userDao"></property>
+		<property name="userCredentialDao" ref="userCredentialDao"></property>
 	</bean>
 
     <!-- setup wicket application -->

@@ -1,0 +1,4 @@
+grant {
+	permission ${ComponentPermission} "${hp}", "inherit, render";
+	permission ${ComponentPermission} "${hp}", "enable";
+};

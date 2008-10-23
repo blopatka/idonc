@@ -1,11 +1,12 @@
 package org.lopatka.idonc.web.page.component;
 
-import org.lopatka.idonc.web.page.AuthenticatedPage;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.security.components.ISecurePage;
 
 /**
  * @author Bartek
  */
-public abstract class BasePage extends AuthenticatedPage {
+public abstract class BasePage extends WebPage implements ISecurePage {
 
 	public BasePage() {
 		super();

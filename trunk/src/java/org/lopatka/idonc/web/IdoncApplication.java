@@ -1,31 +1,61 @@
-/*
- * $Id: org.eclipse.jdt.ui.prefs 367 2005-10-11 16:06:41 -0700 (Tue, 11 Oct 2005) ivaynberg $
- * $Revision: 367 $
- * $Date: 2005-10-11 16:06:41 -0700 (Tue, 11 Oct 2005) $
- *
- * ==============================================================================
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
 package org.lopatka.idonc.web;
 
+import java.net.MalformedURLException;
+
+import org.apache.wicket.Request;
+import org.apache.wicket.Response;
+import org.apache.wicket.Session;
+import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.security.hive.HiveMind;
+import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
+import org.lopatka.idonc.web.page.LoginPage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class IdoncApplication extends BaseIdoncApplication {
 
 	@Override
+	protected void init() {
+		super.init();
+		
+		getMarkupSettings().setCompressWhitespace(true);
+		getMarkupSettings().setStripComments(true);
+		getMarkupSettings().setStripWicketTags(true);
+		getRequestCycleSettings().setResponseRequestEncoding("UTF-8");
+
+	}
+	
+	@Override
 	public ApplicationContext context() {
 		return WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+	}
+
+	@Override
+	protected Object getHiveKey() {
+		return getServletContext().getContextPath();
+	}
+
+	@Override
+	protected void setUpHive() {
+		PolicyFileHiveFactory factory = new PolicyFileHiveFactory();
+		try {
+			factory.addPolicyFile(getServletContext().getResource("WEB-INF/idonclogin.hive"));
+			factory.setAlias("hp", "org.lopatka.idonc.web.page.HomePage");
+		} 
+		catch (MalformedURLException e) {
+			throw new WicketRuntimeException(e);
+		}
+		HiveMind.registerHive(getHiveKey(), factory);
+		
+	}
+
+	public Class getLoginPage() {
+		return LoginPage.class;
+	}
+	
+	@Override
+	public Session newSession(Request request, Response response) {
+		return new IdoncSession(this, request);
 	}
 
 }

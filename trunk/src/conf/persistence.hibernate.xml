@@ -13,6 +13,7 @@
 				 -->
 				<value>idoncUser.hbm.xml</value>
 				<value>loggedUser.hbm.xml</value>
+				<value>userCredential.hbm.xml</value>
 			</list>
 		</property>
 
@@ -45,6 +46,10 @@
 	<bean id="userDaoTarget" class="org.lopatka.idonc.web.dao.UserDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
+	
+	<bean id="userCredentialDaoTarget" class="org.lopatka.idonc.web.dao.UserCredentialDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
 
 	<!-- this is a transactional proxy for contact dao which ensures proper transaction handling -->
 	<!-- 
@@ -71,6 +76,18 @@
 				<!-- 
 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
 				 -->
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="userCredentialDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target" ref="userCredentialDaoTarget"/>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="save">PROPAGATION_REQUIRED</prop>
+				<prop key="delete">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED, readOnly</prop>
 			</props>
 		</property>
 	</bean>
