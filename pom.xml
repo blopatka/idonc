@@ -11,7 +11,8 @@
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt
+			</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
@@ -37,7 +38,19 @@
 		<repository>
 			<id>maven2-repository.dev.java.net</id>
 			<name>Java.net Repository for Maven</name>
-			<url>http://download.java.net/maven/2/</url>
+			<url>http://download.java.net/maven/2/
+			</url>
+		</repository>
+		<repository>
+			<id>wicket-snaps</id>
+			<url>http://wicketstuff.org/maven/repository
+			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
 		</repository>
 	</repositories>
 
@@ -45,7 +58,7 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket</artifactId>
-			<version>${project.version}</version>
+			<version>${wicket.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 			<exclusions>
@@ -58,7 +71,7 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
-			<version>${project.version}</version>
+			<version>${wicket.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 			<exclusions>
@@ -71,7 +84,7 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-spring</artifactId>
-			<version>${project.version}</version>
+			<version>${wicket.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 			<exclusions>
@@ -82,15 +95,21 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-spring-annot</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket.wicket-security</groupId>
+			<artifactId>swarm</artifactId>
+			<version>1.3.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
 			<version>3.2.6.ga</version>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.ibatis</groupId>
-			<artifactId>ibatis2-sqlmap</artifactId>
-			<version>2.1.7.597</version>
 		</dependency>
 		<dependency>
 			<groupId>hsqldb</groupId>
@@ -114,11 +133,6 @@
 			<artifactId>jetty-util</artifactId>
 			<version>6.0.1</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.shadesdb</groupId>
-			<artifactId>shades</artifactId>
-			<version>0.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -177,10 +191,8 @@
 					<include>**</include>
 				</includes>
 				<!--
-					Just for a demo project, don't exclude sources...
-					<excludes>
-					<exclude>**/*.java</exclude>
-					</excludes>
+					Just for a demo project, don't exclude sources... <excludes>
+					<exclude>**/*.java</exclude> </excludes>
 				-->
 			</resource>
 			<resource>
@@ -222,11 +234,13 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptor>src/assembly/bin.xml</descriptor>
-					<finalName>${artifactId}-${version}</finalName>
+					<finalName>${artifactId}-${version}
+					</finalName>
 					<outputDirectory>
 						target/distributions
 					</outputDirectory>
-					<workDirectory>target/assembly/work</workDirectory>
+					<workDirectory>target/assembly/work
+					</workDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -266,7 +280,8 @@
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>surefire-report-maven-plugin</artifactId>
+				<artifactId>surefire-report-maven-plugin
+				</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -279,24 +294,26 @@
 				</configuration>
 			</plugin>
 			<plugin>
-		        <artifactId>maven-eclipse-plugin</artifactId>
-		        <configuration>
-		          <additionalProjectnatures>
-		            <projectnature>wicketbench.wicketnature</projectnature>
-		          </additionalProjectnatures>
-		          <additionalBuildcommands>
-		            <buildcommand>wicketbench.associatedMarkupAuditor</buildcommand>
-		          </additionalBuildcommands>
-		        </configuration>
-	      	</plugin>	
-	      	<plugin>
-	      		<groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                	<source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin> 
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>wicketbench.wicketnature
+						</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>wicketbench.associatedMarkupAuditor
+						</buildcommand>
+					</additionalBuildcommands>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -343,7 +360,8 @@
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>surefire-report-maven-plugin</artifactId>
+				<artifactId>surefire-report-maven-plugin
+				</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -367,4 +385,7 @@
 		<site>
 		</site>
 	</distributionManagement>
+	<properties>
+		<wicket.version>1.3.5</wicket.version>
+	</properties>
 </project>
