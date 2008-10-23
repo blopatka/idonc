@@ -15,7 +15,7 @@ public abstract class ThreeColumnContentPanel extends Panel {
 		add(getLeftColumn("leftColumn"));
 		add(getMainColumn("mainColumn"));
 		add(getRightColumn("rightColumn"));
-
+		
 	}
 
 	public abstract Component getLeftColumn(String columnId);

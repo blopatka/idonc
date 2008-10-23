@@ -60,7 +60,7 @@ public class ListContactsPage extends BasePage
 	@SpringBean(name = "contactDao")
 	private ContactDao dao;
 
-	private final DefaultDataTable<Contact> users;
+	private final DefaultDataTable users;
 
 	private final Set<Long> selectedContactIds = new HashSet<Long>();
 
@@ -71,7 +71,7 @@ public class ListContactsPage extends BasePage
 	 */
 	private static class UserActionsPanel extends Panel
 	{
-		public UserActionsPanel(String id, IModel<Contact> contactModel)
+		public UserActionsPanel(String id, IModel contactModel)
 		{
 			super(id);
 			addEditLink(contactModel);
@@ -79,9 +79,9 @@ public class ListContactsPage extends BasePage
 
 		}
 
-		private void addDeleteLink(IModel<Contact> contactModel)
+		private void addDeleteLink(IModel contactModel)
 		{
-			add(new Link<Contact>("deleteLink", contactModel)
+			add(new Link("deleteLink", contactModel)
 			{
 				/**
 				 * Go to the Delete page, passing this page and the id of the
@@ -95,9 +95,9 @@ public class ListContactsPage extends BasePage
 			});
 		}
 
-		private void addEditLink(IModel<Contact> contactModel)
+		private void addEditLink(IModel contactModel)
 		{
-			add(new Link<Contact>("editLink", contactModel)
+			add(new Link("editLink", contactModel)
 			{
 				/**
 				 * Go to the Edit page, passing this page and the id of the
@@ -192,10 +192,10 @@ public class ListContactsPage extends BasePage
 		return columns;
 	}
 
-	private TextFilteredPropertyColumn<String> createColumn(String key, String sortProperty,
+	private TextFilteredPropertyColumn createColumn(String key, String sortProperty,
 			String propertyExpression)
 	{
-		return new TextFilteredPropertyColumn<String>(new ResourceModel(key), sortProperty,
+		return new TextFilteredPropertyColumn(new ResourceModel(key), sortProperty,
 				propertyExpression);
 	}
 
@@ -204,9 +204,9 @@ public class ListContactsPage extends BasePage
 	 * adds a UserActionsPanel as its cell contents. It also provides the
 	 * go-and-clear filter control panel.
 	 */
-	private FilteredAbstractColumn<Object> createActionsColumn()
+	private FilteredAbstractColumn createActionsColumn()
 	{
-		return new FilteredAbstractColumn<Object>(new Model<String>(getString("actions")))
+		return new FilteredAbstractColumn(new Model(getString("actions")))
 		{
 			// return the go-and-clear filter for the filter toolbar
 			public Component getFilter(String componentId, FilterForm form)
@@ -225,7 +225,7 @@ public class ListContactsPage extends BasePage
 
 	private void addCreateLink()
 	{
-		add(new Link<Void>("createLink")
+		add(new Link("createLink")
 		{
 			/**
 			 * Go to the Edit page when the link is clicked, passing an empty
@@ -234,7 +234,7 @@ public class ListContactsPage extends BasePage
 			@Override
 			public void onClick()
 			{
-				setResponsePage(new EditContactPage(getPage(), new Model<Contact>(new Contact())));
+				setResponsePage(new EditContactPage(getPage(), new Model(new Contact())));
 			}
 		});
 	}

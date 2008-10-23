@@ -52,10 +52,10 @@ public class DeleteContactPage extends BasePage
 	 * @param contact
 	 *            Model that contains the contact to be deleted
 	 */
-	public DeleteContactPage(Page backPage, IModel<?> contact)
+	public DeleteContactPage(Page backPage, IModel contact)
 	{
 		this.backPage = backPage;
-		setDefaultModel(contact);
+		setModel(contact);
 		add(new Label("name", getContact().getFullName()));
 		addConfimButton();
 		addCancelButton();
@@ -68,7 +68,7 @@ public class DeleteContactPage extends BasePage
 		 * tag, the link is smart enough to know to generate an onclick instead
 		 * of href
 		 */
-		Link<String> confirmLink = new Link<String>("confirm")
+		Link confirmLink = new Link("confirm")
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -78,7 +78,7 @@ public class DeleteContactPage extends BasePage
 				final Contact deleted = getContact();
 				contactDao.delete(deleted.getId());
 				String msg = MapVariableInterpolator.interpolate(getLocalizer().getString(
-						"status.deleted", this), new MicroMap<String, String>("name", deleted
+						"status.deleted", this), new MicroMap("name", deleted
 						.getFullName()));
 				getSession().info(msg);
 				setResponsePage(DeleteContactPage.this.backPage);
@@ -90,7 +90,7 @@ public class DeleteContactPage extends BasePage
 
 	private void addCancelButton()
 	{
-		Link<String> cancelLink = new Link<String>("cancel")
+		Link cancelLink = new Link("cancel")
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -98,7 +98,7 @@ public class DeleteContactPage extends BasePage
 			public void onClick()
 			{
 				String msg = MapVariableInterpolator.interpolate(getLocalizer().getString(
-						"status.cancelled", this), new MicroMap<String, String>("name",
+						"status.cancelled", this), new MicroMap("name",
 						getContact().getFullName()));
 				getSession().info(msg);
 				setResponsePage(DeleteContactPage.this.backPage);
@@ -115,6 +115,6 @@ public class DeleteContactPage extends BasePage
 	 */
 	private Contact getContact()
 	{
-		return (Contact)getDefaultModelObject();
+		return (Contact)getModelObject();
 	}
 }

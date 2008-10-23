@@ -4,7 +4,9 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.lopatka.idonc.web.dao.UserDao;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 
-public class DetachableIdoncUserModel extends LoadableDetachableModel<IdoncUser> {
+public class DetachableIdoncUserModel extends LoadableDetachableModel {
+
+	private static final long serialVersionUID = 4900056953111927614L;
 
 	private final long id;
 	
