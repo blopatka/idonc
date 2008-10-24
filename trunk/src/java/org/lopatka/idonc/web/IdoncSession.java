@@ -2,6 +2,7 @@ package org.lopatka.idonc.web;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import org.apache.wicket.Request;
 import org.apache.wicket.Session;
@@ -39,11 +40,11 @@ public class IdoncSession extends AuthenticatedWebSession {
 		//return username.equals(password);
 		if((username != null) && (password != null)) {
 			UserCredential cred = userCredentialDao.get(username);
-			String storedHash =  cred.getPassword();
-			String storedSalt = cred.getSalt();
+			byte[] storedHash = PasswordHasher.base64ToByte(cred.getPassword());
+			byte[] storedSalt = PasswordHasher.base64ToByte(cred.getSalt());
 			try {
-				String inputHash = PasswordHasher.getHash(1000, password, storedSalt);
-				if(inputHash.equals(storedHash)) {
+				byte[] inputHash = PasswordHasher.getHash(1000, password, storedSalt);
+				if(Arrays.equals(inputHash, storedHash)) {
 					return true;
 				} else {
 					return false;
