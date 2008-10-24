@@ -30,10 +30,10 @@ public class PasswordHasher {
 		return input;
 	}
 	
-	public static String getHash(int iterationNumber, String password, String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	public static byte[] getHash(int iterationNumber, String password, String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		byte[] saltB = base64ToByte(salt);
 		byte[] hash = getHash(iterationNumber, password, saltB);
-		return new String(hash, "UTF-8");
+		return hash;
 	}
 
 	/**
