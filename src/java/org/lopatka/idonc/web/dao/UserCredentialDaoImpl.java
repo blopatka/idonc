@@ -26,6 +26,7 @@ public class UserCredentialDaoImpl implements UserCredentialDao {
 		getSession().delete(credential);
 	}
 
+	@SuppressWarnings("unchecked")
 	public UserCredential get(String username) {
 		Criteria usrCrit = getSession().createCriteria(IdoncUser.class);
 		Criterion crit = Restrictions.eq("userName", username);

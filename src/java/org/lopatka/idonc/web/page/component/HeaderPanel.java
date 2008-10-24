@@ -1,8 +1,10 @@
 package org.lopatka.idonc.web.page.component;
 
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.PageLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.lopatka.idonc.web.page.HomePage;
+import org.lopatka.idonc.web.page.LogoutPage;
 import org.lopatka.idonc.web.page.UserListPage;
 import org.lopatka.idonc.web.page.component.suckerfish.SuckerfishMenuPanel;
 import org.lopatka.idonc.web.page.text.AboutPage;
@@ -13,6 +15,8 @@ import org.lopatka.idonc.web.page.text.FaqPage;
  */
 public class HeaderPanel extends Panel {
 
+	private static final long serialVersionUID = -7253076246501732670L;
+
 	public HeaderPanel(String id) {
 		super(id);
 		final SuckerfishMenuPanel menuBar = new SuckerfishMenuPanel("menuBar");
@@ -20,6 +24,7 @@ public class HeaderPanel extends Panel {
 
 		final SuckerfishMenuPanel.MenuItem home = new SuckerfishMenuPanel.MenuItem(
 				new BookmarkablePageLink(SuckerfishMenuPanel.LINK_ID, HomePage.class), "Home");
+		
 		final SuckerfishMenuPanel.MenuItem users = new SuckerfishMenuPanel.MenuItem(
 				new BookmarkablePageLink(SuckerfishMenuPanel.LINK_ID, UserListPage.class),"Users");
 
@@ -29,12 +34,18 @@ public class HeaderPanel extends Panel {
 		final SuckerfishMenuPanel.MenuItem about = new SuckerfishMenuPanel.MenuItem(
 				new BookmarkablePageLink(SuckerfishMenuPanel.LINK_ID, AboutPage.class), "About");
 
+		final SuckerfishMenuPanel.MenuItem logout = new SuckerfishMenuPanel.MenuItem(
+				new PageLink(SuckerfishMenuPanel.LINK_ID, LogoutPage.class), "Logout");
+		
+		
 		menuBar.addMenu(home);
 		menuBar.addMenu(users);
-		menuBar.addMenu(info);
-
+		
 		info.addMenu(faq);
 		info.addMenu(about);
+		menuBar.addMenu(info);
+	
+		menuBar.addMenu(logout);
 	}
 
 }

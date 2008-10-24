@@ -22,6 +22,7 @@ public interface UserDao {
 	
 	public void delete(long id);
 	
+	@SuppressWarnings("unchecked")
 	public Iterator find(QueryParam qp, IdoncUser filter);
 	
 	public int count(IdoncUser filter);

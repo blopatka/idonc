@@ -2,10 +2,7 @@ package org.lopatka.idonc.web.servlet;
 
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
-
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class IdoncServlet { 
 //extends WebContainerServlet {
