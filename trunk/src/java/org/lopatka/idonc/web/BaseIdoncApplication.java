@@ -15,7 +15,7 @@ public abstract class BaseIdoncApplication extends SwarmWebApplication {
 	@Override
 	protected void init() {
 		super.init();
-		addComponentInstantiationListener(new SpringComponentInjector(this, context()));
+		
 	}
 
 	public abstract ApplicationContext context();
