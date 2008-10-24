@@ -31,6 +31,9 @@ public class RegisterUserPage extends WebPage {
 		form.add(new TextArea("countryInput", new PropertyModel(this, "user.address.country")));
 
 		Button accept = new Button("acceptButton") {
+
+			private static final long serialVersionUID = -4742823374395732L;
+
 			@Override
 			public void onSubmit() {
 				//TODO - register user as login as him, redirect to home page
@@ -40,6 +43,9 @@ public class RegisterUserPage extends WebPage {
 		form.add(accept);
 
 		Button cancel = new Button("cancelButton") {
+
+			private static final long serialVersionUID = 6703091768251015771L;
+
 			@Override
 			public void onSubmit() {
 				setResponsePage(LoginPage.class);

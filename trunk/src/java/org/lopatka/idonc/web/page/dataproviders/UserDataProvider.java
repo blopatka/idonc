@@ -11,6 +11,8 @@ import org.lopatka.idonc.web.utils.QueryParam;
 
 public class UserDataProvider implements IDataProvider {
 
+	private static final long serialVersionUID = 8897947586615266997L;
+
 	private UserDao dao;
 
 	private IdoncUser filter = new IdoncUser();
@@ -21,6 +23,7 @@ public class UserDataProvider implements IDataProvider {
 		this.dao = dao;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Iterator iterator(int first, int count) {
 		if (qp == null) {
 			qp = new QueryParam(first, count);

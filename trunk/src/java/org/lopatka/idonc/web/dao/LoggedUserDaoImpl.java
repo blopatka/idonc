@@ -14,6 +14,7 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 		getHibernateTemplate().delete(loggedUser);
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean deleteLoggedUserById(Long id) {
 		logger.info("deletin LoggedUser information");
 		HibernateTemplate template = getHibernateTemplate();
@@ -30,6 +31,7 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public LoggedUser getLoggedUserBySession(String sessionId) {
 		LoggedUser example = new LoggedUser();
 		example.setSessionId(sessionId);
@@ -41,6 +43,7 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public LoggedUser getLoggedUserByUser(IdoncUser user) {
 		LoggedUser example = new LoggedUser();
 		example.setUser(user);
