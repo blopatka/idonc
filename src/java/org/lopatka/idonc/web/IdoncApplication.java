@@ -1,24 +1,18 @@
 package org.lopatka.idonc.web;
 
-import java.net.MalformedURLException;
-
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
-import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.security.hive.HiveMind;
-import org.apache.wicket.security.hive.authentication.LoginContext;
-import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
-import org.apache.wicket.security.swarm.SwarmWebApplication;
+import org.apache.wicket.authentication.AuthenticatedWebApplication;
+import org.apache.wicket.authentication.AuthenticatedWebSession;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
-import org.lopatka.idonc.web.page.AuthenticatedPage;
 import org.lopatka.idonc.web.page.HomePage;
 import org.lopatka.idonc.web.page.LoginPage;
-import org.lopatka.idonc.web.utils.IdoncLoginContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-public class IdoncApplication extends SwarmWebApplication {
+public class IdoncApplication extends AuthenticatedWebApplication {
 
 	@Override
 	protected void init() {
@@ -37,44 +31,24 @@ public class IdoncApplication extends SwarmWebApplication {
 	}
 
 	@Override
-	protected Object getHiveKey() {
-//		return getServletContext().getContextPath();
-		return "idonc-applications";
-	}
-
-	@Override
-	protected void setUpHive() {
-		PolicyFileHiveFactory factory = new PolicyFileHiveFactory();
-		try {
-			factory.addPolicyFile(getServletContext().getResource("/WEB-INF/idonclogin.hive"));
-			factory.setAlias("hp", "org.lopatka.idonc.web.page.HomePage");
-			factory.setAlias("package", "org.lopatka.idonc.web");
-		} 
-		catch (MalformedURLException e) {
-			throw new WicketRuntimeException(e);
-		}
-		HiveMind.registerHive(getHiveKey(), factory);
-		
-	}
-
-	@Override
-	public Class getHomePage() {
+	public Class<? extends HomePage> getHomePage() {
 		return HomePage.class;
-		//return AuthenticatedPage.class;
-	}
-	
-	public Class getLoginPage() {
-		return LoginPage.class;
 	}
 	
 	@Override
 	public Session newSession(Request request, Response response) {
-		return new IdoncSession(this, request);
+		return new IdoncSession(request);
+	}
+
+	
+	@Override
+	protected Class<? extends AuthenticatedWebSession> getWebSessionClass() {
+		return IdoncSession.class;
 	}
 	
-	public LoginContext getLogoffContext()
-	{
-		return new IdoncLoginContext();
+	@Override
+	protected Class<? extends WebPage> getSignInPageClass() {
+		return LoginPage.class;
 	}
 
 }

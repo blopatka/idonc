@@ -18,6 +18,10 @@
 		<property name="userDao" ref="userDao"></property>
 		<property name="userCredentialDao" ref="userCredentialDao"></property>
 	</bean>
+	
+<!--	<bean id="idoncSession" class="org.lopatka.idonc.web.IdoncSession">-->
+<!--		<property name="userCredentialDao" ref="userCredentialDao"></property>-->
+<!--	</bean>-->
 
     <!-- setup wicket application -->
     <!-- 
