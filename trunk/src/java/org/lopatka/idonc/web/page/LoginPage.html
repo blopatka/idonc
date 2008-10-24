@@ -1,9 +1,10 @@
-<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"-->
-<!--    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">-->
-<!---->
-<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
-<!--<body>-->
-<!--  <form wicket:id="loginForm">-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+  <span wicket:id="signInPanel"/>
+  <form wicket:id="loginForm">
 <!--  	<div>-->
 <!--  		<label id="title">IDONC Login Page</label>-->
 <!--  	</div>-->
@@ -18,38 +19,12 @@
 <!--  	<div>-->
 <!--  		<input type="submit" value="Login" wicket:id="loginButton"/>-->
 <!--  	</div>-->
-<!--  	<div>-->
-<!--  		<label for="registerLink" id="registerLabel">Not registerd?</label>-->
-<!--  		<a href="#" wicket:id="registerLink" id="registerLink">Register</a>-->
-<!--  	</div>-->
-<!--  	-->
-<!--  </form>-->
-<!--</body>-->
-<!--</html>-->
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-
-</head>
-<body onload="doFocus();">
-
-<div id="loginBox">
-<div class="loginTitle">Logon to Idonc Web Application
-<div class="loginError" wicket:id="feedback">Username or password
-incorrect</div>
-</div>
-<div class="loginFormBox" wicket:id="signInPanel">Login panel
-comes here</div>
-<div class="loginFooter"></div>
-</div>
-<div>Login as</div>
-<ul>
-	<li><a href="#" onclick="doLogin('token','token');return false;">A
-	user identified by a token from a card reader</a></li>
-</ul>
+  	<div>
+  		<label for="registerLink" id="registerLabel">Not registerd?</label>
+  		<a href="#" wicket:id="registerLink" id="registerLink">Register</a>
+  	</div>
+  	
+  </form>
 </body>
 </html>
 

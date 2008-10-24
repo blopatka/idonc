@@ -1,5 +1,6 @@
 package org.lopatka.idonc.web.page;
 
+import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
@@ -13,6 +14,7 @@ import org.lopatka.idonc.web.page.dataproviders.UserDataProvider;
 /**
  * @author Bartek
  */
+@AuthorizeInstantiation("ADMIN")
 public class UserListPage extends BasePage {
 
 	@SpringBean(name = "userDao")

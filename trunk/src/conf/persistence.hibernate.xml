@@ -8,9 +8,6 @@
 		<property name="dataSource" ref="dataSource"/>
 		<property name="mappingResources">
 			<list>
-				<!-- 
-				<value>idoncLongData.hbm.xml</value>
-				 -->
 				<value>idoncUser.hbm.xml</value>
 				<value>loggedUser.hbm.xml</value>
 				<value>userCredential.hbm.xml</value>
@@ -38,11 +35,7 @@
 	<!--
 		setup dao
 	-->
-	<!-- 
-	<bean id="contactDaoTarget" class="wicket.contrib.phonebook.HibernateContactDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-	-->
+	
 	<bean id="userDaoTarget" class="org.lopatka.idonc.web.dao.UserDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
@@ -51,20 +44,7 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
-	<!-- this is a transactional proxy for contact dao which ensures proper transaction handling -->
-	<!-- 
-	<bean id="contactDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="transactionManager" ref="transactionManager"/>
-		<property name="target" ref="contactDaoTarget"/>
-		<property name="transactionAttributes">
-			<props>
-				<prop key="save">PROPAGATION_REQUIRED</prop>
-				<prop key="delete">PROPAGATION_REQUIRED</prop>
-				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
-			</props>
-		</property>
-	</bean>
-	-->
+
 	<bean id="userDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="target" ref="userDaoTarget"/>
