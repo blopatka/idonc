@@ -5,12 +5,21 @@ import java.io.Serializable;
 public class UserCredential implements Serializable {
 
 	private static final long serialVersionUID = 8642933674178126834L;
+	private Long id;
 	private IdoncUser user;
 	private String password;
 	private String salt;
 
 	public UserCredential() {
 		
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public IdoncUser getUser() {

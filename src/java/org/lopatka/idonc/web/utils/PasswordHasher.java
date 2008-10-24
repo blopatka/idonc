@@ -29,6 +29,12 @@ public class PasswordHasher {
 		}
 		return input;
 	}
+	
+	public static String getHash(int iterationNumber, String password, String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		byte[] saltB = base64ToByte(salt);
+		byte[] hash = getHash(iterationNumber, password, saltB);
+		return new String(hash, "UTF-8");
+	}
 
 	/**
 	 * From a base 64 representation, returns the corresponding byte[]

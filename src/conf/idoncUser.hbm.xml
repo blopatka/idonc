@@ -12,7 +12,7 @@
 		</id>
 		
 		<property name="userName" type="string" length="255" column="USER_NAME" not-null="true"/>
-		<property name="password" type="string" length="255" column="PASSWORD" not-null="true"/>
+<!--		<property name="password" type="string" length="255" column="PASSWORD" not-null="true"/>-->
 		<property name="firstName" type="string" length="255" column="FIRST_NAME"/>
 		<property name="lastName" type="string" length="255" column="LAST_NAME"/>
 		
