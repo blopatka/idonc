@@ -25,6 +25,8 @@ public interface UserDao {
 	@SuppressWarnings("unchecked")
 	public Iterator find(QueryParam qp, IdoncUser filter);
 	
+	public IdoncUser findByUsername(String username);
+	
 	public int count(IdoncUser filter);
 	
 	public List<String> getUniqueUsernames();
