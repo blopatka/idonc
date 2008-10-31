@@ -1,66 +1,68 @@
 <html xmlns:wicket>
 <body>
   <form wicket:id="registerForm">
-  	<div>
-  		<label id="title">Register new user</label>
-  	</div>
-  	<div>
-  		<label id="sectionTitle">Enter login data:</label>
-  	</div>
-  	<div>
-  		<label for="username">Username:</label>
-  		<input type="text" wicket:id="usernameInput" id="username"/>
-  	</div>
-  	<div>
-  		<label for="password">Password:</label>
-  		<input type="password" wicket:id="passwordInput" id="password"/>
-  	</div>
-  	<div>
-  		<label for="rePassword">Retype Password:</label>
-  		<input type="password" wicket:id="rePasswordInput" id="rePassword"/>
-  	</div>
-  	<div>
-  		<label id="sectionTitle">Enter user data:</label>
-  	</div>
-  	<div>
-  		<label for="firstName">First name:</label>
-  		<input type="text" wicket:id="firstNameInput" id="firstName"/>
-  	</div>
-  	<div>
-  		<label for="lastName">Last name:</label>
-  		<input type="text" wicket:id="lastNameInput" id="lastName"/>
-  	</div>
-  	<div>
-  		<label for="email">Email:</label>
-  		<input type="text" wicket:id="emailInput" id="email"/>
-  	</div>
-  	<div>
-  		<label for="website">Website:</label>
-  		<input type="text" wicket:id="websiteInput" id="website"/>
-  	</div>
-  	<div>
-  		<label for="street">Street:</label>
-  		<input type="text" wicket:id="streetInput" id="street"/>
-  	</div>
-  	<div>
-  		<label for="houseNumber">House Number:</label>
-  		<input type="text" wicket:id="houseNumberInput" id="houseNumber"/>
-  	</div>
-  	<div>
-  		<label for="city">City:</label>
-  		<input type="text" wicket:id="cityInput" id="city"/>
-  	</div>
-  	<div>
-  		<label for="zipCode">Zip Code:</label>
-  		<input type="text" wicket:id="zipCodeInput" id="zipCode"/>
-  	</div>
-  	<div>
-  		<label for="country">Country:</label>
-  		<input type="text" wicket:id="countryInput" id="country"/>
-  	</div>
+  	<table cellspacing="0" cellpadding="0" border="0">
+  		<thead>
+  			<tr><label id="title">Register new user</label></tr>
+  			<tr><label id="sectionTitle">Enter login data:</label></tr>
+  		</thead>
+  		<tbody>
+  			<tr>
+  				<td><label for="username">Username:</label></td>
+  				<td><input type="text" wicket:id="usernameInput" id="username"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="password">Password:</label></td>
+  				<td><input type="password" wicket:id="passwordInput" id="password"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="rePassword">Retype Password:</label></td>
+  				<td><input type="password" wicket:id="rePasswordInput" id="rePassword"/></td>
+  			</tr>
+  			<tr>
+  				<td><label id="sectionTitle">Enter user data:</label></td>
+  			</tr>
+  			<tr>
+  				<td><label for="firstName">First name:</label></td>
+  				<td><input type="text" wicket:id="firstNameInput" id="firstName"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="lastName">Last name:</label></td>
+  				<td><input type="text" wicket:id="lastNameInput" id="lastName"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="email">Email:</label></td>
+  				<td><input type="text" wicket:id="emailInput" id="email"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="website">Website:</label></td>
+  				<td><input type="text" wicket:id="websiteInput" id="website"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="street">Street:</label></td>
+  				<td><input type="text" wicket:id="streetInput" id="street"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="houseNumber">House Number:</label></td>
+  				<td><input type="text" wicket:id="houseNumberInput" id="houseNumber"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="city">City:</label></td>
+  				<td><input type="text" wicket:id="cityInput" id="city"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="zipCode">Zip Code:</label></td>
+  				<td><input type="text" wicket:id="zipCodeInput" id="zipCode"/></td>
+  			</tr>
+  			<tr>
+  				<td><label for="country">Country:</label></td>
+  				<td><input type="text" wicket:id="countryInput" id="country"/></td>
+  			</tr>
+  		</tbody>
+  	</table>
   	<div>
   		<input type="submit" wicket:id="acceptButton" id="acceptButton" value="OK"/>
-  		<input type="submit" wicket:id="cancelButton" id="cancelButton" value="Cancel"/>	
+  		<input type="submit" wicket:id="cancelButton" id="cancelButton" value="Cancel"/>
   	</div>
   </form>
 </body>

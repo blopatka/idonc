@@ -3,9 +3,12 @@ package org.lopatka.idonc.web.dao;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.utils.HibernateIdoncUserFinderQueryBuilder;
 import org.lopatka.idonc.web.utils.QueryParam;
@@ -83,6 +86,15 @@ public class UserDaoImpl implements UserDao {
 			query.setFirstResult(qp.getFirst()).setMaxResults(qp.getCount());
 		}
 		return query;
+	}
+
+	public IdoncUser findByUsername(String username) {
+		Criteria criteria = getSession().createCriteria(IdoncUser.class);
+		Criterion crit = Restrictions.eq("userName", username);
+		criteria.add(crit);
+		IdoncUser user = (IdoncUser) criteria.uniqueResult();
+		return user;
+		
 	}
 
 }
