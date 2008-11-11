@@ -10,6 +10,7 @@ public class IdoncProject {
 	private String description;
 	private List<IdoncPart> partsToProcess;
 	private List<IdoncPart> processedParts;
+	
 	public String getName() {
 		return name;
 	}
