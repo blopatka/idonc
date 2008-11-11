@@ -2,22 +2,38 @@ package org.lopatka.idonc.web.model.user;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.Length;
+import org.hibernate.validator.NotNull;
+
+@Embeddable
 public class Address implements Serializable{
 
 	private static final long serialVersionUID = -8283647876262623680L;
 
+	@Column(name="EMAIL")
+	@NotNull
 	private String email;
 
+	@Column(name="WEBSITE")
 	private String website;
 
+	@Column(name="STREET")
 	private String street;
 
+	@Column(name="HOUSE_NUMBER")
 	private String houseNumber;
 
+	@Column(name="CITY")
 	private String city;
 
+	@Column(name="ZIP_CODE")
 	private String zipCode;
 
+	@Column(name="COUNTRY")
 	private String country;
 
 	public Address() {
