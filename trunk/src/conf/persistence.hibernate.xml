@@ -4,15 +4,20 @@
 <beans>
 
 	<!-- setup hibernate session factory -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="mappingResources">
+	<bean id="sessionFactory" class="org.lopatka.idonc.web.core.AnnotationSessionFactoryBean">
+
+		<property name="configurationClass">
+			<value>org.hibernate.cfg.AnnotationConfiguration</value>
+		</property>
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
 			<list>
-				<value>idoncUser.hbm.xml</value>
-				<value>loggedUser.hbm.xml</value>
-				<value>userCredential.hbm.xml</value>
+				<value>org.lopatka.idonc.web.model.user.IdoncUser</value>
+				<value>org.lopatka.idonc.web.model.user.LoggedUser</value>
+				<value>org.lopatka.idonc.web.model.user.UserCredential</value>
 			</list>
 		</property>
+
 
 		<property name="hibernateProperties">
 			<props>
@@ -21,55 +26,50 @@
 				<prop key="hibernate.connection.pool_size">5</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
-            	<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
-            	<prop key="hibernate.hibernate.cache.use_query_cache">true</prop>
-			</props>
-		</property>
-	</bean>
-
-	<!-- setup transaction manager	-->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-       <property name="sessionFactory"><ref bean="sessionFactory"/></property>
-    </bean>
-
-	<!--
-		setup dao
-	-->
-	
-	<bean id="userDaoTarget" class="org.lopatka.idonc.web.dao.UserDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-	
-	<bean id="userCredentialDaoTarget" class="org.lopatka.idonc.web.dao.UserCredentialDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-
-
-	<bean id="userDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="transactionManager" ref="transactionManager"/>
-		<property name="target" ref="userDaoTarget"/>
-		<property name="transactionAttributes">
-			<props>
-				<prop key="save">PROPAGATION_REQUIRED</prop>
-				<prop key="delete">PROPAGATION_REQUIRED</prop>
-				<prop key="*">PROPAGATION_REQUIRED, readOnly</prop>
-				<!-- 
-				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
-				 -->
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.hibernate.cache.use_query_cache">true</prop>
 			</props>
 		</property>
 	</bean>
 	
-	<bean id="userCredentialDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<!-- transaction manager -->
+	<bean name="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- dao transaction template -->
+	<bean id="daoTxTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager" ref="transactionManager"/>
-		<property name="target" ref="userCredentialDaoTarget"/>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="save">PROPAGATION_REQUIRED</prop>
-				<prop key="delete">PROPAGATION_REQUIRED</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,ISOLATION_READ_COMMITTED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,ISOLATION_READ_COMMITTED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
 				<prop key="*">PROPAGATION_REQUIRED, readOnly</prop>
 			</props>
 		</property>
 	</bean>
 
+	<!-- dao -->
+	<bean id="userDao" parent="daoTxTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target">
+			<bean class="org.lopatka.idonc.web.dao.UserDaoImpl">
+				<property name="sessionFactory" ref="sessionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="userCredentialDao" parent="daoTxTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target">
+			<bean class="org.lopatka.idonc.web.dao.UserCredentialDaoImpl">
+				<property name="sessionFactory" ref="sessionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	
 </beans>
