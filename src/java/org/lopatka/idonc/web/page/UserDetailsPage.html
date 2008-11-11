@@ -2,49 +2,61 @@
 <head></head>
 <body>
 <wicket:extend>
-		<span>User details</span>
-		<table cellspacing="0" class="dataView">
+	<table cellspacing="0" class="dataView">
+		<thead>
 			<tr>
-				<td>Username:</td>
-				<td><label wicket:id="username" /></td>
+				<td><label id="title">User details</label></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><label>Username:</label></td>
+				<td><label wicket:id="username"/></td>
 			</tr>
 			<tr>
-				<td>First Name:</td>
-				<td><label wicket:id="firstname" /></td>
+				<td><label>First name:</label></td>
+				<td><label wicket:id="firstName"/></td>
 			</tr>
 			<tr>
-				<td>Last Name:</td>
-				<td><label wicket:id="lastname" /></td>
+				<td><label>Last name:</label></td>
+				<td><label wicket:id="lastName"/>
+				</td>
 			</tr>
 			<tr>
-				<td>Email:</td>
-				<td><label wicket:id="email" /></td>
+				<td><label>Email:</label></td>
+				<td><label wicket:id="email"/></td>
 			</tr>
 			<tr>
-				<td>Website:</td>
+				<td><label>Website:</label></td>
 				<td><label wicket:id="website" /></td>
 			</tr>
 			<tr>
-				<td>Street:</td>
-				<td><label wicket:id="street" /></td>
+				<td><label>Street:</label></td>
+				<td><label wicket:id="street"/></td>
 			</tr>
 			<tr>
-				<td>House Number:</td>
-				<td><label wicket:id="housenumber" /></td>
+				<td><label>House Number:</label></td>
+				<td><label wicket:id="houseNumber"/></td>
 			</tr>
 			<tr>
-				<td>City:</td>
-				<td><label wicket:id="city" /></td>
+				<td><label>City:</label></td>
+				<td><label wicket:id="city"/></td>
 			</tr>
 			<tr>
-				<td>Zip Code:</td>
-				<td><label wicket:id="zipcode" /></td>
+				<td><label>Zip Code:</label></td>
+				<td><label wicket:id="zipCode"/></td>
 			</tr>
 			<tr>
-				<td>Country:</td>
-				<td><label wicket:id="country" /></td>
+				<td><label>Country:</label></td>
+				<td><label wicket:id="country"/>
+				</td>
 			</tr>
-		</table>
+			<tr>
+				<td><input type="submit" wicket:id="backButton" value="Back" /></td>
+			</tr>
+		</tbody>
+	</table>
 </wicket:extend>
 </body>
 </html>
+
