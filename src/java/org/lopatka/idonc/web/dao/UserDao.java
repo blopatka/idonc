@@ -7,14 +7,6 @@ import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.utils.QueryParam;
 
 public interface UserDao {
-
-//	public List<IdoncUser> getUserList();
-//
-//	public void saveUser(IdoncUser user);
-//
-//	public void registerUser(IdoncUser user);
-//	
-	//new methods - directly from hibernate
 	
 	public IdoncUser load(long id);
 	

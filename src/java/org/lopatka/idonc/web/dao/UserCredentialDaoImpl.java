@@ -3,24 +3,13 @@ package org.lopatka.idonc.web.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.model.user.UserCredential;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public class UserCredentialDaoImpl implements UserCredentialDao {
-
-	private SessionFactory factory;
-	
-	public void setSessionFactory(SessionFactory factory) {
-		this.factory = factory;
-	}
-	
-	public Session getSession() {
-		return factory.getCurrentSession();
-	}
+public class UserCredentialDaoImpl extends HibernateDaoSupport implements UserCredentialDao {
 	
 	public void delete(UserCredential credential) {
 		getSession().delete(credential);
