@@ -5,44 +5,15 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.utils.HibernateIdoncUserFinderQueryBuilder;
 import org.lopatka.idonc.web.utils.QueryParam;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
-	private SessionFactory factory;
-
-	public void setSessionFactory(SessionFactory factory) {
-		this.factory = factory;
-	}
-
-	protected Session getSession() {
-		return factory.getCurrentSession();
-	}
-
-//	public List<IdoncUser> getUserList() {
-//		// logger.info("Getting users list");
-//		// return getHibernateTemplate().find(
-//		// "from org.lopatka.idonc.model.user.IdoncUser");
-//		throw new UnsupportedOperationException("not implemented");
-//	}
-//
-//	public void saveUser(IdoncUser user) {
-//		// logger.info("Saving user: " + user.getUserName());
-//		// getHibernateTemplate().saveOrUpdate(user);
-//		throw new UnsupportedOperationException("not implemented");
-//	}
-//
-//	public void registerUser(IdoncUser user) {
-//		// logger.info("Registering user: " + user.getUserName());
-//		// //getHibernateTemplate()
-//		throw new UnsupportedOperationException("not implemented");
-//	}
 
 	public int count(IdoncUser filter) {
 		return ((Long) buildFindQuery(null, filter, true).uniqueResult())
