@@ -6,6 +6,12 @@
 	<import resource="classpath:common.xml"/>
 	<import resource="classpath:persistence.hibernate.xml"/>
 	
+
+	<bean name="openSessionInViewInterceptor"
+		class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
 	<!-- setup data generator that will add some data into the db when the app starts up -->
 	<bean id="dataGenerator" class="org.lopatka.idonc.web.utils.DataGenerator">
 		<property name="userDao" ref="userDao"></property>
