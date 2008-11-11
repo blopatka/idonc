@@ -12,4 +12,6 @@ public interface LoggedUserDao {
 	public void deleteLoggedUser(LoggedUser loggedUser);
 
 	public boolean deleteLoggedUserById(Long id);
+	
+	public LoggedUser createLoggedUser(IdoncUser user);
 }

@@ -11,11 +11,17 @@
 		class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	
+	<!--  setup idoncservice -->
+	<bean id="idoncService" class="org.lopatka.idonc.web.service.IdoncServiceImpl">
+		<property name="userDao" ref="userDao"/>
+		<property name="userCredentialDao" ref="userCredentialDao"/>
+		<property name="loggedUserDao" ref="loggedUserDao"/>
+	</bean>
 
 	<!-- setup data generator that will add some data into the db when the app starts up -->
 	<bean id="dataGenerator" class="org.lopatka.idonc.web.utils.DataGenerator">
-		<property name="userDao" ref="userDao"></property>
-		<property name="userCredentialDao" ref="userCredentialDao"></property>
+		<property name="idoncService" ref="idoncService"></property>
 	</bean>
 
     <!-- setup wicket application -->

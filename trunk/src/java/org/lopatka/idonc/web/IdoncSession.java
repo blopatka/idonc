@@ -15,17 +15,19 @@ import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.lopatka.idonc.web.dao.UserCredentialDao;
 import org.lopatka.idonc.web.model.user.IdoncUser;
+import org.lopatka.idonc.web.model.user.LoggedUser;
 import org.lopatka.idonc.web.model.user.UserCredential;
+import org.lopatka.idonc.web.service.IdoncService;
 import org.lopatka.idonc.web.utils.PasswordHasher;
 
 public class IdoncSession extends AuthenticatedWebSession {
 
-	private String loggedUserName;
+	private LoggedUser loggedUser;
 	
 	private Map<String, IdoncUser> users;
 	
-	@SpringBean(name="userCredentialDao")
-	private UserCredentialDao userCredentialDao;
+	@SpringBean(name="idoncService")
+	private IdoncService idoncService;
 	
 	private static final long serialVersionUID = -3623974092048074997L;
 	
@@ -37,8 +39,8 @@ public class IdoncSession extends AuthenticatedWebSession {
 		users = new HashMap<String, IdoncUser>();
 	}
 	
-	public void setUserCredentialDao(UserCredentialDao dao) {
-		this.userCredentialDao = dao;
+	public void setIdoncService(IdoncService service) {
+		this.idoncService = service;
 	}
 	
 	public static IdoncSession get() {
@@ -48,24 +50,13 @@ public class IdoncSession extends AuthenticatedWebSession {
 	@Override
 	public boolean authenticate(String username, String password) {
 		//return username.equals(password);
-		if((username != null) && (password != null)) {
-			UserCredential cred = userCredentialDao.get(username);
-			byte[] storedHash = PasswordHasher.base64ToByte(cred.getPassword());
-			byte[] storedSalt = PasswordHasher.base64ToByte(cred.getSalt());
-			try {
-				byte[] inputHash = PasswordHasher.getHash(1000, password, storedSalt);
-				if(Arrays.equals(inputHash, storedHash)) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (NoSuchAlgorithmException e) {
-				return false;
-			} catch (UnsupportedEncodingException e) {
-				return false;
-			}
-		} else {
+		LoggedUser logU = idoncService.loginUser(username, password);
+		if (logU == null) {
+			loggedUser = null;
 			return false;
+		} else {
+			loggedUser = logU;
+			return true;
 		}
 	}
 
@@ -77,12 +68,12 @@ public class IdoncSession extends AuthenticatedWebSession {
 		return null;
 	}
 
-	public String getLoggedUserName() {
-		return loggedUserName;
+	public LoggedUser getLoggedUser() {
+		return loggedUser;
 	}
 
-	public void setLoggedUserName(String loggedUserName) {
-		this.loggedUserName = loggedUserName;
+	public void setLoggedUserName(LoggedUser loggedUser) {
+		this.loggedUser = loggedUser;
 	}
 
 	public IdoncUser getUser(String username) {
@@ -97,6 +88,12 @@ public class IdoncSession extends AuthenticatedWebSession {
 		for (IdoncUser user : users) {
 			this.users.put(user.getUserName(), user);
 		}
+	}
+
+	@Override
+	public void invalidate() {
+		idoncService.logoutUser(loggedUser.getUser().getUserName(), loggedUser.getSessionId());
+		super.invalidate();
 	}
 	
 	

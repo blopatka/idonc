@@ -1,6 +1,7 @@
 package org.lopatka.idonc.web.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.model.user.LoggedUser;
@@ -10,7 +11,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUserDao{
 
 	public void deleteLoggedUser(LoggedUser loggedUser) {
-		logger.info("deletin LoggedUser information");
+		logger.info("deleting LoggedUser information");
 		getHibernateTemplate().delete(loggedUser);
 	}
 
@@ -54,5 +55,16 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 			return null;
 		}
 	}
+
+	public LoggedUser createLoggedUser(IdoncUser user) {
+		LoggedUser lU = new LoggedUser();
+		lU.setUser(user);
+		String sessionId = UUID.randomUUID().toString();
+		lU.setSessionId(sessionId);
+		Long id = (Long) getHibernateTemplate().save(lU);
+		return (LoggedUser) getHibernateTemplate().get(LoggedUser.class, id);
+	}
+	
+	
 
 }

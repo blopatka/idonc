@@ -9,13 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.NotNull;
 
 @Entity
-@Table(name="USERS")
+@Table(name="USERS", uniqueConstraints=@UniqueConstraint(columnNames={"USER_NAME"}))
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class IdoncUser implements Serializable {
 

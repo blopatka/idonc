@@ -23,6 +23,7 @@ import org.lopatka.idonc.web.dao.UserDao;
 import org.lopatka.idonc.web.model.user.Address;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.model.user.UserCredential;
+import org.lopatka.idonc.web.service.IdoncService;
 import org.springframework.beans.factory.InitializingBean;
 
 public class DataGenerator implements InitializingBean {
@@ -44,33 +45,23 @@ public class DataGenerator implements InitializingBean {
 			"Nelson", "Moore", "Wilson", "Graham", "Fisher", "Cruz", "Ortiz",
 			"Gomez", "Murray" };
 	private static final String[] DOMAINS = {"com", "pl", "de", "co.uk", "org", "edu"};
-	private static final String[] CITIES = {"Warszawa", "Poznañ", "Kraków", "Gdañsk",
-			"Katowice", "Wroclaw", "Szczecin", "Radom", "Rzeszów", "Lublin", "Witnica"};
+	private static final String[] CITIES = {"Warszawa", "Poznaï¿½", "Krakï¿½w", "Gdaï¿½sk",
+			"Katowice", "Wroclaw", "Szczecin", "Radom", "Rzeszï¿½w", "Lublin", "Witnica"};
 	private static final String[] COUNTRIES = {"Polska", "Niemcy", "Irlandia", "Szkocja"};
 	private static final String[] STREETS = {"Warszawska", "Zamenhoffa", "Slowianska",
 			"Lechicka", "Wolnosci", "Wschodnia", "Zachodnia", "Polnocna", "Poludniowa",
 			"Poranna", "Wieczorna", "Bajkowa", "Filmowa", "Kocia"};
 
-	private UserDao userDao;
+	private IdoncService idoncService;
 	
-	private UserCredentialDao userCredentialDao;
-
-
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+	public void setIdoncService(IdoncService idoncService) {
+		this.idoncService = idoncService;
 	}
-	
-	public void setUserCredentialDao(UserCredentialDao credDao) {
-		this.userCredentialDao = credDao;
-	}
-
-
 
 	public void afterPropertiesSet() throws Exception {
 		for (String element : USERNAMES) {
 			IdoncUser user = new IdoncUser();
 			user.setUserName(element);
-			//user.setPassword(element);
 			user.setFirstName(randomString(FIRSTNAMES));
 			user.setLastName(randomString(LASTNAMES));
 			Address address = new Address();
@@ -99,15 +90,8 @@ public class DataGenerator implements InitializingBean {
 			address.setWebsite(website);
 			address.setZipCode(randomZipCode());
 			user.setAddress(address);
-			user = userDao.save(user);
-			
-			UserCredential cred = new UserCredential();
-			cred.setUser(user);
-			byte[] salt = PasswordHasher.createSalt();
-			byte[] password = PasswordHasher.getHash(1000,element , salt);
-			cred.setSalt(PasswordHasher.byteToBase64(salt));
-			cred.setPassword(PasswordHasher.byteToBase64(password));
-			userCredentialDao.save(cred);
+
+			idoncService.registerUser(user, element);
 			
 		}
 	}
