@@ -4,7 +4,6 @@ import org.apache.wicket.PageParameters;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.PageLink;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
@@ -24,7 +23,7 @@ public class UserListPage extends BasePage {
 	@SpringBean(name = "userDao")
 	private UserDao dao;
 	
-	IdoncSession session = IdoncSession.get();
+	private IdoncSession session = IdoncSession.get();
 
 	public UserListPage() {
 		initLayout();
@@ -42,9 +41,9 @@ public class UserListPage extends BasePage {
 				item.add(new Label("firstname", user.getFirstName()));
 				item.add(new Label("lastname", user.getLastName()));
 				item.add(new Label("email", user.getAddress().getEmail()));
-				PageParameters params = new PageParameters();
-				params.add("username", user.getUserName());
-				item.add(new BookmarkablePageLink("details", UserDetailsPage.class, params));
+				PageParameters param = new PageParameters();
+				param.add("username", user.getUserName());
+				item.add(new BookmarkablePageLink("details", UserDetailsPage.class, param));
 				
 				//persisting in session
 				session.setUser(user.getUserName(), user);
