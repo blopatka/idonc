@@ -2,12 +2,47 @@ package org.lopatka.idonc.web.model.user;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.validator.Length;
+import org.hibernate.validator.NotNull;
+
+@Entity
+@Table(name="USER_CREDENTIALS")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class UserCredential implements Serializable {
 
 	private static final long serialVersionUID = 8642933674178126834L;
+	
+	@Id
+	@Column(name="ID")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name="USER")
+	@LazyToOne(LazyToOneOption.FALSE)
 	private IdoncUser user;
+	
+	@Column(name="PASSWORD")
+	@NotNull
+	@Length(max=32)
 	private String password;
+	
+	@Column(name="SALT")
+	@NotNull
+	@Length(max=32)
 	private String salt;
 
 	public UserCredential() {
