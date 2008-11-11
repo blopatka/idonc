@@ -10,7 +10,6 @@ public class IdoncPart {
 	private Long number;
 	private String name;
 	private List<IdoncLongData> longDataList;
-	// private byte[] blob;
 
 	private List<IdoncResult> results;
 	private List<IdoncUser> usersProcessing;
