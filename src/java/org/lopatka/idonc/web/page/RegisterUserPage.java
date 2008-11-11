@@ -5,20 +5,26 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.lopatka.idonc.web.model.user.IdoncUser;
+import org.lopatka.idonc.web.service.IdoncService;
 
 /**
  * @author Bartek
  */
 public class RegisterUserPage extends WebPage {
 
-	IdoncUser user;
-	String rePassword;
+	@SpringBean(name="idoncService")
+	private IdoncService idoncService;
+	
+	private IdoncUser user;
+	private String password;
+	private String rePassword;
 
 	public RegisterUserPage() {
 		Form form = new Form("registerForm");
 		form.add(new TextArea("usernameInput", new PropertyModel(this, "user.userName")));
-		form.add(new TextArea("passwordInput", new PropertyModel(this, "user.password")));
+		form.add(new TextArea("passwordInput", new PropertyModel(this, "password")));
 		form.add(new TextArea("rePasswordInput", new PropertyModel(this, "rePassword")));
 		form.add(new TextArea("firstNameInput", new PropertyModel(this, "user.firstName")));
 		form.add(new TextArea("lastNameInput", new PropertyModel(this, "user.lastName")));
@@ -36,7 +42,10 @@ public class RegisterUserPage extends WebPage {
 
 			@Override
 			public void onSubmit() {
-				//TODO - register user as login as him, redirect to home page
+				//TODO check if username exists
+				if(password.equals(rePassword)) {
+					idoncService.registerUser(user, password);
+				}
 				setResponsePage(HomePage.class);
 			}
 		};

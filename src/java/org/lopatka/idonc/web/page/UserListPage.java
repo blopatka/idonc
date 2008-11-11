@@ -13,6 +13,7 @@ import org.lopatka.idonc.web.dao.UserDao;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.page.component.BasePage;
 import org.lopatka.idonc.web.page.dataproviders.UserDataProvider;
+import org.lopatka.idonc.web.service.IdoncService;
 
 /**
  * @author Bartek
@@ -20,8 +21,8 @@ import org.lopatka.idonc.web.page.dataproviders.UserDataProvider;
 @AuthorizeInstantiation("ADMIN")
 public class UserListPage extends BasePage {
 
-	@SpringBean(name = "userDao")
-	private UserDao dao;
+	@SpringBean(name = "idoncService")
+	private IdoncService idoncService;
 	
 	private IdoncSession session = IdoncSession.get();
 
@@ -30,7 +31,7 @@ public class UserListPage extends BasePage {
 	}
 
 	private void initLayout() {	
-		UserDataProvider prov = new UserDataProvider(dao);
+		UserDataProvider prov = new UserDataProvider(idoncService);
 		DataView table = new DataView("pageable", prov) {
 			private static final long serialVersionUID = 6733451812819095983L;
 

@@ -15,6 +15,7 @@
 				<value>org.lopatka.idonc.web.model.user.IdoncUser</value>
 				<value>org.lopatka.idonc.web.model.user.LoggedUser</value>
 				<value>org.lopatka.idonc.web.model.user.UserCredential</value>
+				<value>org.lopatka.idonc.web.model.user.LoggedUser</value>
 			</list>
 		</property>
 
@@ -67,6 +68,15 @@
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target">
 			<bean class="org.lopatka.idonc.web.dao.UserCredentialDaoImpl">
+				<property name="sessionFactory" ref="sessionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="loggedUserDao" parent="daoTxTemplate">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target">
+			<bean class="org.lopatka.idonc.web.dao.LoggedUserDaoImpl">
 				<property name="sessionFactory" ref="sessionFactory"/>
 			</bean>
 		</property>

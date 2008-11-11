@@ -3,6 +3,7 @@ package org.lopatka.idonc.web.page.detachablemodel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.lopatka.idonc.web.dao.UserDao;
 import org.lopatka.idonc.web.model.user.IdoncUser;
+import org.lopatka.idonc.web.service.IdoncService;
 
 public class DetachableIdoncUserModel extends LoadableDetachableModel {
 
@@ -10,17 +11,17 @@ public class DetachableIdoncUserModel extends LoadableDetachableModel {
 
 	private final long id;
 	
-	private final UserDao userDao;
+	private final IdoncService service;
 	
-	public DetachableIdoncUserModel(IdoncUser user, UserDao dao) {
+	public DetachableIdoncUserModel(IdoncUser user, IdoncService service) {
 		super(user);
 		this.id = user.getId();
-		this.userDao = dao;
+		this.service = service;
 	}
 	
 	@Override
 	protected IdoncUser load() {
-		return userDao.load(id);
+		return service.loadUser(id);
 	}
 
 }
