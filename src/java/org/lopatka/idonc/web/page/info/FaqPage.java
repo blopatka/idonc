@@ -1,4 +1,4 @@
-package org.lopatka.idonc.web.page.text;
+package org.lopatka.idonc.web.page.info;
 
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;

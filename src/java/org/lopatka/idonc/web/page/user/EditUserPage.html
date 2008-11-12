@@ -1,0 +1,91 @@
+<html xmlns:wicket>
+<body>
+<wicket:extend>
+	<form wicket:id="editUserForm">
+	<table cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<td><label id="title">edit user</label></td>
+			</tr>
+			<tr>
+				<td><label id="sectionTitle">Enter login data:</label></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><label for="username">Username:</label></td>
+				<td><label wicket:id="usernameInput" id="username" /></td>
+			</tr>
+			<tr>
+				<td><label for="oldPassword">Old Password:</label></td>
+				<td><input type="password" wicket:id="oldPasswordInput"
+					id="oldPassword" /></td>
+			</tr>
+			<tr>
+				<td><label for="password">New Password:</label></td>
+				<td><input type="password" wicket:id="passwordInput"
+					id="password" /></td>
+			</tr>
+			<tr>
+				<td><label for="rePassword">Retype New Password:</label></td>
+				<td><input type="password" wicket:id="rePasswordInput"
+					id="rePassword" /></td>
+			</tr>
+			<tr>
+				<td><label id="sectionTitle">Enter user data:</label></td>
+			</tr>
+			<tr>
+				<td><label for="firstName">First name:</label></td>
+				<td><input type="text" wicket:id="firstNameInput"
+					id="firstName" /></td>
+			</tr>
+			<tr>
+				<td><label for="lastName">Last name:</label></td>
+				<td><input type="text" wicket:id="lastNameInput" id="lastName" />
+				</td>
+			</tr>
+			<tr>
+				<td><label for="email">Email:</label></td>
+				<td><input type="text" wicket:id="emailInput" id="email" /></td>
+			</tr>
+			<tr>
+				<td><label for="website">Website:</label></td>
+				<td><input type="text" wicket:id="websiteInput" id="website" />
+				</td>
+			</tr>
+			<tr>
+				<td><label for="street">Street:</label></td>
+				<td><input type="text" wicket:id="streetInput" id="street" /></td>
+			</tr>
+			<tr>
+				<td><label for="houseNumber">House Number:</label></td>
+				<td><input type="text" wicket:id="houseNumberInput"
+					id="houseNumber" /></td>
+			</tr>
+			<tr>
+				<td><label for="city">City:</label></td>
+				<td><input type="text" wicket:id="cityInput" id="city" /></td>
+			</tr>
+			<tr>
+				<td><label for="zipCode">Zip Code:</label></td>
+				<td><input type="text" wicket:id="zipCodeInput" id="zipCode" />
+				</td>
+			</tr>
+			<tr>
+				<td><label for="country">Country:</label></td>
+				<td><input type="text" wicket:id="countryInput" id="country" />
+				</td>
+			</tr>
+			<tr>
+				<td><input type="submit" wicket:id="acceptButton"
+					id="acceptButton" value="OK" /></td>
+				<td><input type="submit" wicket:id="cancelButton"
+					id="cancelButton" value="Cancel" /></td>
+			</tr>
+		</tbody>
+	</table>
+	</form>
+</wicket:extend>
+</body>
+</html>
+
