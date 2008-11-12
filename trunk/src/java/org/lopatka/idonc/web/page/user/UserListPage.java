@@ -1,4 +1,4 @@
-package org.lopatka.idonc.web.page;
+package org.lopatka.idonc.web.page.user;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
