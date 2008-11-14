@@ -4,9 +4,9 @@ import org.apache.wicket.PageParameters;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.PropertyModel;
 import org.lopatka.idonc.web.IdoncSession;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.page.component.BasePage;
@@ -38,17 +38,18 @@ public class UserDetailsPage extends BasePage {
 		
 		IdoncUser user = (IdoncUser) UserDetailsPage.this.getModelObject();
 		
-		add(new Label("username", user.getUserName()));
-		add(new Label("firstName", user.getFirstName()));
-		add(new Label("lastName", user.getLastName()));
-		add(new Label("email", user.getAddress().getEmail()));
-		add(new Label("website", user.getAddress().getWebsite()));
-		add(new Label("street", user.getAddress().getStreet()));
-		add(new Label("houseNumber", user.getAddress().getHouseNumber()));
-		add(new Label("city", user.getAddress().getCity()));
-		add(new Label("zipCode", user.getAddress().getZipCode()));
-		add(new Label("country", user.getAddress().getCountry()));
-		add(new Button("backButton") {
+		Form form = new Form("userForm");
+		form.add(new Label("username", user.getUserName()));
+		form.add(new Label("firstName", user.getFirstName()));
+		form.add(new Label("lastName", user.getLastName()));
+		form.add(new Label("email", user.getAddress().getEmail()));
+		form.add(new Label("website", user.getAddress().getWebsite()));
+		form.add(new Label("street", user.getAddress().getStreet()));
+		form.add(new Label("houseNumber", user.getAddress().getHouseNumber()));
+		form.add(new Label("city", user.getAddress().getCity()));
+		form.add(new Label("zipCode", user.getAddress().getZipCode()));
+		form.add(new Label("country", user.getAddress().getCountry()));
+		form.add(new Button("backButton") {
 			private static final long serialVersionUID = -6744445235406140825L;
 
 			@Override
@@ -56,6 +57,7 @@ public class UserDetailsPage extends BasePage {
 				setResponsePage(UserListPage.class);
 			}
 		});
+		add(form);
 	}
 }
 

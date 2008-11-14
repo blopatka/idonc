@@ -8,6 +8,7 @@ import org.lopatka.idonc.web.page.LogoutPage;
 import org.lopatka.idonc.web.page.component.suckerfish.SuckerfishMenuPanel;
 import org.lopatka.idonc.web.page.info.AboutPage;
 import org.lopatka.idonc.web.page.info.FaqPage;
+import org.lopatka.idonc.web.page.project.ProjectsListPage;
 import org.lopatka.idonc.web.page.user.EditUserPage;
 import org.lopatka.idonc.web.page.user.UserListPage;
 
@@ -27,10 +28,14 @@ public class HeaderPanel extends Panel {
 				new BookmarkablePageLink(SuckerfishMenuPanel.LINK_ID, HomePage.class), "Home");
 		
 		final SuckerfishMenuPanel.MenuItem users = new SuckerfishMenuPanel.MenuItem("Users");
-		final SuckerfishMenuPanel.MenuItem list = new SuckerfishMenuPanel.MenuItem(
+		final SuckerfishMenuPanel.MenuItem usersList = new SuckerfishMenuPanel.MenuItem(
 				new BookmarkablePageLink(SuckerfishMenuPanel.LINK_ID, UserListPage.class),"List");
 		final SuckerfishMenuPanel.MenuItem edit = new SuckerfishMenuPanel.MenuItem(
 				new BookmarkablePageLink(SuckerfishMenuPanel.LINK_ID, EditUserPage.class), "Edit");
+		
+		final SuckerfishMenuPanel.MenuItem projects = new SuckerfishMenuPanel.MenuItem("Projects");
+		final SuckerfishMenuPanel.MenuItem projectsList = new SuckerfishMenuPanel.MenuItem(
+				new BookmarkablePageLink(SuckerfishMenuPanel.LINK_ID, ProjectsListPage.class),"List");
 
 		final SuckerfishMenuPanel.MenuItem info = new SuckerfishMenuPanel.MenuItem("Info");
 		final SuckerfishMenuPanel.MenuItem faq = new SuckerfishMenuPanel.MenuItem(
@@ -44,9 +49,12 @@ public class HeaderPanel extends Panel {
 		
 		menuBar.addMenu(home);
 		
-		users.addMenu(list);
+		users.addMenu(usersList);
 		users.addMenu(edit);
 		menuBar.addMenu(users);
+		
+		projects.addMenu(projectsList);
+		menuBar.addMenu(projects);
 		
 		info.addMenu(faq);
 		info.addMenu(about);

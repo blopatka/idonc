@@ -18,15 +18,16 @@
  */
 package org.lopatka.idonc.web.utils;
 
-import org.lopatka.idonc.web.dao.UserCredentialDao;
-import org.lopatka.idonc.web.dao.UserDao;
+import org.lopatka.idonc.web.model.data.IdoncProject;
 import org.lopatka.idonc.web.model.user.Address;
 import org.lopatka.idonc.web.model.user.IdoncUser;
-import org.lopatka.idonc.web.model.user.UserCredential;
 import org.lopatka.idonc.web.service.IdoncService;
 import org.springframework.beans.factory.InitializingBean;
 
 public class DataGenerator implements InitializingBean {
+	
+	private static final String[] PROJECTNAMES = {"Alpha", "Beta", "Gamma", "Delta", "Kappa", "Sigma", "Pi"};
+	private static final String[] DESCRIPTIONS = {"hej", "blabla", "holahola", "tolamanola"};
 
 	private static final String[] USERNAMES = {"andy", "gary", "lisa", "bart",
 			"homer", "marge", "maggie", "krusty", "opek", "opiszon", "kasia",
@@ -93,6 +94,16 @@ public class DataGenerator implements InitializingBean {
 
 			idoncService.registerUser(user, element);
 			
+		}
+		
+		for(String element : PROJECTNAMES) {
+			IdoncProject project = new IdoncProject();
+			project.setName(element);
+			project.setDescription(randomString(DESCRIPTIONS));
+			String website = new StringBuilder().append("www.").append(project.getName()).
+			append(".").append("idoncProject").append(randomString(DOMAINS)).toString();
+			project.setWebsite(website);
+			idoncService.addProject(project);
 		}
 	}
 

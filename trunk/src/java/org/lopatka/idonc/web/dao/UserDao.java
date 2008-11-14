@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.lopatka.idonc.web.model.user.IdoncUser;
-import org.lopatka.idonc.web.utils.QueryParam;
 
 public interface UserDao {
 	
@@ -15,11 +14,11 @@ public interface UserDao {
 	public void delete(long id);
 	
 	@SuppressWarnings("unchecked")
-	public Iterator find(QueryParam qp, IdoncUser filter);
+	public Iterator get(int first, int count);
 	
 	public IdoncUser findByUsername(String username);
 	
-	public int count(IdoncUser filter);
+	public int count();
 	
 	public List<String> getUniqueUsernames();
 	
