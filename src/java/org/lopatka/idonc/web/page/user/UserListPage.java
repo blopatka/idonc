@@ -9,7 +9,6 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.lopatka.idonc.web.IdoncSession;
-import org.lopatka.idonc.web.dao.UserDao;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.page.component.BasePage;
 import org.lopatka.idonc.web.page.dataproviders.UserDataProvider;

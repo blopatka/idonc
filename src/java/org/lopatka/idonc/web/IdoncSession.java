@@ -14,6 +14,7 @@ import org.apache.wicket.authorization.strategies.role.Roles;
 import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.lopatka.idonc.web.dao.UserCredentialDao;
+import org.lopatka.idonc.web.model.data.IdoncProject;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.model.user.LoggedUser;
 import org.lopatka.idonc.web.model.user.UserCredential;
@@ -25,6 +26,8 @@ public class IdoncSession extends AuthenticatedWebSession {
 	private LoggedUser loggedUser;
 	
 	private Map<String, IdoncUser> users;
+
+	private Map<String, IdoncProject> projects;
 	
 	@SpringBean(name="idoncService")
 	private IdoncService idoncService;
@@ -37,6 +40,7 @@ public class IdoncSession extends AuthenticatedWebSession {
 		InjectorHolder.getInjector().inject(this);
 		
 		users = new HashMap<String, IdoncUser>();
+		projects = new HashMap<String, IdoncProject>();
 	}
 	
 	public void setIdoncService(IdoncService service) {
@@ -94,6 +98,20 @@ public class IdoncSession extends AuthenticatedWebSession {
 	public void invalidate() {
 		idoncService.logoutUser(loggedUser.getUser().getUserName(), loggedUser.getSessionId());
 		super.invalidate();
+	}
+	
+	public IdoncProject getProject(String name) {
+		return projects.get(name);
+	}
+
+	public void setProject(String name, IdoncProject project) {
+		projects.put(name, project);
+	}
+	
+	public void setProjects(List<IdoncProject> projects) {
+		for(IdoncProject project: projects) {
+			this.projects.put(project.getName(), project);
+		}
 	}
 	
 	

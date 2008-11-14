@@ -4,20 +4,20 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.lopatka.idonc.web.model.user.IdoncUser;
-import org.lopatka.idonc.web.utils.HibernateIdoncUserFinderQueryBuilder;
-import org.lopatka.idonc.web.utils.QueryParam;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
 
-	public int count(IdoncUser filter) {
-		return ((Long) buildFindQuery(null, filter, true).uniqueResult())
-				.intValue();
+	public int count() {
+		Criteria crit = getSession().createCriteria(IdoncUser.class);
+		crit.setProjection(Projections.rowCount());
+		Integer count = (Integer) crit.uniqueResult();
+		return count;
 	}
 
 	public void delete(long id) {
@@ -25,8 +25,11 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Iterator<IdoncUser> find(QueryParam qp, IdoncUser filter) {
-		return buildFindQuery(qp, filter, false).list().iterator();
+	public Iterator<IdoncUser> get(int first, int count) {
+		Criteria crit = getSession().createCriteria(IdoncUser.class);
+		crit.setMaxResults(count);
+		crit.setFirstResult(first);
+		return crit.list().iterator();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -43,20 +46,6 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
 	public IdoncUser save(IdoncUser user) {
 		return (IdoncUser) getSession().merge(user);
-	}
-
-	protected Query buildFindQuery(QueryParam qp, IdoncUser filter,
-			boolean count) {
-		HibernateIdoncUserFinderQueryBuilder builder = new HibernateIdoncUserFinderQueryBuilder();
-		builder.setQueryParam(qp);
-		builder.setFilter(filter);
-		builder.setCount(count);
-		Query query = getSession().createQuery(builder.buildHql());
-		query.setParameters(builder.getParameters(), builder.getTypes());
-		if (!count && qp != null) {
-			query.setFirstResult(qp.getFirst()).setMaxResults(qp.getCount());
-		}
-		return query;
 	}
 
 	public IdoncUser findByUsername(String username) {

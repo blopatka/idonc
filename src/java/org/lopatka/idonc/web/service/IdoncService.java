@@ -3,9 +3,9 @@ package org.lopatka.idonc.web.service;
 import java.util.Iterator;
 import java.util.List;
 
+import org.lopatka.idonc.web.model.data.IdoncProject;
 import org.lopatka.idonc.web.model.user.IdoncUser;
 import org.lopatka.idonc.web.model.user.LoggedUser;
-import org.lopatka.idonc.web.utils.QueryParam;
 
 public interface IdoncService {
 
@@ -23,9 +23,17 @@ public interface IdoncService {
 
 	public void logoutUser(String userName, String sessionId);
 	
-	public Iterator findUser(QueryParam qp, IdoncUser user);
+	public Iterator getUsers(int first, int count);
 	
-	public int countUsers(IdoncUser filter);
+	public int countUsers();
 	
 	public IdoncUser loadUser(long id);
+
+	public IdoncProject loadProject(long id);
+
+	public Iterator getProjects(int first, int count);
+
+	public int countProjects();
+
+	public void addProject(IdoncProject project);
 }

@@ -17,6 +17,7 @@
 		<property name="userDao" ref="userDao"/>
 		<property name="userCredentialDao" ref="userCredentialDao"/>
 		<property name="loggedUserDao" ref="loggedUserDao"/>
+		<property name="projectDao" ref="projectDao"></property>
 	</bean>
 
 	<!-- setup data generator that will add some data into the db when the app starts up -->
