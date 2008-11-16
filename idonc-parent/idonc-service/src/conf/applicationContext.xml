@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <import resource="classpath:common.xml" />
+    <import resource="classpath:persistence.hibernate.xml" />
+
+    <bean name="openSessionInViewInterceptor"
+		class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="converterService" class="org.lopatka.idonc.service.ConverterServiceImpl"/>
+
+    <bean id="idoncService" class="org.lopatka.idonc.service.IdoncServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="userCredentialDao" ref="userCredentialDao"/>
+        <property name="loggedUserDao" ref="loggedUserDao"/>
+        <property name="projectDao" ref="projectDao"/>
+    </bean>
+
+    <bean id="dataGenerator" class="org.lopatka.idonc.service.utils.DataGenerator">
+        <property name="idoncService" ref="idoncService"/>
+    </bean> 
+</beans>
