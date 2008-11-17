@@ -88,11 +88,4 @@ public class IdoncUser implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
-	}
-	
-	
-	
 }

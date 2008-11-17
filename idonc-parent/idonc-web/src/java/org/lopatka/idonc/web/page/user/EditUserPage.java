@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.lopatka.idonc.web.IdoncSession;
@@ -70,6 +71,23 @@ public class EditUserPage extends BasePage{
 				setResponsePage(UserListPage.class);
 			}
 		});
+
+        Link accept = new Link("acceptLink") {
+            @Override
+            public void onClick() {
+                setResponsePage(UserListPage.class);
+            }
+        };
+
+        Link cancel = new Link("cancelLink") {
+
+            @Override
+            public void onClick() {
+                setResponsePage(UserListPage.class);
+            }
+        };
+        add(accept);
+        add(cancel);
 
 		add(form);
 	}

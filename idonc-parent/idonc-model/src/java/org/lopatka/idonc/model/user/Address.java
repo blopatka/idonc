@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import org.hibernate.annotations.Type;
-import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 @Embeddable

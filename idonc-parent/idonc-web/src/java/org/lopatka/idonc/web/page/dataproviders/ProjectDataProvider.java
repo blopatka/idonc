@@ -2,11 +2,16 @@ package org.lopatka.idonc.web.page.dataproviders;
 
 import java.util.Iterator;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
+import org.lopatka.idonc.exception.IdoncException;
 import org.lopatka.idonc.model.data.IdoncProject;
+import org.lopatka.idonc.model.user.LoggedUser;
 import org.lopatka.idonc.web.page.detachablemodel.DetachableIdoncProjectModel;
 import org.lopatka.idonc.service.IdoncService;
+import org.lopatka.idonc.web.IdoncSession;
 
 public class ProjectDataProvider implements IDataProvider {
 
@@ -14,13 +19,18 @@ public class ProjectDataProvider implements IDataProvider {
 
 	private IdoncService idoncService;
 
+    private IdoncSession session = IdoncSession.get();
+
 	public ProjectDataProvider(IdoncService idoncService) {
 		this.idoncService = idoncService;
 	}
 
 	@SuppressWarnings("unchecked")
 	public Iterator iterator(int first, int count) {
-		return idoncService.getProjects(first, count).iterator();
+        String username = session.getLoggedUserName();
+        String sessionId = session.getSessionId();
+        return idoncService.getProjects(username, sessionId, first, count).iterator();
+      
 	}
 
 	public IModel model(Object object) {
@@ -32,7 +42,9 @@ public class ProjectDataProvider implements IDataProvider {
 	}
 
 	public int size() {
-		return idoncService.countProjects();
+        String username = session.getLoggedUserName();
+        String sessionId = session.getSessionId();
+		return idoncService.countProjects(username, sessionId);
 	}
 
 	public void detach() {

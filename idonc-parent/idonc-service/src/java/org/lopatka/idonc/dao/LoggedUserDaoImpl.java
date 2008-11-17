@@ -64,7 +64,5 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 		Long id = (Long) getHibernateTemplate().save(lU);
 		return (LoggedUser) getHibernateTemplate().get(LoggedUser.class, id);
 	}
-	
-	
 
 }
