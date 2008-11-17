@@ -7,12 +7,15 @@ import org.apache.wicket.model.IModel;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.web.page.detachablemodel.DetachableIdoncUserModel;
 import org.lopatka.idonc.service.IdoncService;
+import org.lopatka.idonc.web.IdoncSession;
 
 public class UserDataProvider implements IDataProvider {
 
 	private static final long serialVersionUID = 8897947586615266997L;
 
 	private IdoncService service;
+
+    private IdoncSession session = IdoncSession.get();
 	
 	public UserDataProvider(IdoncService service) {
 		this.service = service;
@@ -20,12 +23,16 @@ public class UserDataProvider implements IDataProvider {
 	
 	@SuppressWarnings("unchecked")
 	public Iterator iterator(int first, int count) {
-		return service.getUsers(first, count).iterator();
+        String username = session.getLoggedUserName();
+        String sessionId = session.getSessionId();
+		return service.getUsers(username, sessionId, first, count).iterator();
 	}
 
 
 	public int size() {
-		return service.countUsers();
+        String username = session.getLoggedUserName();
+        String sessionId = session.getSessionId();
+		return service.countUsers(username, sessionId);
 	}
 
 	public void detach() {

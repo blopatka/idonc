@@ -18,6 +18,7 @@
  */
 package org.lopatka.idonc.service.utils;
 
+import org.lopatka.idonc.dao.ProjectDao;
 import org.lopatka.idonc.model.data.IdoncProject;
 import org.lopatka.idonc.model.user.Address;
 import org.lopatka.idonc.model.user.IdoncUser;
@@ -54,10 +55,17 @@ public class DataGenerator implements InitializingBean {
 			"Poranna", "Wieczorna", "Bajkowa", "Filmowa", "Kocia"};
 
 	private IdoncService idoncService;
-	
+
+    private ProjectDao projectDao;
+
+
 	public void setIdoncService(IdoncService idoncService) {
 		this.idoncService = idoncService;
 	}
+
+    public void setProjectDao(ProjectDao projectDao) {
+        this.projectDao = projectDao;
+    }
 
 	public void afterPropertiesSet() throws Exception {
 		for (String element : USERNAMES) {
@@ -103,7 +111,7 @@ public class DataGenerator implements InitializingBean {
 			String website = new StringBuilder().append("www.").append(project.getName()).
 			append(".").append("idoncProject").append(randomString(DOMAINS)).toString();
 			project.setWebsite(website);
-			idoncService.addProject(project);
+			projectDao.add(project);
 		}
 	}
 

@@ -3,6 +3,7 @@ package org.lopatka.idonc.web.page.detachablemodel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.lopatka.idonc.model.data.IdoncProject;
 import org.lopatka.idonc.service.IdoncService;
+import org.lopatka.idonc.web.IdoncSession;
 
 public class DetachableIdoncProjectModel extends LoadableDetachableModel {
 
@@ -11,6 +12,8 @@ public class DetachableIdoncProjectModel extends LoadableDetachableModel {
 	private final long id;
 	
 	private final IdoncService service;
+
+    private IdoncSession session = IdoncSession.get();
 
 	public DetachableIdoncProjectModel(IdoncProject project,
 			IdoncService idoncService) {
@@ -21,7 +24,9 @@ public class DetachableIdoncProjectModel extends LoadableDetachableModel {
 
 	@Override
 	protected Object load() {
-		return service.loadProject(id);
+        String username = session.getLoggedUserName();
+        String sessionId = session.getSessionId();
+		return service.loadProject(username, sessionId, id);
 	}
 	
 	

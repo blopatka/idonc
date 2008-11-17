@@ -86,9 +86,17 @@ public class IdoncSession extends AuthenticatedWebSession {
 		return loggedUser;
 	}
 
-	public void setLoggedUserName(LoggedUser loggedUser) {
+	public void setLoggedUser(LoggedUser loggedUser) {
 		this.loggedUser = loggedUser;
-	}
+    }
+
+    public String getLoggedUserName() {
+        return loggedUser.getUser().getUserName();
+    }
+
+    public String getSessionId() {
+        return loggedUser.getSessionId();
+    }
 
 	public IdoncUser getUser(String username) {
 		return users.get(username);
