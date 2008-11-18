@@ -17,6 +17,9 @@
 				<value>org.lopatka.idonc.model.user.UserCredential</value>
 				<value>org.lopatka.idonc.model.user.LoggedUser</value>
 				<value>org.lopatka.idonc.model.data.IdoncProject</value>
+                <value>org.lopatka.idonc.model.data.IdoncPart</value>
+                <value>org.lopatka.idonc.model.data.IdoncResult</value>
+                <value>org.lopatka.idonc.model.data.IdoncLongData</value>
 			</list>
 		</property>
 

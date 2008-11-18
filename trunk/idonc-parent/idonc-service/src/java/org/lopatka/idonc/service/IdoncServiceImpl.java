@@ -6,13 +6,16 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.hibernate.cfg.NotYetImplementedException;
 import org.lopatka.idonc.dao.LoggedUserDao;
 import org.lopatka.idonc.dao.ProjectDao;
 import org.lopatka.idonc.dao.UserCredentialDao;
 import org.lopatka.idonc.dao.UserDao;
 import org.lopatka.idonc.exception.IdoncAuthorizationException;
 import org.lopatka.idonc.exception.IdoncException;
+import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
+import org.lopatka.idonc.model.data.IdoncResult;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.LoggedUser;
 import org.lopatka.idonc.model.user.UserCredential;
@@ -209,13 +212,29 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
         }
     }
 
-    /*
-    public void addProject(String username, String sessionId, IdoncProject project) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            projectDao.add(project);
+    public IdoncProject getContributedProject(String username, String sessionId) throws IdoncException {
+        if(checkUserAuthorized(username, sessionId)) {
+            LoggedUser lUser = loggedUserDao.getLoggedUserBySession(sessionId);
+            return lUser.getUser().getContributedProject();
         } else {
             throw new IdoncAuthorizationException("user not authorized");
         }
     }
-     */
+
+    public IdoncPart getPartToProcess(String username, String sessionId) throws IdoncException {
+        if(checkUserAuthorized(username, sessionId)) {
+            throw new UnsupportedOperationException("not yet implemented");
+        } else {
+            throw new IdoncAuthorizationException("user not authorized");
+        }
+    }
+
+    public void returnProcessingResult(String username, String sessionId, IdoncResult result) throws IdoncException {
+        if(checkUserAuthorized(username, sessionId)) {
+            throw new UnsupportedOperationException("not yet implemented");
+        } else {
+            throw new IdoncAuthorizationException("user not authorized");
+        }
+    }
+
 }
