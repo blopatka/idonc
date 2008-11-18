@@ -3,7 +3,9 @@ package org.lopatka.idonc.service;
 import java.util.List;
 
 import org.lopatka.idonc.exception.IdoncException;
+import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
+import org.lopatka.idonc.model.data.IdoncResult;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.LoggedUser;
 
@@ -39,4 +41,12 @@ public interface IdoncService {
 	public int countProjects(String username, String sessionId) throws IdoncException;
 
 	//public void addProject(String username, String sessionId, IdoncProject project) throws IdoncException;
+
+    //Services for desktop client
+
+    public IdoncProject getContributedProject(String username, String sessionId) throws IdoncException;
+
+    public IdoncPart getPartToProcess(String username, String sessionId) throws IdoncException;
+
+    public void returnProcessingResult(String username, String sessionId, IdoncResult result) throws IdoncException;
 }
