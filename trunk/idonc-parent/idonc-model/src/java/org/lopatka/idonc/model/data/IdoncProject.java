@@ -11,12 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.lucene.Keyword;
 import org.hibernate.validator.NotNull;
+import org.lopatka.idonc.model.user.IdoncUser;
 
 @Entity
 @Table(name = "PROJECTS", uniqueConstraints = @UniqueConstraint(columnNames = {"NAME"}))
@@ -24,27 +27,37 @@ import org.hibernate.validator.NotNull;
 public class IdoncProject implements Serializable {
 
     private static final long serialVersionUID = 2588813544137432822L;
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @Column(name = "NAME")
     @NotNull
     private String name;
+
     @Column(name = "WEBSITE")
     private String website;
+
     @Column(name = "DESCRIPTION")
     private String description;
+
     @OneToMany
     @JoinTable(name = "PROJECT_PARTS_TO_PROCESS",
     joinColumns = {@JoinColumn(name = "PROJECT_ID")},
     inverseJoinColumns = @JoinColumn(name = "PART_ID"))
     private List<IdoncPart> partsToProcess;
+
     @OneToMany
     @JoinTable(name = "PROJECT_PROCESSED_PARTS",
     joinColumns = {@JoinColumn(name = "PROJECT_ID")},
     inverseJoinColumns = @JoinColumn(name = "PART_ID"))
     private List<IdoncPart> processedParts;
+
+    @OneToMany
+    @OrderBy("userName")
+    private List<IdoncUser> activeUsers;
 
     public String getName() {
         return name;
@@ -93,4 +106,14 @@ public class IdoncProject implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public List<IdoncUser> getActiveUsers() {
+        return activeUsers;
+    }
+
+    public void setActiveUsers(List<IdoncUser> activeUsers) {
+        this.activeUsers = activeUsers;
+    }
+
+    
 }

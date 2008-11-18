@@ -3,13 +3,18 @@ package org.lopatka.idonc.model.data;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+@Entity(name="RESULTS")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class IdoncResult implements Serializable {
     private static final long serialVersionUID = 5579955974727356642L;
 
