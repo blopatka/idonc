@@ -41,5 +41,6 @@
 	<module>idonc-service</module>
     <module>idonc-web</module>
     <module>idonc-client</module>
+    <module>idonc-wsclient</module>
 </modules>
 </project>
