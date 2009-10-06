@@ -16,6 +16,8 @@ import org.lopatka.idonc.web.IdoncSession;
  */
 public class LoginPage extends SignInPage {
 
+    private static final long serialVersionUID = 1L;
+
 	public LoginPage() {
 		setStatelessHint(true);		
 		Form form = new Form("loginForm");

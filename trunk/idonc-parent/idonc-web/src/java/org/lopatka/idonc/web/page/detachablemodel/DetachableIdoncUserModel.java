@@ -7,7 +7,7 @@ import org.lopatka.idonc.web.IdoncSession;
 
 public class DetachableIdoncUserModel extends LoadableDetachableModel {
 
-	private static final long serialVersionUID = 4900056953111927614L;
+	private static final long serialVersionUID = 1L;
 
 	private final long id;
 	

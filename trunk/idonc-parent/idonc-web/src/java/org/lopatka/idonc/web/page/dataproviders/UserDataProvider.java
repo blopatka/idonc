@@ -11,7 +11,7 @@ import org.lopatka.idonc.web.IdoncSession;
 
 public class UserDataProvider implements IDataProvider {
 
-	private static final long serialVersionUID = 8897947586615266997L;
+	private static final long serialVersionUID = 1L;
 
 	private IdoncService service;
 
@@ -43,7 +43,7 @@ public class UserDataProvider implements IDataProvider {
 			IdoncUser user = (IdoncUser) object;
 			return new DetachableIdoncUserModel(user, service);
 		}
-		throw new IllegalArgumentException("object shoul be IdoncUser type");
+		throw new IllegalArgumentException("object should be IdoncUser type");
 	}
 
 

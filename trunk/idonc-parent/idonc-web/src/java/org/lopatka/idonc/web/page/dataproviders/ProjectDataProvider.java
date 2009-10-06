@@ -2,20 +2,16 @@ package org.lopatka.idonc.web.page.dataproviders;
 
 import java.util.Iterator;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
-import org.lopatka.idonc.exception.IdoncException;
 import org.lopatka.idonc.model.data.IdoncProject;
-import org.lopatka.idonc.model.user.LoggedUser;
 import org.lopatka.idonc.web.page.detachablemodel.DetachableIdoncProjectModel;
 import org.lopatka.idonc.service.IdoncService;
 import org.lopatka.idonc.web.IdoncSession;
 
 public class ProjectDataProvider implements IDataProvider {
 
-	private static final long serialVersionUID = -2376251935906010691L;
+	private static final long serialVersionUID = 1L;
 
 	private IdoncService idoncService;
 

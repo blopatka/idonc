@@ -10,6 +10,8 @@ import org.lopatka.idonc.web.page.component.BasePage;
  */
 public class LogoutPage extends BasePage {
 
+    private static final long serialVersionUID = 1L;
+
 	public LogoutPage() {
 		getSession().invalidate();
 		RequestCycle.get().setResponsePage(IdoncApplication.get().getHomePage());

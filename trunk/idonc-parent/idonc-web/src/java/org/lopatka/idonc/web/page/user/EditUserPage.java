@@ -17,6 +17,8 @@ import org.lopatka.idonc.service.IdoncService;
 @AuthorizeInstantiation("ADMIN")
 public class EditUserPage extends BasePage{
 
+    private static final long serialVersionUID = 1L;
+
 	@SpringBean(name="idoncService")
 	private IdoncService idoncService;
 	
@@ -50,7 +52,7 @@ public class EditUserPage extends BasePage{
 
 		form.add(new Button("acceptButton") {
 
-			private static final long serialVersionUID = -4742823374395732L;
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSubmit() {
@@ -64,7 +66,7 @@ public class EditUserPage extends BasePage{
 
 		form.add(new Button("cancelButton") {
 
-			private static final long serialVersionUID = 6703091768251015771L;
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSubmit() {
@@ -73,6 +75,8 @@ public class EditUserPage extends BasePage{
 		});
 
         Link accept = new Link("acceptLink") {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void onClick() {
                 setResponsePage(UserListPage.class);
@@ -80,6 +84,7 @@ public class EditUserPage extends BasePage{
         };
 
         Link cancel = new Link("cancelLink") {
+            private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick() {

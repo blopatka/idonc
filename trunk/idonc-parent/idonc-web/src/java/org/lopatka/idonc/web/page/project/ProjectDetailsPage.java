@@ -14,11 +14,13 @@ import org.lopatka.idonc.web.page.component.BasePage;
 @AuthorizeInstantiation("ADMIN")
 public class ProjectDetailsPage extends BasePage {
 
+    private static final long serialVersionUID = 1L;
+
 	public ProjectDetailsPage(PageParameters params) {
 		super(params);
 		this.setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 			
-			private static final long serialVersionUID = -3624462692938027960L;
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected Object load() {

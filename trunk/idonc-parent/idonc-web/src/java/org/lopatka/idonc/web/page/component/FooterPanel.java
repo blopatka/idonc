@@ -9,7 +9,7 @@ import org.apache.wicket.model.Model;
  */
 public class FooterPanel extends Panel {
 
-	private static final long serialVersionUID = 4074581733492005075L;
+	private static final long serialVersionUID = 1L;
 
 	public FooterPanel(String id) {
 		super(id);

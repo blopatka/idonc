@@ -18,6 +18,8 @@ import org.lopatka.idonc.service.IdoncService;
 
 public class IdoncSession extends AuthenticatedWebSession {
 
+    private static final long serialVersionUID = 1L;
+
 	private LoggedUser loggedUser;
 	
 	private Map<String, IdoncUser> users;
@@ -29,8 +31,6 @@ public class IdoncSession extends AuthenticatedWebSession {
 	
 	@SpringBean(name="converterService")
 	private ConverterService converterService;
-	
-	private static final long serialVersionUID = -3623974092048074997L;
 	
 	public IdoncSession(Request request) {
 		super(request);

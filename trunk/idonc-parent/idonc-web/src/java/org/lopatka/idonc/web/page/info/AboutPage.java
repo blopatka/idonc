@@ -11,6 +11,8 @@ import org.lopatka.idonc.web.page.component.BasePage;
 @AuthorizeInstantiation("ADMIN")
 public class AboutPage extends BasePage {
 
+    private static final long serialVersionUID = 1L;
+
 	public AboutPage() {
 		initLayout();
 	}
