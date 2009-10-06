@@ -17,7 +17,6 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.lucene.Keyword;
 import org.hibernate.validator.NotNull;
 import org.lopatka.idonc.model.user.IdoncUser;
 
@@ -26,7 +25,8 @@ import org.lopatka.idonc.model.user.IdoncUser;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class IdoncProject implements Serializable {
 
-    private static final long serialVersionUID = 2588813544137432822L;
+    private static final long serialVersionUID = 1L;
+
 
     @Id
     @Column(name = "ID")
@@ -43,6 +43,7 @@ public class IdoncProject implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    /*
     @OneToMany
     @JoinTable(name = "PROJECT_PARTS_TO_PROCESS",
     joinColumns = {@JoinColumn(name = "PROJECT_ID")},
@@ -54,6 +55,7 @@ public class IdoncProject implements Serializable {
     joinColumns = {@JoinColumn(name = "PROJECT_ID")},
     inverseJoinColumns = @JoinColumn(name = "PART_ID"))
     private List<IdoncPart> processedParts;
+    */
 
     @OneToMany
     @OrderBy("userName")
@@ -83,6 +85,7 @@ public class IdoncProject implements Serializable {
         this.description = description;
     }
 
+    /*
     public List<IdoncPart> getPartsToProcess() {
         return partsToProcess;
     }
@@ -98,6 +101,7 @@ public class IdoncProject implements Serializable {
     public void setProcessedParts(List<IdoncPart> processedParts) {
         this.processedParts = processedParts;
     }
+     */
 
     public int getId() {
         return id;

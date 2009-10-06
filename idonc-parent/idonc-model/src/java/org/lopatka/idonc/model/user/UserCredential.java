@@ -23,7 +23,7 @@ import org.hibernate.validator.NotNull;
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class UserCredential implements Serializable {
 
-	private static final long serialVersionUID = 8642933674178126834L;
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@Column(name="ID")

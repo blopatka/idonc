@@ -13,10 +13,12 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+
+
 @Entity(name="RESULTS")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class IdoncResult implements Serializable {
-    private static final long serialVersionUID = 5579955974727356642L;
+    private static final long serialVersionUID = 1L;
 
 
     @Id

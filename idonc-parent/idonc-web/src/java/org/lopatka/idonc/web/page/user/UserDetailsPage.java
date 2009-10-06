@@ -17,11 +17,13 @@ import org.lopatka.idonc.web.page.component.BasePage;
 @AuthorizeInstantiation("ADMIN")
 public class UserDetailsPage extends BasePage {
 
+    private static final long serialVersionUID = 1L;
+
 	public UserDetailsPage(final PageParameters params) {
 		super(params);
 		
 		this.setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
-			private static final long serialVersionUID = -6854691124950191170L;
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected Object load() {
@@ -50,7 +52,7 @@ public class UserDetailsPage extends BasePage {
 		form.add(new Label("zipCode", user.getAddress().getZipCode()));
 		form.add(new Label("country", user.getAddress().getCountry()));
 		form.add(new Button("backButton") {
-			private static final long serialVersionUID = -6744445235406140825L;
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSubmit() {

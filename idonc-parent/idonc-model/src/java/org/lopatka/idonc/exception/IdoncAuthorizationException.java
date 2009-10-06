@@ -5,12 +5,14 @@
 
 package org.lopatka.idonc.exception;
 
+import java.io.Serializable;
+
 /**
  *
- * @author 129370
+ * @author Bartek
  */
-public class IdoncAuthorizationException extends IdoncException {
-    private static final long serialVersionUID = -8267186191161164462L;
+public class IdoncAuthorizationException extends IdoncException implements Serializable {
+    private static final long serialVersionUID = 810445236110474300L;
 
     /**
      * Creates a new instance of <code>IdoncAuthorizationException</code> without detail message.

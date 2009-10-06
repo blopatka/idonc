@@ -16,7 +16,8 @@ import org.lopatka.idonc.service.IdoncService;
 
 @AuthorizeInstantiation("ADMIN")
 public class ProjectsListPage extends BasePage {
-
+    
+   private static final long serialVersionUID = 1L;
 	@SpringBean(name="idoncService")
 	private IdoncService idoncService;
 	
@@ -29,7 +30,6 @@ public class ProjectsListPage extends BasePage {
 	private void initLayout() {
 		ProjectDataProvider prov = new ProjectDataProvider(idoncService);
 		DataView table = new DataView("pageable", prov) {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override

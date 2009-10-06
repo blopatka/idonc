@@ -14,6 +14,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class IdoncApplication extends AuthenticatedWebApplication {
 
+    private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void init() {
 		super.init();

@@ -29,7 +29,7 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class SuckerfishMenuPanel extends Panel
 {
-	private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 1L;
 
 	public static final String LINK_ID = "linkid";
 	public static final String LINK_TEXT_ID = "linktext";

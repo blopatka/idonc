@@ -15,7 +15,9 @@ import org.lopatka.idonc.service.IdoncService;
  */
 public class RegisterUserPage extends WebPage {
 
-	@SpringBean(name="idoncService")
+	private static final long serialVersionUID = 1L;
+
+    @SpringBean(name="idoncService")
 	private IdoncService idoncService;
 	
 	private IdoncUser user;

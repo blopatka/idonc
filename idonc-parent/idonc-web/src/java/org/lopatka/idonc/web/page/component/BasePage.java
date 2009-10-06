@@ -1,5 +1,6 @@
 package org.lopatka.idonc.web.page.component;
 
+import java.io.Serializable;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.IModel;
@@ -7,7 +8,7 @@ import org.apache.wicket.model.IModel;
 /**
  * @author Bartek
  */
-public abstract class BasePage extends WebPage {
+public abstract class BasePage extends WebPage implements Serializable {
 //public abstract class BasePage extends WebPage {
 
 	public BasePage() {

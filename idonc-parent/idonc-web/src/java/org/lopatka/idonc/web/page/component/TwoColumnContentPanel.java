@@ -5,7 +5,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 public abstract class TwoColumnContentPanel extends Panel {
 
-	private static final long serialVersionUID = -5122738283206694353L;
+	private static final long serialVersionUID = 1L;
 
 	public TwoColumnContentPanel(String id) {
 		super(id);

@@ -19,7 +19,7 @@ import org.lopatka.idonc.model.user.IdoncUser;
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class IdoncPart implements Serializable {
 
-    private static final long serialVersionUID = -6718712989424169865L;
+    private static final long serialVersionUID = 1L;
 
 	@Id
     @Column(name="ID")

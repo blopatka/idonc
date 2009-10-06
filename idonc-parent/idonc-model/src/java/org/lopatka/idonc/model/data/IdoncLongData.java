@@ -10,15 +10,15 @@ import javax.persistence.Id;
 @Entity(name="LONG_DATA")
 public class IdoncLongData implements Serializable {
     
-    private static final long serialVersionUID = 2371633585017885955L;
+    private static final long serialVersionUID = 1L;
 
 	@Id
     @Column(name="ID")
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
-    @Column(name="VALUE")
-	private Long value;
+    @Column(name="VAL")
+	private Long val;
 
 	public int getId() {
 		return id;
@@ -29,10 +29,10 @@ public class IdoncLongData implements Serializable {
 	}
 
 	public Long getValue() {
-		return value;
+		return val;
 	}
 
 	public void setValue(Long value) {
-		this.value = value;
+		this.val = value;
 	}
 }
