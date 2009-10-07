@@ -259,6 +259,18 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 			throw new IdoncAuthorizationException("user not authorized");
 		}
 	}
+	
+	public IdoncUser setContributedProject(String username, IdoncProject project, String sessionId) throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			LoggedUser lUser = loggedUserDao.getLoggedUserBySession(sessionId);
+			IdoncUser user = lUser.getUser();
+			user.setContributedProject(project);
+			userDao.save(user);
+			return user;
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
 	public IdoncPart getPartToProcess(String username, String sessionId)
 			throws IdoncException {
