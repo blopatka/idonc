@@ -1,0 +1,5 @@
+1) w plikach applicationContext.xml i clientApplicationContext.xml ustawiæ prawid³owe namiary na serwis idonc-service
+
+tzn je¿eli zmieniamy port z domyœlnego nap n 8282 to powinniœmy mieæ wpis
+
+<property name="serviceUrl" value="http://localhost:8282/idonc-service/remote/...nazwa serwisu..."/>
