@@ -270,6 +270,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<warSourceDirectory>src/webapp</warSourceDirectory>
+					<finalName>idonc-web</finalName>
 				</configuration>
 			</plugin>
 			<plugin>
