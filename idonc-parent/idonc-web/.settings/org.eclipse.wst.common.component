@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
 <wb-module deploy-name="idonc_web">
-<wb-resource deploy-path="/" source-path="/src/webapp"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/java"/>
-<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/conf"/>
-<wb-resource deploy-path="/WEB-INF/classes" source-path="/resources"/>
-<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/resources"/>
-<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/idonc-remote-interface/idonc-remote-interface">
-<dependency-type>uses</dependency-type>
-</dependent-module>
-<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/idonc-model/idonc-model">
-<dependency-type>uses</dependency-type>
-</dependent-module>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/conf"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/webapp"/>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/idonc-remote-interface-1.0-SNAPSHOT/idonc-remote-interface-1.0-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/idonc-model-1.0-SNAPSHOT/idonc-model-1.0-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
 <property name="java-output-path"/>
 <property name="context-root" value="idonc_web"/>
 </wb-module>
