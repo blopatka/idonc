@@ -23,14 +23,14 @@ public class UserListPage extends BasePage {
 
 	@SpringBean(name = "idoncService")
 	private IdoncService idoncService;
-	
+
 	private IdoncSession session = IdoncSession.get();
 
 	public UserListPage() {
 		initLayout();
 	}
 
-	private void initLayout() {	
+	private void initLayout() {
 		BookmarkablePageLink edit = new BookmarkablePageLink("edit", EditUserPage.class);
         add(edit);
 
@@ -44,16 +44,20 @@ public class UserListPage extends BasePage {
 				item.add(new Label("username", user.getUserName()));
 				item.add(new Label("firstname", user.getFirstName()));
 				item.add(new Label("lastname", user.getLastName()));
-				item.add(new Label("email", user.getAddress().getEmail()));
+				if (user.getAddress() != null) {
+					item.add(new Label("email", user.getAddress().getEmail()));
+				} else {
+					item.add(new Label("email", ""));
+				}
 				PageParameters param = new PageParameters();
 				param.add("username", user.getUserName());
 				item.add(new BookmarkablePageLink("details", UserDetailsPage.class, param));
-				
+
 				//persisting in session
 				session.setUser(user.getUserName(), user);
-			}		
+			}
 		};
-		
+
 		table.setItemsPerPage(10);
 		add(table);
 		add(new PagingNavigator("navigator", table));

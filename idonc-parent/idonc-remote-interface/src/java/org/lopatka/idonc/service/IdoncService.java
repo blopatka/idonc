@@ -17,6 +17,7 @@ public interface IdoncService {
 
 	public boolean registerUser(IdoncUser user, String password);
 
+	public boolean editUser(IdoncUser user, String password);
 
     public boolean checkUserAuthorized(String username, String sessionId) throws IdoncException;
 
@@ -27,11 +28,11 @@ public interface IdoncService {
 	public List<String> getUserNameList(String username, String sessionId) throws IdoncException;
 
 	public void updateUser(String username, String sessionId, IdoncUser user) throws IdoncException;
-    
+
 	public List getUsers(String username, String sessionId, int first, int count) throws IdoncException;
-	
+
 	public int countUsers(String username, String sessionId) throws IdoncException;
-	
+
 	public IdoncUser loadUser(String username, String sessionId, long id) throws IdoncException;
 
 	public IdoncProject loadProject(String username, String sessionId, long id) throws IdoncException;

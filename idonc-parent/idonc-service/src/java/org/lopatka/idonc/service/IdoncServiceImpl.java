@@ -23,218 +23,259 @@ import org.lopatka.idonc.service.utils.PasswordHasher;
 
 public class IdoncServiceImpl implements IdoncService, Serializable {
 
-    /**
+	/**
      *
      */
-    private static final long serialVersionUID = 1L;
-    private UserDao userDao;
-    private UserCredentialDao userCredentialDao;
-    private LoggedUserDao loggedUserDao;
-    private ProjectDao projectDao;
+	private static final long serialVersionUID = 1L;
+	private UserDao userDao;
+	private UserCredentialDao userCredentialDao;
+	private LoggedUserDao loggedUserDao;
+	private ProjectDao projectDao;
 
-    public UserDao getUserDao() {
-        return userDao;
-    }
+	public UserDao getUserDao() {
+		return userDao;
+	}
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
-    public UserCredentialDao getUserCredentialDao() {
-        return userCredentialDao;
-    }
+	public UserCredentialDao getUserCredentialDao() {
+		return userCredentialDao;
+	}
 
-    public void setUserCredentialDao(UserCredentialDao userCredentialDao) {
-        this.userCredentialDao = userCredentialDao;
-    }
+	public void setUserCredentialDao(UserCredentialDao userCredentialDao) {
+		this.userCredentialDao = userCredentialDao;
+	}
 
-    public LoggedUserDao getLoggedUserDao() {
-        return loggedUserDao;
-    }
+	public LoggedUserDao getLoggedUserDao() {
+		return loggedUserDao;
+	}
 
-    public void setLoggedUserDao(LoggedUserDao loggedUserDao) {
-        this.loggedUserDao = loggedUserDao;
-    }
+	public void setLoggedUserDao(LoggedUserDao loggedUserDao) {
+		this.loggedUserDao = loggedUserDao;
+	}
 
-    public ProjectDao getProjectDao() {
-        return projectDao;
-    }
+	public ProjectDao getProjectDao() {
+		return projectDao;
+	}
 
-    public void setProjectDao(ProjectDao projectDao) {
-        this.projectDao = projectDao;
-    }
+	public void setProjectDao(ProjectDao projectDao) {
+		this.projectDao = projectDao;
+	}
 
-    //Services for login and registering
-    public LoggedUser loginUser(String username, String password) {
-        if ((username != null) && (password != null)) {
-            UserCredential cred = userCredentialDao.get(username);
-            byte[] storedHash = PasswordHasher.base64ToByte(cred.getPassword());
-            byte[] storedSalt = PasswordHasher.base64ToByte(cred.getSalt());
-            try {
-                byte[] inputHash = PasswordHasher.getHash(1000, password, storedSalt);
-                if (Arrays.equals(inputHash, storedHash)) {
-                    //add loggedUser to generate sessionId
-                    IdoncUser user = userDao.findByUsername(username);
-                    return loggedUserDao.createLoggedUser(user);
-                } else {
-                    return null;
-                }
-            } catch (NoSuchAlgorithmException e) {
-                return null;
-            } catch (UnsupportedEncodingException e) {
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
+	// Services for login and registering
+	public LoggedUser loginUser(String username, String password) {
+		if ((username != null) && (password != null)) {
+			UserCredential cred = userCredentialDao.get(username);
+			if (cred != null) {
+				byte[] storedHash = PasswordHasher.base64ToByte(cred
+						.getPassword());
+				byte[] storedSalt = PasswordHasher.base64ToByte(cred.getSalt());
+				try {
+					byte[] inputHash = PasswordHasher.getHash(1000, password,
+							storedSalt);
+					if (Arrays.equals(inputHash, storedHash)) {
+						// add loggedUser to generate sessionId
+						IdoncUser user = userDao.findByUsername(username);
+						return loggedUserDao.createLoggedUser(user);
+					} else {
+						return null;
+					}
+				} catch (NoSuchAlgorithmException e) {
+					return null;
+				} catch (UnsupportedEncodingException e) {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
 
-    public void logoutUser(String userName, String sessionId) {
-        LoggedUser lU = loggedUserDao.getLoggedUserBySession(sessionId);
-        if (lU != null) {
-            loggedUserDao.deleteLoggedUser(lU);
-        }
-    }
+	public void logoutUser(String userName, String sessionId) {
+		LoggedUser lU = loggedUserDao.getLoggedUserBySession(sessionId);
+		if (lU != null) {
+			loggedUserDao.deleteLoggedUser(lU);
+		}
+	}
 
-    public boolean registerUser(IdoncUser user, String password) {
-        user = userDao.save(user);
+	public boolean registerUser(IdoncUser user, String password) {
+		user = userDao.save(user);
 
-        UserCredential cred = new UserCredential();
-        cred.setUser(user);
-        byte[] salt;
-        try {
-            salt = PasswordHasher.createSalt();
-            byte[] pass = PasswordHasher.getHash(1000, password, salt);
-            cred.setSalt(PasswordHasher.byteToBase64(salt));
-            cred.setPassword(PasswordHasher.byteToBase64(pass));
-            userCredentialDao.save(cred);
-        } catch (NoSuchAlgorithmException e) {
-            return false;
-        } catch (UnsupportedEncodingException e) {
-            return false;
-        }
+		UserCredential cred = new UserCredential();
+		cred.setUser(user);
+		byte[] salt;
+		try {
+			salt = PasswordHasher.createSalt();
+			byte[] pass = PasswordHasher.getHash(1000, password, salt);
+			cred.setSalt(PasswordHasher.byteToBase64(salt));
+			cred.setPassword(PasswordHasher.byteToBase64(pass));
+			userCredentialDao.save(cred);
+		} catch (NoSuchAlgorithmException e) {
+			return false;
+		} catch (UnsupportedEncodingException e) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public boolean checkUserAuthorized(String username, String sessionId) throws IdoncException {
-        LoggedUser loggedUser = loggedUserDao.getLoggedUserBySession(sessionId);
-        if (loggedUser != null) {
-            if(loggedUser.getUser().getUserName().equals(username)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	public boolean editUser(IdoncUser user, String password) {
+		user = userDao.save(user);
 
-    //General purpose services
-   
-    public List<IdoncUser> getUserList(String username, String sessionId) throws IdoncException{
-        if (checkUserAuthorized(username, sessionId)) {
-            // TODO Auto-generated method stub
-            return null;
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+		UserCredential cred = userCredentialDao.get(user.getUserName());
+		cred.setUser(user);
+		byte[] salt;
+		try {
+			salt = PasswordHasher.createSalt();
+			byte[] pass = PasswordHasher.getHash(1000, password, salt);
+			cred.setSalt(PasswordHasher.byteToBase64(salt));
+			cred.setPassword(PasswordHasher.byteToBase64(pass));
+			userCredentialDao.save(cred);
+		} catch (NoSuchAlgorithmException e) {
+			return false;
+		} catch (UnsupportedEncodingException e) {
+			return false;
+		}
 
-    public void updateUser(String username, String sessionId, IdoncUser user) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            // TODO Auto-generated method stub
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+		return true;
+	}
 
-    public IdoncUser getUserDetails(String queriedUsername, String username, String sessionId) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            // TODO Auto-generated method stub
-            return null;
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public boolean checkUserAuthorized(String username, String sessionId)
+			throws IdoncException {
+		LoggedUser loggedUser = loggedUserDao.getLoggedUserBySession(sessionId);
+		if (loggedUser != null) {
+			if (loggedUser.getUser().getUserName().equals(username)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    public List<String> getUserNameList(String username, String sessionId) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            // TODO Auto-generated method stub
-            return null;
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	// General purpose services
 
-    public int countUsers(String username, String sessionId) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            return userDao.count();
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public List<IdoncUser> getUserList(String username, String sessionId)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			// TODO Auto-generated method stub
+			return null;
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
-    public List getUsers(String username, String sessionId, int first, int count) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            return userDao.get(first, count);
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public void updateUser(String username, String sessionId, IdoncUser user)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			// TODO Auto-generated method stub
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
-    public IdoncUser loadUser(String username, String sessionId, long id) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            return userDao.load(id);
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public IdoncUser getUserDetails(String queriedUsername, String username,
+			String sessionId) throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			// TODO Auto-generated method stub
+			return null;
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
-    public List getProjects(String username, String sessionId, int first, int count) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            return projectDao.get(first, count);
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public List<String> getUserNameList(String username, String sessionId)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			// TODO Auto-generated method stub
+			return null;
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
-    public IdoncProject loadProject(String username, String sessionId, long id) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            return projectDao.load(id);
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public int countUsers(String username, String sessionId)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			return userDao.count();
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
-    public int countProjects(String username, String sessionId) throws IdoncException {
-        if (checkUserAuthorized(username, sessionId)) {
-            return projectDao.count();
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public List getUsers(String username, String sessionId, int first, int count)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			return userDao.get(first, count);
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
-    public IdoncProject getContributedProject(String username, String sessionId) throws IdoncException {
-        if(checkUserAuthorized(username, sessionId)) {
-            LoggedUser lUser = loggedUserDao.getLoggedUserBySession(sessionId);
-            return lUser.getUser().getContributedProject();
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public IdoncUser loadUser(String username, String sessionId, long id)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			return userDao.load(id);
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
-    public IdoncPart getPartToProcess(String username, String sessionId) throws IdoncException {
-        if(checkUserAuthorized(username, sessionId)) {
-            throw new UnsupportedOperationException("not yet implemented");
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public List getProjects(String username, String sessionId, int first,
+			int count) throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			return projectDao.get(first, count);
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
-    public void returnProcessingResult(String username, String sessionId, IdoncResult result) throws IdoncException {
-        if(checkUserAuthorized(username, sessionId)) {
-            throw new UnsupportedOperationException("not yet implemented");
-        } else {
-            throw new IdoncAuthorizationException("user not authorized");
-        }
-    }
+	public IdoncProject loadProject(String username, String sessionId, long id)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			return projectDao.load(id);
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
+
+	public int countProjects(String username, String sessionId)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			return projectDao.count();
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
+
+	public IdoncProject getContributedProject(String username, String sessionId)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			LoggedUser lUser = loggedUserDao.getLoggedUserBySession(sessionId);
+			return lUser.getUser().getContributedProject();
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
+
+	public IdoncPart getPartToProcess(String username, String sessionId)
+			throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			throw new UnsupportedOperationException("not yet implemented");
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
+
+	public void returnProcessingResult(String username, String sessionId,
+			IdoncResult result) throws IdoncException {
+		if (checkUserAuthorized(username, sessionId)) {
+			throw new UnsupportedOperationException("not yet implemented");
+		} else {
+			throw new IdoncAuthorizationException("user not authorized");
+		}
+	}
 
 }
