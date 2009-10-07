@@ -14,13 +14,13 @@
 		<tbody>
 			<tr>
 				<td><label for="username">Username:</label></td>
-				<td><label wicket:id="usernameInput" id="username" /></td>
+				<td><label wicket:id="usernameInput" id="username" ></label></td>
 			</tr>
-			<tr>
-				<td><label for="oldPassword">Old Password:</label></td>
-				<td><input type="password" wicket:id="oldPasswordInput"
-					id="oldPassword" /></td>
-			</tr>
+<!--			<tr>-->
+<!--				<td><label for="oldPassword">Old Password:</label></td>-->
+<!--				<td><input type="password" wicket:id="oldPasswordInput"-->
+<!--					id="oldPassword" /></td>-->
+<!--			</tr>-->
 			<tr>
 				<td><label for="password">New Password:</label></td>
 				<td><input type="password" wicket:id="passwordInput"
@@ -77,9 +77,9 @@
 				</td>
 			</tr>
 			<tr>
-                
+
 				<td><input type="submit" wicket:id="acceptButton" value="OK" /></td>
-				<td><input type="submit" wicket:id="cancelButton" value="Cancel" /></td>
+				<td><input type="submit" wicket:id="backButton" value="Back" /></td>
                 <!--
                  <td><a href="#" wicket:id="acceptLink">accept</a></td>
                  <td><a href="#" wicket:id="cancelLink">cancel</a></td>
@@ -88,10 +88,10 @@
 		</tbody>
 	</table>
 	</form>
-    <div>
-        <a href="#" wicket:id="acceptLink">accept</a>
-        <a href="#" wicket:id="cancelLink">cancel</a>
-    </div>
+<!--    <div>-->
+<!--        <a href="#" wicket:id="acceptLink">accept</a>-->
+<!--        <a href="#" wicket:id="cancelLink">cancel</a>-->
+<!--    </div>-->
 </wicket:extend>
 </body>
 </html>
