@@ -46,6 +46,8 @@ public interface IdoncService {
     //Services for desktop client
 
     public IdoncProject getContributedProject(String username, String sessionId) throws IdoncException;
+    
+    public IdoncUser setContributedProject(String username, IdoncProject project, String sessionId) throws IdoncException;
 
     public IdoncPart getPartToProcess(String username, String sessionId) throws IdoncException;
 

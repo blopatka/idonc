@@ -40,6 +40,8 @@ public class ProjectsListPage extends BasePage {
 				params.add("projectname", project.getName());
 				item.add(new BookmarkablePageLink("details", ProjectDetailsPage.class, params));
 				
+				item.add(new BookmarkablePageLink("setActiveProject", SetActiveProjectPage.class, params));
+				
 				session.setProject(project.getName(), project);
 				
 			}
