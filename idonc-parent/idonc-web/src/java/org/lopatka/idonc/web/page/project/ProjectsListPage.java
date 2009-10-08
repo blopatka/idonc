@@ -16,13 +16,14 @@ import org.lopatka.idonc.service.IdoncService;
 
 @AuthorizeInstantiation("ADMIN")
 public class ProjectsListPage extends BasePage {
-    
+
    private static final long serialVersionUID = 1L;
-	@SpringBean(name="idoncService")
+
+   @SpringBean(name = "idoncService")
 	private IdoncService idoncService;
-	
+
 	private IdoncSession session = IdoncSession.get();
-	
+
 	public ProjectsListPage() {
 		initLayout();
 	}
@@ -39,13 +40,13 @@ public class ProjectsListPage extends BasePage {
 				PageParameters params = new PageParameters();
 				params.add("projectname", project.getName());
 				item.add(new BookmarkablePageLink("details", ProjectDetailsPage.class, params));
-				
+
 				item.add(new BookmarkablePageLink("setActiveProject", SetActiveProjectPage.class, params));
-				
+
 				session.setProject(project.getName(), project);
-				
+
 			}
-			
+
 		};
 		table.setItemsPerPage(10);
 		add(table);

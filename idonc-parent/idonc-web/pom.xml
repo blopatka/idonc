@@ -211,6 +211,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>idonc-web</finalName>
 		<sourceDirectory>src/java</sourceDirectory>
 		<testSourceDirectory>src/test</testSourceDirectory>
 
@@ -233,6 +234,12 @@
 			</resource>
 			<resource>
 				<directory>src/resources</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/html</directory>
 				<includes>
 					<include>**</include>
 				</includes>
