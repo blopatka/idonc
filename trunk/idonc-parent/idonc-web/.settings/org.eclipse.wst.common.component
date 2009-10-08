@@ -6,10 +6,11 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/resources"/>
         <wb-resource deploy-path="/" source-path="/src/webapp"/>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/idonc-remote-interface/idonc-remote-interface">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/html"/>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/idonc-remote-interface-1.0-SNAPSHOT/idonc-remote-interface-1.0-SNAPSHOT">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/idonc-model/idonc-model">
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/idonc-model-1.0-SNAPSHOT/idonc-model-1.0-SNAPSHOT">
             <dependency-type>uses</dependency-type>
         </dependent-module>
 <property name="java-output-path"/>
