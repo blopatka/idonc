@@ -65,6 +65,7 @@
 	<build>
 		<finalName>idonc-service</finalName>
 		<sourceDirectory>src/java</sourceDirectory>
+		<testSourceDirectory>src/test</testSourceDirectory>
 		<resources>
 			<resource>
 				<directory>src/resources</directory>
@@ -77,6 +78,9 @@
 				<includes>
 					<include>**</include>
 				</includes>
+			</resource>
+			<resource>
+				<directory>src/java</directory>
 			</resource>
 		</resources>
 		<plugins>
