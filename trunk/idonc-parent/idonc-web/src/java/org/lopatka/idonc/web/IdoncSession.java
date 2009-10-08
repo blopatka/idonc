@@ -2,6 +2,7 @@ package org.lopatka.idonc.web;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.wicket.Request;
@@ -21,42 +22,45 @@ public class IdoncSession extends AuthenticatedWebSession {
     private static final long serialVersionUID = 1L;
 
 	private LoggedUser loggedUser;
-	
+
 	private Map<String, IdoncUser> users;
 
 	private Map<String, IdoncProject> projects;
-	
+
 	@SpringBean(name="idoncService")
 	private IdoncService idoncService;
-	
+
 	@SpringBean(name="converterService")
 	private ConverterService converterService;
-	
+
 	public IdoncSession(Request request) {
 		super(request);
 		//http://markmail.org/message/2tqrkaik3ym6nif3#query:wicket%20authenticatedwebsession%20dao+page:1+mid:trzow66cod7ebomi+state:results
 		InjectorHolder.getInjector().inject(this);
-		
+
 		users = new HashMap<String, IdoncUser>();
 		projects = new HashMap<String, IdoncProject>();
+
+		//set default locale as pl_PL
+		this.setLocale(new Locale("pl", "PL"));
 	}
-	
+
 	public void setIdoncService(IdoncService service) {
 		this.idoncService = service;
 	}
-	
+
 	public IdoncService getIdoncService() {
 		return this.idoncService;
 	}
-	
+
 	public void setConverterService(ConverterService service) {
 		this.converterService = service;
 	}
-	
+
 	public ConverterService getConverterService() {
 		return this.converterService;
 	}
-	
+
 	public static IdoncSession get() {
 		return (IdoncSession) Session.get();
 	}
@@ -105,7 +109,7 @@ public class IdoncSession extends AuthenticatedWebSession {
 	public void setUser(String username, IdoncUser user) {
 		users.put(username, user);
 	}
-	
+
 	public void setUsers(List<IdoncUser> users) {
 		for (IdoncUser user : users) {
 			this.users.put(user.getUserName(), user);
@@ -117,7 +121,7 @@ public class IdoncSession extends AuthenticatedWebSession {
 		idoncService.logoutUser(loggedUser.getUser().getUserName(), loggedUser.getSessionId());
 		super.invalidate();
 	}
-	
+
 	public IdoncProject getProject(String name) {
 		return projects.get(name);
 	}
@@ -125,13 +129,13 @@ public class IdoncSession extends AuthenticatedWebSession {
 	public void setProject(String name, IdoncProject project) {
 		projects.put(name, project);
 	}
-	
+
 	public void setProjects(List<IdoncProject> projects) {
 		for(IdoncProject project: projects) {
 			this.projects.put(project.getName(), project);
 		}
 	}
-	
-	
+
+
 
 }

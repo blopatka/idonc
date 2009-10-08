@@ -1,5 +1,9 @@
 package org.lopatka.idonc.web;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
@@ -16,18 +20,22 @@ public class IdoncApplication extends AuthenticatedWebApplication {
 
     private static final long serialVersionUID = 1L;
 
+    /** Relevant locales wrapped in a list. */
+    public static final List<Locale> LOCALES = Arrays.asList(new Locale[] { Locale.ENGLISH,
+            new Locale("pl", "PL") });
+
 	@Override
 	protected void init() {
 		super.init();
 		addComponentInstantiationListener(new SpringComponentInjector(this, context()));
-		
+
 		getMarkupSettings().setCompressWhitespace(true);
 		getMarkupSettings().setStripComments(true);
 		getMarkupSettings().setStripWicketTags(true);
 		getRequestCycleSettings().setResponseRequestEncoding("UTF-8");
 
 	}
-	
+
 	public ApplicationContext context() {
 		return WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 	}
@@ -36,18 +44,18 @@ public class IdoncApplication extends AuthenticatedWebApplication {
 	public Class<? extends HomePage> getHomePage() {
 		return HomePage.class;
 	}
-	
+
 	@Override
 	public Session newSession(Request request, Response response) {
 		return new IdoncSession(request);
 	}
 
-	
+
 	@Override
 	protected Class<? extends AuthenticatedWebSession> getWebSessionClass() {
 		return IdoncSession.class;
 	}
-	
+
 	@Override
 	protected Class<? extends WebPage> getSignInPageClass() {
 		return LoginPage.class;
