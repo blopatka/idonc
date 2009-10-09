@@ -1,5 +1,8 @@
-1) w plikach applicationContext.xml i clientApplicationContext.xml ustawiæ prawid³owe namiary na serwis idonc-service
+1) w plikach applicationContext.xml i clientApplicationContext.xml ustawiï¿½ prawidï¿½owe namiary na serwis idonc-service
 
-tzn je¿eli zmieniamy port z domyœlnego nap n 8282 to powinniœmy mieæ wpis
+tzn jeï¿½eli zmieniamy port z domyï¿½lnego nap n 8282 to powinniï¿½my mieï¿½ wpis
 
 <property name="serviceUrl" value="http://localhost:8282/idonc-service/remote/...nazwa serwisu..."/>
+
+2) do skonstruowania aplikacji klienckiej uÅ¼yc
+Swing Application Framework - obecny w Javie 1.6
