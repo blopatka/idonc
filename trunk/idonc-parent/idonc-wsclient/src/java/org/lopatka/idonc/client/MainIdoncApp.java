@@ -8,10 +8,11 @@ import javax.swing.SwingUtilities;
 import org.lopatka.idonc.Celsius;
 import org.lopatka.idonc.Farenheit;
 import org.lopatka.idonc.service.ConverterService;
+import org.lopatka.idonc.service.IdoncService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class Main {
+public class MainIdoncApp  {
   /**
    * Create the GUI and show it. For thread safety, this method should be
    * invoked from the event-dispatching thread.
@@ -30,7 +31,7 @@ public class Main {
         String text = null;
 
 		ApplicationContext context = new ClassPathXmlApplicationContext ( "client-applicationContext.xml" );
-		//TimeService timeService = ( TimeService ) context.getBean ( "timeService" );
+		IdoncService idoncService = ( IdoncService ) context.getBean ( "idoncService" );
 		ConverterService service = (ConverterService) context.getBean("converterService");
         Celsius cel = new Celsius();
         cel.setTemperatur(10);
