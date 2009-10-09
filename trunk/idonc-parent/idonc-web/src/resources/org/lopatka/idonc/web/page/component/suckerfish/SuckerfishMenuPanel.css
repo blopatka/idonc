@@ -1,6 +1,6 @@
 #nav, #nav ul {
 	float: left;
-	width: 99.9%;
+	width: 780px;
 	list-style: none;
 	line-height: 1;
 	font-weight: bold;
@@ -77,14 +77,14 @@
 
 /* Used to add a down arrow icon if there are children. If necessary, change /app to match the name of your context. */
 #nav li span.menu-has-submenu {
- 	background-image:url(/resources/org.lopatka.idonc.web.page.component.suckerfish/menu_has_submenu.gif);
+ 	background-image:url(menu_has_submenu.gif);
 	background-position: 100% 50%;
     background-repeat: no-repeat;
 }
 /* Used to add a right arrow icon if there are children. If necessary, change /app to match the name of your context. */
 #nav li li span.menu-has-submenu {
 	
-	background-image:url(/resources/org.lopatka.idonc.web.page.component.suckerfish/submenu_has_submenu.gif); 
+	background-image:url(submenu_has_submenu.gif); 
 	background-position: 100% 50%;
     background-repeat: no-repeat;
 }

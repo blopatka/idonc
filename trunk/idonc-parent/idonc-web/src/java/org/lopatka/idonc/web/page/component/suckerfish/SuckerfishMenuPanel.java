@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -13,9 +14,12 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.markup.html.resources.StyleSheetReference;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.lopatka.idonc.web.page.component.BasePage;
 
 /**
  * Author: Julian Sinai http://javathoughts.capesugarbird.com
@@ -45,11 +49,16 @@ public class SuckerfishMenuPanel extends Panel
 	{
 		super(id);
 		// Add the Suckerfish CSS
-		add(HeaderContributor.forCss(SuckerfishMenuPanel.class,
-				"SuckerfishMenuPanel.css"));
+//		add(HeaderContributor.forCss(SuckerfishMenuPanel.class,
+//				"SuckerfishMenuPanel.css"));
+		add(new StyleSheetReference("suckerfishStyle", suckerFishStyle()));
 		// Add the top menus
 		add(new SubMenuListView("topmenuitems", new PropertyModel(this,
 				"topMenuItems")));
+	}
+	
+	public final ResourceReference suckerFishStyle() {
+		return new CompressedResourceReference(SuckerfishMenuPanel.class, "SuckerfishMenuPanel.css");
 	}
 
 	/** Add one menu item */

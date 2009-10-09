@@ -1,0 +1,46 @@
+html, body {
+	background-color: #fff;
+	color: #000;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+#top {
+	width: 780px;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#naglowek {
+	background-color: #888;
+	
+}
+
+#tresc {
+	width: 780px;
+	background-color: #fff;	
+}
+
+#stopka {
+	background-color: #888;
+	clear: both;
+	width: 100%;
+}
+
+#dane_usera {
+	float: left;	
+}
+
+#edycja_usera {
+	float: left;
+}
+
+#dane_projektu {
+	float: left;	
+}
+	
+IMG {
+	border: none;
+}
