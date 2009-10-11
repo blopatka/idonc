@@ -56,6 +56,17 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+        <dependency>
+        	<groupId>net.java.dev.appframework</groupId>
+        	<artifactId>appframework</artifactId>
+        	<version>1.03</version>
+        	<exclusions>
+        		<exclusion>
+        			<artifactId>swing-worker</artifactId>
+        			<groupId>org.swinglabs</groupId>
+        		</exclusion>
+        	</exclusions>
+        </dependency>
     </dependencies>
     <build>
         <sourceDirectory>src/java</sourceDirectory>
