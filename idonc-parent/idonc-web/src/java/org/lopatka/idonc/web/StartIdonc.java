@@ -26,7 +26,7 @@ import org.mortbay.jetty.webapp.WebAppContext;
 public class StartIdonc {
 	/**
 	 * Main function, starts the jetty server.
-	 * 
+	 *
 	 * @param args
 	 */
 
@@ -35,7 +35,7 @@ public class StartIdonc {
 	public static void main(String[] args) {
 		Server server = new Server();
 		SocketConnector connector = new SocketConnector();
-		connector.setPort(8080);
+		connector.setPort(8585);
 		server.setConnectors(new Connector[] { connector });
 
 		WebAppContext context = new WebAppContext();
