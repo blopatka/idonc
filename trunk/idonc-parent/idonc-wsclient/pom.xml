@@ -60,12 +60,12 @@
         	<groupId>net.java.dev.appframework</groupId>
         	<artifactId>appframework</artifactId>
         	<version>1.03</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>swing-worker</artifactId>
-        			<groupId>org.swinglabs</groupId>
-        		</exclusion>
-        	</exclusions>
+<!--        	<exclusions>-->
+<!--        		<exclusion>-->
+<!--        			<artifactId>swing-worker</artifactId>-->
+<!--        			<groupId>org.swinglabs</groupId>-->
+<!--        		</exclusion>-->
+<!--        	</exclusions>-->
         </dependency>
     </dependencies>
     <build>
@@ -129,9 +129,9 @@
                         <packageName>org.lopatka.idonc.client</packageName>
                         <addClasspath>true</addClasspath>
                     </manifest>
-                 
+
                     <manifestFile>src/java/MANIFEST.MF</manifestFile>
-              
+
                 </configuration>
             </plugin>
             -->
