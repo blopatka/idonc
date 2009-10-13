@@ -54,45 +54,47 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
 				.getContext().getResourceMap(MainFrame.class);
-		// setTitle(resourceMap.getString("Form.title"));
-		// setName("");
-		// mainPanel.setName("");
-		// mainMenuBar.setName("");
-		// fileMenu.setText("");
-		// fileMenu.setName("");
+		setTitle(resourceMap.getString("Form.title"));
+		setName(resourceMap.getString("Form.name"));
+		mainPanel.setName(resourceMap.getString("MainPanel.name"));
+		mainMenuBar.setName(resourceMap.getString("MenuBar.name"));
+		fileMenu.setText(resourceMap.getString("FileMenu.text"));
+		fileMenu.setName(resourceMap.getString("FileMenu.name"));
 
 		mainPaneActionsMap = Application.getInstance(MainIdoncApp.class)
 				.getContext().getActionMap(MainPanel.class, mainPanel);
 		loginMenuItem.setAction(mainPaneActionsMap.get("loginUser"));
 		loginMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
 				InputEvent.CTRL_MASK));
-		// loginMenuItem.setText("");
-		// loginMenuItem.setName("");
+		loginMenuItem.setText(resourceMap.getString("LoginMenu.text"));
+		loginMenuItem.setName(resourceMap.getString("LoginMenu.name"));
 		fileMenu.add(loginMenuItem);
 
 		ActionMap actionMap = Application.getInstance(MainIdoncApp.class)
 				.getContext().getActionMap(MainFrame.class, this);
 		closeApplicationMenuItem.setAction(actionMap.get("quit"));
-		//closeApplicationMenuItem.setText("");
-		//closeApplicationMenuItem.setName("");
+		closeApplicationMenuItem.setText(resourceMap.getString("CloseMenu.text"));
+		closeApplicationMenuItem.setName(resourceMap.getString("CloseMenu.name"));
 		fileMenu.add(closeApplicationMenuItem);
 
 		mainMenuBar.add(fileMenu);
 
-		//actionsMenu.setText("");
-		//actionsMenu.setName("");
+		actionsMenu.setText(resourceMap.getString("ActionsMenu.text"));
+		actionsMenu.setName(resourceMap.getString("ActionsMenu.name"));
 
 		beginWorkMenuItem.setAction(actionMap.get("beginWork"));
 		beginWorkMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_MASK));
-		//beginWorkMenuItem.setText("");
-		//beginWorkMenuItem.setName("");
+		beginWorkMenuItem.setText(resourceMap.getString("BeginWork.text"));
+		beginWorkMenuItem.setName(resourceMap.getString("BeginWork.name"));
 		actionsMenu.add(beginWorkMenuItem);
 
 		stopWorkMenuItem.setAction(actionMap.get("stopWork"));
-		beginWorkMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-		//stopWorkMenuItem.setText("");
-		//stopWorkMenuItem.setName("");
+		stopWorkMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+		stopWorkMenuItem.setText(resourceMap.getString("StopWork.text"));
+		stopWorkMenuItem.setName(resourceMap.getString("StopWork.name"));
 		actionsMenu.add(stopWorkMenuItem);
+		
+		mainMenuBar.add(actionsMenu);
 
 		setJMenuBar(mainMenuBar);
 
