@@ -16,6 +16,7 @@ import javax.swing.WindowConstants;
 import javax.swing.JPopupMenu.Separator;
 import javax.swing.plaf.SeparatorUI;
 
+import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
 
@@ -41,12 +42,6 @@ public class MainFrame extends JFrame {
 
 	private JMenuItem stopWorkMenuItem;
 
-	private JMenu languageMenu;
-
-	private JRadioButtonMenuItem polishMenuItem;
-
-	private JRadioButtonMenuItem englishMenuItem;
-
 	public MainFrame() {
 		initComponents();
 	}
@@ -60,9 +55,6 @@ public class MainFrame extends JFrame {
 		actionsMenu = new JMenu();
 		beginWorkMenuItem = new JMenuItem();
 		stopWorkMenuItem = new JMenuItem();
-		languageMenu = new JMenu();
-		polishMenuItem = new JRadioButtonMenuItem();
-		englishMenuItem = new JRadioButtonMenuItem();
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,9 +68,14 @@ public class MainFrame extends JFrame {
 		fileMenu.setText(resourceMap.getString("FileMenu.text"));
 		fileMenu.setName(resourceMap.getString("FileMenu.name"));
 
-		mainPaneActionsMap = Application.getInstance(MainIdoncApp.class)
-				.getContext().getActionMap(MainPanel.class, mainPanel);
-		loginMenuItem.setAction(mainPaneActionsMap.get("loginUser"));
+//		mainPaneActionsMap = Application.getInstance(MainIdoncApp.class)
+//				.getContext().getActionMap(MainPanel.class, mainPanel);
+//		loginMenuItem.setAction(mainPaneActionsMap.get("loginUser"));
+		
+		ActionMap actionMap = Application.getInstance(MainIdoncApp.class)
+		.getContext().getActionMap(MainFrame.class, this);
+		
+		loginMenuItem.setAction(actionMap.get("loginUser"));
 		loginMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
 				InputEvent.CTRL_MASK));
 		loginMenuItem.setText(resourceMap.getString("LoginMenu.text"));
@@ -86,8 +83,7 @@ public class MainFrame extends JFrame {
 		loginMenuItem.setIcon(resourceMap.getIcon("LoginMenu.icon"));
 		fileMenu.add(loginMenuItem);
 
-		ActionMap actionMap = Application.getInstance(MainIdoncApp.class)
-				.getContext().getActionMap(MainFrame.class, this);
+		
 		closeApplicationMenuItem.setAction(actionMap.get("quit"));
 		closeApplicationMenuItem.setText(resourceMap.getString("CloseMenu.text"));
 		closeApplicationMenuItem.setName(resourceMap.getString("CloseMenu.name"));
@@ -116,32 +112,6 @@ public class MainFrame extends JFrame {
 
 		mainMenuBar.add(actionsMenu);
 
-		languageMenu.setText(resourceMap.getString("LanguageMenu.text"));
-		languageMenu.setName(resourceMap.getString("LanguageMenu.name"));
-		languageMenu.addSeparator();
-		ButtonGroup languageGroup = new ButtonGroup();
-
-		polishMenuItem.setAction(actionMap.get("polishLanguage"));
-		polishMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
-		polishMenuItem.setText(resourceMap.getString("PolishMenu.text"));
-		polishMenuItem.setName(resourceMap.getString("PolishMenu.name"));
-		polishMenuItem.setIcon(resourceMap.getIcon("PolishMenu.icon"));
-		languageGroup.add(polishMenuItem);
-		languageMenu.add(polishMenuItem);
-
-		englishMenuItem.setAction(actionMap.get("englishLanguage"));
-		englishMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
-		englishMenuItem.setText(resourceMap.getString("EnglishMenu.text"));
-		englishMenuItem.setName(resourceMap.getString("EnglishMenu.name"));
-		englishMenuItem.setIcon(resourceMap.getIcon("EnglishMenu.icon"));
-		languageGroup.add(englishMenuItem);
-		languageMenu.add(englishMenuItem);
-
-		polishMenuItem.setSelected(true);
-		languageMenu.addSeparator();
-
-		mainMenuBar.add(languageMenu);
-
 		setJMenuBar(mainMenuBar);
 
 		GroupLayout layout = new GroupLayout(getContentPane());
@@ -156,6 +126,26 @@ public class MainFrame extends JFrame {
 
 		pack();
 
+	}
+	
+	@Action
+	public void loginUser() {
+		System.out.println("login user");
+	}
+	
+	@Action
+	public void quit() {
+		Application.getInstance().exit();
+	}
+	
+	@Action
+	public void beginWork() {
+		System.out.println("begin work");
+	}
+	
+	@Action
+	public void stopWork() {
+		System.out.println("stop work");
 	}
 
 }
