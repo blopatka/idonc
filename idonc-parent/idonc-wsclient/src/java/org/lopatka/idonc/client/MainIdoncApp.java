@@ -50,6 +50,8 @@ public class MainIdoncApp extends SingleFrameApplication {
 
 	@Override
 	protected void shutdown() {
+		super.shutdown();
+		//tutaj dodać wylogowanie i inne ewentualne pierdoły ;-)
 		System.out.println("End of work - cleaning");
 	}
 
