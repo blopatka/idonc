@@ -1,20 +1,18 @@
 package org.lopatka.idonc.client;
 
+import java.awt.CardLayout;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ActionMap;
-import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
-import javax.swing.JPopupMenu.Separator;
-import javax.swing.plaf.SeparatorUI;
 
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
@@ -24,22 +22,17 @@ public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
+	private AppSession session = AppSession.getInstance();
+
+	private JPanel cards;
+
 	private ActionMap mainPaneActionsMap;
-
-	private MainPanel mainPanel;
-
 	private JMenuBar mainMenuBar;
-
 	private JMenu fileMenu;
-
 	private JMenuItem loginMenuItem;
-
 	private JMenuItem closeApplicationMenuItem;
-
 	private JMenu actionsMenu;
-
 	private JMenuItem beginWorkMenuItem;
-
 	private JMenuItem stopWorkMenuItem;
 
 	public MainFrame() {
@@ -47,7 +40,9 @@ public class MainFrame extends JFrame {
 	}
 
 	private void initComponents() {
-		mainPanel = new MainPanel();
+		session.setMainFrame(this);
+
+		//mainPanel = new MainPanel();
 		mainMenuBar = new JMenuBar();
 		fileMenu = new JMenu();
 		loginMenuItem = new JMenuItem();
@@ -63,7 +58,7 @@ public class MainFrame extends JFrame {
 
 		setTitle(resourceMap.getString("Form.title"));
 		setName(resourceMap.getString("Form.name"));
-		mainPanel.setName(resourceMap.getString("MainPanel.name"));
+		//mainPanel.setName(resourceMap.getString("MainPanel.name"));
 		mainMenuBar.setName(resourceMap.getString("MenuBar.name"));
 		fileMenu.setText(resourceMap.getString("FileMenu.text"));
 		fileMenu.setName(resourceMap.getString("FileMenu.name"));
@@ -71,11 +66,11 @@ public class MainFrame extends JFrame {
 //		mainPaneActionsMap = Application.getInstance(MainIdoncApp.class)
 //				.getContext().getActionMap(MainPanel.class, mainPanel);
 //		loginMenuItem.setAction(mainPaneActionsMap.get("loginUser"));
-		
+
 		ActionMap actionMap = Application.getInstance(MainIdoncApp.class)
 		.getContext().getActionMap(MainFrame.class, this);
-		
-		loginMenuItem.setAction(actionMap.get("loginUser"));
+
+		loginMenuItem.setAction(actionMap.get("showLoginScreen"));
 		loginMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
 				InputEvent.CTRL_MASK));
 		loginMenuItem.setText(resourceMap.getString("LoginMenu.text"));
@@ -83,7 +78,7 @@ public class MainFrame extends JFrame {
 		loginMenuItem.setIcon(resourceMap.getIcon("LoginMenu.icon"));
 		fileMenu.add(loginMenuItem);
 
-		
+
 		closeApplicationMenuItem.setAction(actionMap.get("quit"));
 		closeApplicationMenuItem.setText(resourceMap.getString("CloseMenu.text"));
 		closeApplicationMenuItem.setName(resourceMap.getString("CloseMenu.name"));
@@ -114,35 +109,60 @@ public class MainFrame extends JFrame {
 
 		setJMenuBar(mainMenuBar);
 
-		GroupLayout layout = new GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
+		session.setLoginPanel(new LoginPanel());
+		session.setMainPanel(new MainPanel());
+		session.setCalculationPanel(new CalculationPanel());
 
-		layout.setHorizontalGroup(layout.createParallelGroup(
-				GroupLayout.Alignment.LEADING).addComponent(mainPanel,
-				GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				GroupLayout.Alignment.LEADING).addComponent(mainPanel,
-				GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE));
+		cards = new JPanel(new CardLayout());
+		cards.add(session.getMainPanel(), session.MAIN_PANEL);
+		cards.add(session.getLoginPanel(), session.LOGIN_PANEL);
+		cards.add(session.getCalculationPanel(), session.CALCULATION_PANEL);
+
+		add(cards);
+
+//		GroupLayout layout = new GroupLayout(getContentPane());
+//		getContentPane().setLayout(layout);
+//
+//		layout.setHorizontalGroup(layout.createParallelGroup(
+//				GroupLayout.Alignment.LEADING).addComponent(cards,
+//				GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE));
+//		layout.setVerticalGroup(layout.createParallelGroup(
+//				GroupLayout.Alignment.LEADING).addComponent(cards,
+//				GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE));
 
 		pack();
 
+
+
 	}
-	
+
+	@Action
+	public void showLoginScreen() {
+		CardLayout cl = (CardLayout) cards.getLayout();
+		cl.show(cards, session.LOGIN_PANEL);
+	}
+
 	@Action
 	public void loginUser() {
 		System.out.println("login user");
 	}
-	
+
+	@Action
+	public void cancelLogin() {
+		CardLayout cl = (CardLayout) cards.getLayout();
+		cl.show(cards, session.MAIN_PANEL);
+	}
+
 	@Action
 	public void quit() {
 		Application.getInstance().exit();
 	}
-	
+
 	@Action
 	public void beginWork() {
 		System.out.println("begin work");
 	}
-	
+
 	@Action
 	public void stopWork() {
 		System.out.println("stop work");
