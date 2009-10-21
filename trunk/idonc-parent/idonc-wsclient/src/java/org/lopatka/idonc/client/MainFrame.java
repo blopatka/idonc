@@ -114,6 +114,7 @@ public class MainFrame extends JFrame {
 		session.setCalculationPanel(new CalculationPanel());
 
 		cards = new JPanel(new CardLayout());
+		session.setCardLayout((CardLayout)cards.getLayout(), cards);
 		cards.add(session.getMainPanel(), session.MAIN_PANEL);
 		cards.add(session.getLoginPanel(), session.LOGIN_PANEL);
 		cards.add(session.getCalculationPanel(), session.CALCULATION_PANEL);
@@ -138,23 +139,17 @@ public class MainFrame extends JFrame {
 
 	@Action
 	public void showLoginScreen() {
-		CardLayout cl = (CardLayout) cards.getLayout();
-		cl.show(cards, session.LOGIN_PANEL);
-	}
-
-	@Action
-	public void loginUser() {
-		System.out.println("login user");
+		session.switchCard(session.LOGIN_PANEL);
 	}
 
 	@Action
 	public void cancelLogin() {
-		CardLayout cl = (CardLayout) cards.getLayout();
-		cl.show(cards, session.MAIN_PANEL);
+		session.switchCard(session.MAIN_PANEL);
 	}
 
 	@Action
 	public void quit() {
+		AppSession.idoncService.logoutUser(session.getLoggedUser().getUser().getUserName(), session.getLoggedUser().getSessionId());
 		Application.getInstance().exit();
 	}
 
