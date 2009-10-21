@@ -67,6 +67,11 @@
 <!--        		</exclusion>-->
 <!--        	</exclusions>-->
         </dependency>
+        <dependency>
+        	<groupId>tablelayout</groupId>
+        	<artifactId>TableLayout</artifactId>
+        	<version>20050920</version>
+        </dependency>
     </dependencies>
     <build>
         <sourceDirectory>src/java</sourceDirectory>

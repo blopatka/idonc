@@ -1,15 +1,23 @@
 package org.lopatka.idonc.client;
 
+import java.awt.CardLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.lopatka.idonc.model.user.LoggedUser;
+import org.lopatka.idonc.service.IdoncService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AppSession {
 
-	final static String MAIN_PANEL = "Main Panel";
-	final static String LOGIN_PANEL = "Login Panel";
-	final static String CALCULATION_PANEL = "Calculation Panel";
+	final static ApplicationContext springContext;
+	final static IdoncService idoncService;
+
+	final static String MAIN_PANEL;
+	final static String LOGIN_PANEL;
+	final static String CALCULATION_PANEL;
 
 	private JPanel mainPanel;
 	private JPanel loginPanel;
@@ -18,6 +26,16 @@ public class AppSession {
 	private JFrame mainFrame;
 
 	private LoggedUser loggedUser;
+	private CardLayout cardLayout;
+	private JPanel cardPanel;
+
+	static {
+		springContext = new ClassPathXmlApplicationContext("client-applicationContext.xml");
+		idoncService = (IdoncService) springContext.getBean("idoncService");
+		MAIN_PANEL = "Main Panel";
+		LOGIN_PANEL = "Login Panel";
+		CALCULATION_PANEL = "Calculation Panel";
+	}
 
 	private AppSession() {}
 
@@ -68,5 +86,15 @@ public class AppSession {
 	public void setCalculationPanel(JPanel calculationPanel) {
 		this.calculationPanel = calculationPanel;
 	}
+
+	public void setCardLayout(CardLayout layout, JPanel cardPanel) {
+		this.cardLayout = layout;
+		this.cardPanel = cardPanel;
+	}
+
+	public void switchCard(String newCard) {
+		cardLayout.show(cardPanel, newCard);
+	}
+
 
 }
