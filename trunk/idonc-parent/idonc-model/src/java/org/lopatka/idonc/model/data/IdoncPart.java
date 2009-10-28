@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.lopatka.idonc.model.user.IdoncUser;
 
 @Entity(name="PARTS")
@@ -34,6 +36,7 @@ public class IdoncPart implements Serializable {
 
 
 	@OneToMany
+	@Cascade({CascadeType.SAVE_UPDATE})
     @JoinTable(
         name="PART_LONG_DATA_ELEMENTS",
         joinColumns={@JoinColumn(name="PART_ID")},
@@ -42,6 +45,7 @@ public class IdoncPart implements Serializable {
     private List<IdoncLongData> longDataList;
 
 	@OneToMany
+	@Cascade({CascadeType.SAVE_UPDATE})
     @JoinTable(
         name="PART_RESULTS",
         joinColumns={@JoinColumn(name="PART_ID")},
@@ -50,6 +54,7 @@ public class IdoncPart implements Serializable {
     private List<IdoncResult> results;
 
     @OneToMany
+    @Cascade({CascadeType.SAVE_UPDATE})
     @JoinTable(
         name="PART_USERS",
         joinColumns={@JoinColumn(name="PART_ID")},
@@ -58,6 +63,7 @@ public class IdoncPart implements Serializable {
     private List<IdoncUser> usersProcessing;
 
     @OneToMany
+    @Cascade({CascadeType.SAVE_UPDATE})
     @JoinTable(
         name="LOCKED_USERS",
         joinColumns={@JoinColumn(name="PART_ID")},

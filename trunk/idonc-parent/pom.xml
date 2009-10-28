@@ -36,10 +36,11 @@
         </plugins>
     </build>
  <modules>
-	<module>idonc-model</module>
-	<module>idonc-remote-interface</module>
-	<module>idonc-service</module>
+    <module>idonc-model</module>
+    <module>idonc-remote-interface</module>
+    <module>idonc-service</module>
     <module>idonc-web</module>
+    <module>idon-computation</module>
     <!--
     <module>idonc-client</module>
     -->

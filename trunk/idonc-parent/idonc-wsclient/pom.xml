@@ -72,6 +72,11 @@
         	<artifactId>TableLayout</artifactId>
         	<version>20050920</version>
         </dependency>
+        <dependency>
+        	<groupId>org.lopatka.idonc</groupId>
+        	<artifactId>idon-computation</artifactId>
+        	<version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <sourceDirectory>src/java</sourceDirectory>
