@@ -1,15 +1,13 @@
 package org.lopatka.idonc.model.data;
 
 import java.io.Serializable;
-import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -26,13 +24,8 @@ public class IdoncResult implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-    @OneToMany
-    @JoinTable(
-        name="RESULT_LONG_DATA_ELEMENTS",
-        joinColumns={@JoinColumn(name="PART_ID")},
-        inverseJoinColumns=@JoinColumn(name="LONG_DATA_ID")
-    )
-    private List<IdoncLongData> longDataList;
+    @Column(name="VAL")
+    private Long val;
 
     public long getId() {
         return id;
@@ -42,13 +35,12 @@ public class IdoncResult implements Serializable {
         this.id = id;
     }
 
-    public List<IdoncLongData> getLongDataList() {
-        return longDataList;
-    }
+	public Long getVal() {
+		return val;
+	}
 
-    public void setLongDataList(List<IdoncLongData> longDataList) {
-        this.longDataList = longDataList;
-    }
+	public void setVal(Long val) {
+		this.val = val;
+	}
 
-    
 }

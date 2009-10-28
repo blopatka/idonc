@@ -18,7 +18,13 @@
  */
 package org.lopatka.idonc.service.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.lopatka.idonc.dao.ProjectDao;
+import org.lopatka.idonc.model.data.IdoncLongData;
+import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
 import org.lopatka.idonc.model.user.Address;
 import org.lopatka.idonc.model.user.IdoncUser;
@@ -26,9 +32,11 @@ import org.lopatka.idonc.service.IdoncService;
 import org.springframework.beans.factory.InitializingBean;
 
 public class DataGenerator implements InitializingBean {
-	
-	private static final String[] PROJECTNAMES = {"Alpha", "Beta", "Gamma", "Delta", "Kappa", "Sigma", "Pi"};
-	private static final String[] DESCRIPTIONS = {"hej", "blabla", "holahola", "tolamanola"};
+
+	private static final String[] PROJECTNAMES = {"Proof of Concept", "Liczba Pi", "Spin"};
+	private static final String[] PROJECT_DESCRIPTIONS = {"Projekt pokazujacy ze dziala wymiana informacji miedzy serwerem a klientem", "Projekt oblicza liczbe Pi", "projekt oblicza Spiny ;-)"};
+	private static final String[] PROJECT_WEBSITE = {"www.poc.example.com", "www.pi.example.com", "www.spin.example.com"};
+	private static final String[] PROJECT_CLASS_NAME = {"org.lopatka.idonc.computation.poc.PocComputation", "org.lopatka.idonc.computation.pi.PiComputation", "org.lopatka.idonc.computation.spin.SpinComputation"};
 
 	private static final String[] USERNAMES = {"andy", "gary", "lisa", "bart",
 			"homer", "marge", "maggie", "krusty", "opek", "opiszon", "kasia",
@@ -47,8 +55,8 @@ public class DataGenerator implements InitializingBean {
 			"Nelson", "Moore", "Wilson", "Graham", "Fisher", "Cruz", "Ortiz",
 			"Gomez", "Murray" };
 	private static final String[] DOMAINS = {"com", "pl", "de", "co.uk", "org", "edu"};
-	private static final String[] CITIES = {"Warszawa", "Pozna�", "Krak�w", "Gda�sk",
-			"Katowice", "Wroclaw", "Szczecin", "Radom", "Rzesz�w", "Lublin", "Witnica"};
+	private static final String[] CITIES = {"Warszawa", "Poznan", "Krakow", "Gdansk",
+			"Katowice", "Wroclaw", "Szczecin", "Radom", "Rzeszow", "Lublin", "Witnica"};
 	private static final String[] COUNTRIES = {"Polska", "Niemcy", "Irlandia", "Szkocja"};
 	private static final String[] STREETS = {"Warszawska", "Zamenhoffa", "Slowianska",
 			"Lechicka", "Wolnosci", "Wschodnia", "Zachodnia", "Polnocna", "Poludniowa",
@@ -101,16 +109,20 @@ public class DataGenerator implements InitializingBean {
 			user.setAddress(address);
 
 			idoncService.registerUser(user, element);
-			
+
 		}
-		
-		for(String element : PROJECTNAMES) {
+
+		for (int i = 0; i < PROJECTNAMES.length; i++) {
+			String projectName = PROJECTNAMES[i];
+			String projectDescription = PROJECT_DESCRIPTIONS[i];
+			String website = PROJECT_WEBSITE[i];
+			String className = PROJECT_CLASS_NAME[i];
 			IdoncProject project = new IdoncProject();
-			project.setName(element);
-			project.setDescription(randomString(DESCRIPTIONS));
-			String website = new StringBuilder().append("www.").append(project.getName()).
-			append(".").append("idoncProject").append(randomString(DOMAINS)).toString();
+			project.setName(projectName);
+			project.setDescription(projectDescription);
 			project.setWebsite(website);
+			project.setComputationClassName(className);
+			project.setPartsToProcess(generatePartsForPOCProject());
 			projectDao.add(project);
 		}
 	}
@@ -126,6 +138,30 @@ public class DataGenerator implements InitializingBean {
 
 	private int rint(int min, int max) {
 		return (int) (Math.random() * (max - min) + min);
+	}
+
+	private List<IdoncPart> generatePartsForPOCProject() {
+		List<IdoncPart> list = new ArrayList<IdoncPart>();
+		for(int i = 0; i < 1000; i++) {
+			long timeToWait = getRandomTimeToWait();
+
+			IdoncPart part = new IdoncPart();
+			part.setName("wait " + timeToWait + "msec");
+			part.setNumber(new Long(i));
+			List<IdoncLongData> dataList = new ArrayList<IdoncLongData>();
+			IdoncLongData data = new IdoncLongData();
+			data.setValue(timeToWait);
+			dataList.add(data);
+			part.setLongDataList(dataList);
+			list.add(part);
+		}
+		return list;
+	}
+
+	private long getRandomTimeToWait() {
+		Random rand = new Random();
+		int t = rand.nextInt(56);
+		return new Long((t + 5) * 1000);
 	}
 
 }

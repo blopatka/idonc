@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -15,6 +17,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.NotNull;
 import org.lopatka.idonc.model.user.IdoncUser;
 
@@ -41,19 +45,24 @@ public class IdoncProject implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    /*
+    @Column(name = "COMPUTATION_CLASS_NAME")
+    private String computationClassName;
+
+
     @OneToMany
+    @Cascade({CascadeType.SAVE_UPDATE})
     @JoinTable(name = "PROJECT_PARTS_TO_PROCESS",
     joinColumns = {@JoinColumn(name = "PROJECT_ID")},
     inverseJoinColumns = @JoinColumn(name = "PART_ID"))
     private List<IdoncPart> partsToProcess;
 
     @OneToMany
+    @Cascade({CascadeType.SAVE_UPDATE})
     @JoinTable(name = "PROJECT_PROCESSED_PARTS",
     joinColumns = {@JoinColumn(name = "PROJECT_ID")},
     inverseJoinColumns = @JoinColumn(name = "PART_ID"))
     private List<IdoncPart> processedParts;
-    */
+
 
     @OneToMany
     @OrderBy("userName")
@@ -83,7 +92,7 @@ public class IdoncProject implements Serializable {
         this.description = description;
     }
 
-    /*
+
     public List<IdoncPart> getPartsToProcess() {
         return partsToProcess;
     }
@@ -99,7 +108,7 @@ public class IdoncProject implements Serializable {
     public void setProcessedParts(List<IdoncPart> processedParts) {
         this.processedParts = processedParts;
     }
-     */
+
 
     public int getId() {
         return id;
@@ -117,5 +126,12 @@ public class IdoncProject implements Serializable {
         this.activeUsers = activeUsers;
     }
 
+	public String getComputationClassName() {
+		return computationClassName;
+	}
+
+	public void setComputationClassName(String computationClassName) {
+		this.computationClassName = computationClassName;
+	}
 
 }
