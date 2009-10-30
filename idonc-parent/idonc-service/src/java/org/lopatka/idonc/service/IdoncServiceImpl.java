@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.cfg.NotYetImplementedException;
@@ -226,13 +227,14 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 	public List getProjects(String username, String sessionId, int first,
 			int count) throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
-			return projectDao.get(first, count);
+			List<IdoncProject> projects = projectDao.get();
+			return projectDao.get();
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
 		}
 	}
 
-	public IdoncProject loadProject(String username, String sessionId, long id)
+	public IdoncProject loadProject(String username, String sessionId, int id)
 			throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
 			return projectDao.load(id);
@@ -259,13 +261,14 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 			throw new IdoncAuthorizationException("user not authorized");
 		}
 	}
-	
+
 	public IdoncUser setContributedProject(String username, IdoncProject project, String sessionId) throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
 			LoggedUser lUser = loggedUserDao.getLoggedUserBySession(sessionId);
 			IdoncUser user = lUser.getUser();
-			user.setContributedProject(project);
-			userDao.save(user);
+			project.addActiveUser(user);
+			IdoncProject project1 = projectDao.save(project);
+			user.setContributedProject(project1);
 			return user;
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
@@ -275,6 +278,27 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 	public IdoncPart getPartToProcess(String username, String sessionId)
 			throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
+			IdoncUser user = userDao.findByUsername(username);
+			IdoncProject project = user.getContributedProject();
+			if(project != null) {
+				//ma ustawiony projekt
+				List<IdoncPart> parts = projectDao.getParts(project);
+				Collections.sort(parts);
+			} else {
+				//nie ma ustawionego projektu
+				return null;
+			}
+			/*
+			 * algorytm pobierania czesci do obliczen
+			 * 1. sprawdzic do jakiego projektu nalezy klient (jezeli nie nalezy do zadnego, zwrocic null
+			 * 2. dla konkretnego projektu pobrac IdoncPart ktory spelnia ponizsze zalozenia
+			 *	a) jest najwczesniej dodanym elementem (najnizsze creationTimestamp)
+			 *	b) ma mniej niz 2 aktualnie liczacych uzytkownikow
+			 *	c) aktualny klient nie jest tym uzytkownikiem ktory w tej chwili liczy
+			 *	d) aktualny klient nie jest dodany do black listy
+			 *3. zwrocic IdoncPart ktory spelnia powyzsze warunki
+			 */
+
 			throw new UnsupportedOperationException("not yet implemented");
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
@@ -284,6 +308,18 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 	public void returnProcessingResult(String username, String sessionId,
 			IdoncResult result) throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
+			/*
+			 * algorytm zwrócenia wyniku obliczen
+			 * 1. jesli nikt wczesniej nie zwrocil wyniki dla tego parta, to wpisac wynik
+			 * 2. jezeli ktos wczesniej liczyl tego parta to
+			 *	a) jezeli otrzymany wynik jest rozny od wyniku zapisanego przez innego uzytkownia nalezy
+			 *	   usunac wyniki obliczenia innego uzytkownika, do listy zablokowanych uzytkownikow, dodac
+			 *	   aktualnego, oraz tego ktory dodal wczesniej wynik (nie da sie stwierdzic ktory z nich dokonal
+			 *	   nieprawidlowych obliczen)
+			 *  b) jezeli wyniki sie zgadzaja to nalezy dodac wynik obliczen do parta, a nastepnie przesunac
+			 *     parta razem z wynikiem do processedParts w IdoncProject (tzn usunac z listy partsToProcess i dodac do
+			 *     processedParts)
+			 */
 			throw new UnsupportedOperationException("not yet implemented");
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");

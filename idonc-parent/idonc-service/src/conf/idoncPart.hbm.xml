@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping default-access="field" package="org.lopatka.idonc.web.model.data">
-  <class name="IdoncPart" table="PARTS">
-    <cache usage="read-write"/>
-    <id column="ID" name="id">
-      <generator class="native"/>
-    </id>
-    <property column="NUMBER" name="number" not-null="true" type="long"/>
-    <property column="NAME" length="255" name="name" type="string"/>
-    <property column="WEBSITE" length="255" name="website" type="string"/>
-    <property column="DESCRIPTION" length="255" name="description" type="string"/>
-  </class>
-</hibernate-mapping>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">-->
+<!--<hibernate-mapping default-access="field" package="org.lopatka.idonc.web.model.data">-->
+<!--  <class name="IdoncPart" table="PARTS">-->
+<!--    <cache usage="read-write"/>-->
+<!--    <id column="ID" name="id">-->
+<!--      <generator class="native"/>-->
+<!--    </id>-->
+<!--    <property column="NUMBER" name="number" not-null="true" type="long"/>-->
+<!--    <property column="NAME" length="255" name="name" type="string"/>-->
+<!--    <property column="WEBSITE" length="255" name="website" type="string"/>-->
+<!--    <property column="DESCRIPTION" length="255" name="description" type="string"/>-->
+<!--  </class>-->
+<!--</hibernate-mapping>-->

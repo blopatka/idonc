@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
-  <class name="org.lopatka.idonc.web.model.user.LoggedUser" table="LOGGED_USER">
-    <id column="ID" name="id">
-      <generator class="increment"/>
-    </id>
-    <many-to-one class="org.lopatka.idonc.web.model.user.IdoncUser" column="USER_ID" lazy="false" name="user" not-null="true"/>
-    <property column="SESSION_ID" name="sessionId" not-null="true" type="string"/>
-  </class>
-</hibernate-mapping>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">-->
+<!--<hibernate-mapping>-->
+<!--  <class name="org.lopatka.idonc.web.model.user.LoggedUser" table="LOGGED_USER">-->
+<!--    <id column="ID" name="id">-->
+<!--      <generator class="increment"/>-->
+<!--    </id>-->
+<!--    <many-to-one class="org.lopatka.idonc.web.model.user.IdoncUser" column="USER_ID" lazy="false" name="user" not-null="true"/>-->
+<!--    <property column="SESSION_ID" name="sessionId" not-null="true" type="string"/>-->
+<!--  </class>-->
+<!--</hibernate-mapping>-->

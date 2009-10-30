@@ -11,6 +11,8 @@
 
     <bean id="converterService" class="org.lopatka.idonc.service.ConverterServiceImpl"/>
 
+    <bean id="generatorService" class="org.lopatka.idonc.service.GeneratorServiceImpl"/>
+
     <bean id="idoncService" class="org.lopatka.idonc.service.IdoncServiceImpl">
         <property name="userDao" ref="userDao"/>
         <property name="userCredentialDao" ref="userCredentialDao"/>
@@ -21,5 +23,5 @@
     <bean id="dataGenerator" class="org.lopatka.idonc.service.utils.DataGenerator">
         <property name="idoncService" ref="idoncService"/>
         <property name="projectDao" ref="projectDao"/>
-    </bean> 
+    </bean>
 </beans>

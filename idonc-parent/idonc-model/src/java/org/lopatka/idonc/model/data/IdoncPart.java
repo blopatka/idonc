@@ -10,7 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
@@ -19,7 +21,7 @@ import org.lopatka.idonc.model.user.IdoncUser;
 
 @Entity(name="PARTS")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class IdoncPart implements Serializable {
+public class IdoncPart implements Serializable, Comparable {
 
     private static final long serialVersionUID = 1L;
 
@@ -70,6 +72,10 @@ public class IdoncPart implements Serializable {
         inverseJoinColumns=@JoinColumn(name="USER_ID")
     )
     private List<IdoncUser> lockedUsers;
+
+    @ManyToOne(optional=false)
+    @JoinColumn(name="PROJECT_ID")
+    private IdoncProject project;
 
 	public Long getNumber() {
 		return number;
@@ -126,4 +132,19 @@ public class IdoncPart implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public int compareTo(Object o) {
+		// TODO do zaimplementowania !! (porównanie timestampów
+		return 0;
+	}
+
+	public IdoncProject getProject() {
+		return project;
+	}
+
+	public void setProject(IdoncProject project) {
+		this.project = project;
+	}
+
+
 }

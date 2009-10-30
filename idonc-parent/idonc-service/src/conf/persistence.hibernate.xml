@@ -14,7 +14,7 @@
 			<list>
 				<value>org.lopatka.idonc.model.user.IdoncUser</value>
 				<value>org.lopatka.idonc.model.user.LoggedUser</value>
-				<value>org.lopatka.idonc.model.user.UserCredential</value>		
+				<value>org.lopatka.idonc.model.user.UserCredential</value>
 				<value>org.lopatka.idonc.model.data.IdoncProject</value>
                 <value>org.lopatka.idonc.model.data.IdoncPart</value>
                 <value>org.lopatka.idonc.model.data.IdoncResult</value>
@@ -25,23 +25,23 @@
 
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<prop key="hibernate.connection.pool_size">5</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
 				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
 				<prop key="hibernate.hibernate.cache.use_query_cache">true</prop>
 			</props>
 		</property>
 	</bean>
-	
+
 	<!-- transaction manager -->
 	<bean name="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	
+
 	<!-- dao transaction template -->
 	<bean id="daoTxTemplate" abstract="true"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -66,7 +66,7 @@
 			</bean>
 		</property>
 	</bean>
-	
+
 	<bean id="userCredentialDao" parent="daoTxTemplate">
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target">
@@ -75,7 +75,7 @@
 			</bean>
 		</property>
 	</bean>
-	
+
 	<bean id="loggedUserDao" parent="daoTxTemplate">
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="target">
@@ -84,7 +84,7 @@
 			</bean>
 		</property>
 	</bean>
-	
+
 	<bean id="projectDao" parent="daoTxTemplate">
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="target">
@@ -93,5 +93,5 @@
 			</bean>
 		</property>
 	</bean>
-	
+
 </beans>

@@ -122,9 +122,14 @@ public class DataGenerator implements InitializingBean {
 			project.setDescription(projectDescription);
 			project.setWebsite(website);
 			project.setComputationClassName(className);
-			project.setPartsToProcess(generatePartsForPOCProject());
-			projectDao.add(project);
+			project = projectDao.save(project);
+			project.setPartsToProcess(generatePartsForPOCProject(project));
+			projectDao.save(project);
 		}
+
+//		List<IdoncProject> project = projectDao.get();
+//		List<IdoncPart> parts = projectDao.getParts(project.get(0));
+//		System.out.println(parts.get(0).getName());
 	}
 
 	private String randomZipCode() {
@@ -140,7 +145,7 @@ public class DataGenerator implements InitializingBean {
 		return (int) (Math.random() * (max - min) + min);
 	}
 
-	private List<IdoncPart> generatePartsForPOCProject() {
+	private List<IdoncPart> generatePartsForPOCProject(IdoncProject project) {
 		List<IdoncPart> list = new ArrayList<IdoncPart>();
 		for(int i = 0; i < 1000; i++) {
 			long timeToWait = getRandomTimeToWait();
@@ -153,6 +158,7 @@ public class DataGenerator implements InitializingBean {
 			data.setValue(timeToWait);
 			dataList.add(data);
 			part.setLongDataList(dataList);
+			part.setProject(project);
 			list.add(part);
 		}
 		return list;

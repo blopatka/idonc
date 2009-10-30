@@ -10,6 +10,7 @@ import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.lopatka.idonc.web.IdoncSession;
 import org.lopatka.idonc.model.data.IdoncProject;
+import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.web.page.component.BasePage;
 import org.lopatka.idonc.web.page.dataproviders.ProjectDataProvider;
 import org.lopatka.idonc.service.IdoncService;
@@ -23,6 +24,8 @@ public class ProjectsListPage extends BasePage {
 	private IdoncService idoncService;
 
 	private IdoncSession session = IdoncSession.get();
+
+	private IdoncUser currentUser = session.getLoggedUser().getUser();
 
 	public ProjectsListPage() {
 		initLayout();
@@ -41,14 +44,21 @@ public class ProjectsListPage extends BasePage {
 				params.add("projectname", project.getName());
 				item.add(new BookmarkablePageLink("details", ProjectDetailsPage.class, params));
 
-				item.add(new BookmarkablePageLink("setActiveProject", SetActiveProjectPage.class, params));
+				BookmarkablePageLink activateLink = new BookmarkablePageLink("setActiveProject", SetActiveProjectPage.class, params);
+				activateLink.setVisibilityAllowed(true);
+				activateLink.setOutputMarkupPlaceholderTag(true);
+				item.add(activateLink);
+
+				if(currentUser.getContributedProject()!= null && (currentUser.getContributedProject().getId() == project.getId())) {
+					activateLink.setVisible(false);
+				}
 
 				session.setProject(project.getName(), project);
 
 			}
 
 		};
-		table.setItemsPerPage(10);
+		table.setItemsPerPage(100);
 		add(table);
 		add(new PagingNavigator("navigator", table));
 	}
