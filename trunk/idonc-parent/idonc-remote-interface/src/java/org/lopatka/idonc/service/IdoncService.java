@@ -35,7 +35,7 @@ public interface IdoncService {
 
 	public IdoncUser loadUser(String username, String sessionId, long id) throws IdoncException;
 
-	public IdoncProject loadProject(String username, String sessionId, long id) throws IdoncException;
+	public IdoncProject loadProject(String username, String sessionId, int id) throws IdoncException;
 
 	public List getProjects(String username, String sessionId, int first, int count) throws IdoncException;
 
@@ -46,7 +46,7 @@ public interface IdoncService {
     //Services for desktop client
 
     public IdoncProject getContributedProject(String username, String sessionId) throws IdoncException;
-    
+
     public IdoncUser setContributedProject(String username, IdoncProject project, String sessionId) throws IdoncException;
 
     public IdoncPart getPartToProcess(String username, String sessionId) throws IdoncException;

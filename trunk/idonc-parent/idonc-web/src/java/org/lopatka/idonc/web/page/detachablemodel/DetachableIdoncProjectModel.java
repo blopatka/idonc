@@ -9,8 +9,8 @@ public class DetachableIdoncProjectModel extends LoadableDetachableModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private final long id;
-	
+	private final int id;
+
 	private final IdoncService service;
 
     private IdoncSession session = IdoncSession.get();
@@ -28,7 +28,7 @@ public class DetachableIdoncProjectModel extends LoadableDetachableModel {
         String sessionId = session.getSessionId();
 		return service.loadProject(username, sessionId, id);
 	}
-	
-	
+
+
 
 }

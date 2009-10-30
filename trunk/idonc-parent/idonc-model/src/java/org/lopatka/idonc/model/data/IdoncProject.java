@@ -1,17 +1,18 @@
 package org.lopatka.idonc.model.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -19,6 +20,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.IndexColumn;
 import org.hibernate.validator.NotNull;
 import org.lopatka.idonc.model.user.IdoncUser;
 
@@ -31,7 +34,7 @@ public class IdoncProject implements Serializable {
 
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "PROJECT_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
@@ -48,12 +51,11 @@ public class IdoncProject implements Serializable {
     @Column(name = "COMPUTATION_CLASS_NAME")
     private String computationClassName;
 
-
-    @OneToMany
-    @Cascade({CascadeType.SAVE_UPDATE})
-    @JoinTable(name = "PROJECT_PARTS_TO_PROCESS",
-    joinColumns = {@JoinColumn(name = "PROJECT_ID")},
-    inverseJoinColumns = @JoinColumn(name = "PART_ID"))
+    @OneToMany(
+    		cascade={javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.REMOVE},
+    		mappedBy ="project",
+    		fetch=FetchType.EAGER)
+    @Cascade({CascadeType.DELETE_ORPHAN})
     private List<IdoncPart> partsToProcess;
 
     @OneToMany
@@ -64,9 +66,15 @@ public class IdoncProject implements Serializable {
     private List<IdoncPart> processedParts;
 
 
-    @OneToMany
-    @OrderBy("userName")
+    @OneToMany(cascade={javax.persistence.CascadeType.ALL}, fetch=FetchType.EAGER)
+    @JoinColumn(name="PROJECT_ID")
+    @Cascade(value=CascadeType.DELETE_ORPHAN)
+    @IndexColumn(name="USER_POSITION")
     private List<IdoncUser> activeUsers;
+
+    public IdoncProject() {
+    	activeUsers = new ArrayList<IdoncUser>();
+    }
 
     public String getName() {
         return name;
@@ -124,6 +132,10 @@ public class IdoncProject implements Serializable {
 
     public void setActiveUsers(List<IdoncUser> activeUsers) {
         this.activeUsers = activeUsers;
+    }
+
+    public void addActiveUser(IdoncUser activeUser) {
+    	this.activeUsers.add(activeUser);
     }
 
 	public String getComputationClassName() {

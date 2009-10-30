@@ -28,7 +28,7 @@ public class IdoncUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="ID")
+	@Column(name="USER_ID")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
@@ -38,15 +38,15 @@ public class IdoncUser implements Serializable {
 
 	@Column(name="FIRST_NAME")
 	private String firstName;
-	
+
 	@Column(name="LAST_NAME")
 	private String lastName;
-	
+
 	@Embedded
 	private Address address;
 
     @ManyToOne
-    @JoinColumn(name="CONTRIBUTED_PROJECT")
+    @JoinColumn(name="PROJECT_ID")
     @LazyToOne(LazyToOneOption.FALSE)
     private IdoncProject contributedProject;
 
@@ -106,4 +106,10 @@ public class IdoncUser implements Serializable {
     public void setContributedProject(IdoncProject contributedProject) {
         this.contributedProject = contributedProject;
     }
+
+	@Override
+	public String toString() {
+		return userName;
+	}
+
 }
