@@ -15,7 +15,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
-import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 @Entity
@@ -24,29 +23,27 @@ import org.hibernate.validator.NotNull;
 public class UserCredential implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(name="ID")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name="USER")
 	@LazyToOne(LazyToOneOption.FALSE)
 	private IdoncUser user;
-	
+
 	@Column(name="PASSWORD")
 	@NotNull
-	@Length(max=32)
 	private String password;
-	
+
 	@Column(name="SALT")
 	@NotNull
-	@Length(max=32)
 	private String salt;
 
 	public UserCredential() {
-		
+
 	}
 
 	public Long getId() {
@@ -56,7 +53,7 @@ public class UserCredential implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public IdoncUser getUser() {
 		return user;
 	}
