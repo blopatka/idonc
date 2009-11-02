@@ -19,9 +19,4 @@
         <property name="loggedUserDao" ref="loggedUserDao"/>
         <property name="projectDao" ref="projectDao"/>
     </bean>
-
-    <bean id="dataGenerator" class="org.lopatka.idonc.service.utils.DataGenerator">
-        <property name="idoncService" ref="idoncService"/>
-        <property name="projectDao" ref="projectDao"/>
-    </bean>
 </beans>
