@@ -1,12 +1,10 @@
 package org.lopatka.idonc.model.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,8 +18,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.CollectionOfElements;
-import org.hibernate.annotations.IndexColumn;
 import org.hibernate.validator.NotNull;
 import org.lopatka.idonc.model.user.IdoncUser;
 
@@ -50,30 +46,30 @@ public class IdoncProject implements Serializable {
 
     @Column(name = "COMPUTATION_CLASS_NAME")
     private String computationClassName;
-
-    @OneToMany(
-    		cascade={javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.REMOVE},
-    		mappedBy ="project",
-    		fetch=FetchType.EAGER)
-    @Cascade({CascadeType.DELETE_ORPHAN})
+    
+    @OneToMany
+    @Cascade({CascadeType.ALL})
+    @JoinTable(name= "PROJECT_PARTS_TO_PROCESS",
+    		joinColumns = {@JoinColumn(name="PROJECT_ID")},
+    		inverseJoinColumns = @JoinColumn(name = "PART_ID"))
     private List<IdoncPart> partsToProcess;
 
     @OneToMany
-    @Cascade({CascadeType.SAVE_UPDATE})
+    @Cascade({CascadeType.ALL})
     @JoinTable(name = "PROJECT_PROCESSED_PARTS",
-    joinColumns = {@JoinColumn(name = "PROJECT_ID")},
-    inverseJoinColumns = @JoinColumn(name = "PART_ID"))
+    		joinColumns = {@JoinColumn(name = "PROJECT_ID")},
+    		inverseJoinColumns = @JoinColumn(name = "PART_ID"))
     private List<IdoncPart> processedParts;
 
 
-    @OneToMany(cascade={javax.persistence.CascadeType.ALL}, fetch=FetchType.EAGER)
-    @JoinColumn(name="PROJECT_ID")
-    @Cascade(value=CascadeType.DELETE_ORPHAN)
-    @IndexColumn(name="USER_POSITION")
+    @OneToMany
+    @Cascade({CascadeType.ALL})
+    @JoinTable(name = "PROJECT_ACTIVE_USERS",
+    		joinColumns = {@JoinColumn(name = "PROJECT_ID")},
+    		inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private List<IdoncUser> activeUsers;
 
     public IdoncProject() {
-    	activeUsers = new ArrayList<IdoncUser>();
     }
 
     public String getName() {

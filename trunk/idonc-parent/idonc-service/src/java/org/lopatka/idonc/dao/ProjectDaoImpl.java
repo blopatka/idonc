@@ -4,6 +4,7 @@ package org.lopatka.idonc.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.lopatka.idonc.model.data.IdoncPart;
@@ -38,7 +39,9 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 
 	public List<IdoncPart> getParts(IdoncProject project) {
 		IdoncProject proj = load(project.getId());
-		return proj.getPartsToProcess();
+		List<IdoncPart> parts = proj.getPartsToProcess();
+		Hibernate.initialize(parts);
+		return parts;
 	}
 
 	public IdoncProject save(IdoncProject project) {

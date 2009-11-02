@@ -282,6 +282,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 				//ma ustawiony projekt
 				List<IdoncPart> parts = projectDao.getParts(project);
 				Collections.sort(parts);
+				return parts.get(0);
 			} else {
 				//nie ma ustawionego projektu
 				return null;
@@ -297,7 +298,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 			 *3. zwrocic IdoncPart ktory spelnia powyzsze warunki
 			 */
 
-			throw new UnsupportedOperationException("not yet implemented");
+			//throw new UnsupportedOperationException("not yet implemented");
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
 		}

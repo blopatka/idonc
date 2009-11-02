@@ -41,9 +41,8 @@
     <module>idonc-service</module>
     <module>idonc-web</module>
     <module>idon-computation</module>
-    <!--
-    <module>idonc-client</module>
-    -->
+    <module>idonc-data-generator</module>
+    <module>idonc-wsclient</module>
 
 </modules>
 </project>
