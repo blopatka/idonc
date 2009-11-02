@@ -6,8 +6,8 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.lopatka.idonc</groupId>
-  <artifactId>idon-computation</artifactId>
-  <name>idon-computation</name>
+  <artifactId>idonc-computation</artifactId>
+  <name>idonc-computation</name>
   <version>1.0-SNAPSHOT</version>
   <url>http://maven.apache.org</url>
   <dependencies>
