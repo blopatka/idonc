@@ -180,8 +180,8 @@ public class DataGenerator
 			IdoncLongData data = new IdoncLongData();
 			data.setValue(timeToWait);
 			dataList.add(data);
-			//part.setLongDataList(dataList);
-			part.setProject(project);
+			part.setLongDataList(dataList);
+			//part.setProject(project);
 			list.add(part);
 		}
 		return list;

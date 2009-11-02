@@ -1,5 +1,7 @@
 package org.lopatka.idonc.client;
 
+import java.util.List;
+
 import info.clearthought.layout.TableLayout;
 
 import javax.swing.ActionMap;
@@ -12,6 +14,8 @@ import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
+import org.lopatka.idonc.model.data.IdoncPart;
+import org.lopatka.idonc.model.data.IdoncProject;
 import org.lopatka.idonc.model.user.LoggedUser;
 
 public class LoginPanel extends JPanel {
@@ -84,6 +88,8 @@ public class LoginPanel extends JPanel {
 			LoggedUser lU = AppSession.idoncService.loginUser(username, password);
 			if(lU != null) {
 				session.setLoggedUser(lU);
+				IdoncProject proj = AppSession.idoncService.getContributedProject(username, session.getLoggedUser().getSessionId());
+				IdoncPart parts = AppSession.idoncService.getPartToProcess(username, session.getLoggedUser().getSessionId());
 				//zalogowano użytkownika, można przejść do karty calculations
 				session.switchCard(AppSession.CALCULATION_PANEL);
 			}

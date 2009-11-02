@@ -11,8 +11,6 @@
 
     <bean id="converterService" class="org.lopatka.idonc.service.ConverterServiceImpl"/>
 
-    <bean id="generatorService" class="org.lopatka.idonc.service.GeneratorServiceImpl"/>
-
     <bean id="idoncService" class="org.lopatka.idonc.service.IdoncServiceImpl">
         <property name="userDao" ref="userDao"/>
         <property name="userCredentialDao" ref="userCredentialDao"/>
