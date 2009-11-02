@@ -1,4 +1,4 @@
-package org.lopatka.idonc.service.utils;
+package org.lopatka.idonc.model.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
