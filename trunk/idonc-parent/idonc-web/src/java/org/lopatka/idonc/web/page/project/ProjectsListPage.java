@@ -58,7 +58,7 @@ public class ProjectsListPage extends BasePage {
 			}
 
 		};
-		table.setItemsPerPage(100);
+		table.setItemsPerPage(2);
 		add(table);
 		add(new PagingNavigator("navigator", table));
 	}
