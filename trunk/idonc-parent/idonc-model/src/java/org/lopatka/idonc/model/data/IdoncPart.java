@@ -37,41 +37,41 @@ public class IdoncPart implements Serializable, Comparable {
 	private String name;
 
 
-	@OneToMany
-	@Cascade({CascadeType.SAVE_UPDATE})
-    @JoinTable(
-        name="PART_LONG_DATA_ELEMENTS",
-        joinColumns={@JoinColumn(name="PART_ID")},
-        inverseJoinColumns=@JoinColumn(name="LONG_DATA_ID")
-    )
-    private List<IdoncLongData> longDataList;
-
-	@OneToMany
-	@Cascade({CascadeType.SAVE_UPDATE})
-    @JoinTable(
-        name="PART_RESULTS",
-        joinColumns={@JoinColumn(name="PART_ID")},
-        inverseJoinColumns=@JoinColumn(name="RESULT_ID")
-        )
-    private List<IdoncResult> results;
-
-    @OneToMany
-    @Cascade({CascadeType.SAVE_UPDATE})
-    @JoinTable(
-        name="PART_USERS",
-        joinColumns={@JoinColumn(name="PART_ID")},
-        inverseJoinColumns=@JoinColumn(name="USER_ID")
-    )
-    private List<IdoncUser> usersProcessing;
-
-    @OneToMany
-    @Cascade({CascadeType.SAVE_UPDATE})
-    @JoinTable(
-        name="LOCKED_USERS",
-        joinColumns={@JoinColumn(name="PART_ID")},
-        inverseJoinColumns=@JoinColumn(name="USER_ID")
-    )
-    private List<IdoncUser> lockedUsers;
+//	@OneToMany
+//	@Cascade({CascadeType.SAVE_UPDATE})
+//    @JoinTable(
+//        name="PART_LONG_DATA_ELEMENTS",
+//        joinColumns={@JoinColumn(name="PART_ID")},
+//        inverseJoinColumns=@JoinColumn(name="LONG_DATA_ID")
+//    )
+//    private List<IdoncLongData> longDataList;
+//
+//	@OneToMany
+//	@Cascade({CascadeType.SAVE_UPDATE})
+//    @JoinTable(
+//        name="PART_RESULTS",
+//        joinColumns={@JoinColumn(name="PART_ID")},
+//        inverseJoinColumns=@JoinColumn(name="RESULT_ID")
+//        )
+//    private List<IdoncResult> results;
+//
+//    @OneToMany
+//    @Cascade({CascadeType.SAVE_UPDATE})
+//    @JoinTable(
+//        name="PART_USERS",
+//        joinColumns={@JoinColumn(name="PART_ID")},
+//        inverseJoinColumns=@JoinColumn(name="USER_ID")
+//    )
+//    private List<IdoncUser> usersProcessing;
+//
+//    @OneToMany
+//    @Cascade({CascadeType.SAVE_UPDATE})
+//    @JoinTable(
+//        name="LOCKED_USERS",
+//        joinColumns={@JoinColumn(name="PART_ID")},
+//        inverseJoinColumns=@JoinColumn(name="USER_ID")
+//    )
+//    private List<IdoncUser> lockedUsers;
 
     @ManyToOne(optional=false)
     @JoinColumn(name="PROJECT_ID")
@@ -93,37 +93,37 @@ public class IdoncPart implements Serializable, Comparable {
 		this.name = name;
 	}
 
-	public List<IdoncLongData> getLongDataList() {
-		return longDataList;
-	}
-
-	public void setLongDataList(List<IdoncLongData> longDataList) {
-		this.longDataList = longDataList;
-	}
-
-	public List<IdoncResult> getResults() {
-		return results;
-	}
-
-	public void setResults(List<IdoncResult> results) {
-		this.results = results;
-	}
-
-	public List<IdoncUser> getUsersProcessing() {
-		return usersProcessing;
-	}
-
-	public void setUsersProcessing(List<IdoncUser> usersProcessing) {
-		this.usersProcessing = usersProcessing;
-	}
-
-	public List<IdoncUser> getLockedUsers() {
-		return lockedUsers;
-	}
-
-	public void setLockedUsers(List<IdoncUser> lockedUsers) {
-		this.lockedUsers = lockedUsers;
-	}
+//	public List<IdoncLongData> getLongDataList() {
+//		return longDataList;
+//	}
+//
+//	public void setLongDataList(List<IdoncLongData> longDataList) {
+//		this.longDataList = longDataList;
+//	}
+//
+//	public List<IdoncResult> getResults() {
+//		return results;
+//	}
+//
+//	public void setResults(List<IdoncResult> results) {
+//		this.results = results;
+//	}
+//
+//	public List<IdoncUser> getUsersProcessing() {
+//		return usersProcessing;
+//	}
+//
+//	public void setUsersProcessing(List<IdoncUser> usersProcessing) {
+//		this.usersProcessing = usersProcessing;
+//	}
+//
+//	public List<IdoncUser> getLockedUsers() {
+//		return lockedUsers;
+//	}
+//
+//	public void setLockedUsers(List<IdoncUser> lockedUsers) {
+//		this.lockedUsers = lockedUsers;
+//	}
 
 	public int getId() {
 		return id;
