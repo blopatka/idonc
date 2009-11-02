@@ -40,9 +40,9 @@
     <module>idonc-remote-interface</module>
     <module>idonc-service</module>
     <module>idonc-web</module>
-    <module>idon-computation</module>
     <module>idonc-data-generator</module>
     <module>idonc-wsclient</module>
+    <module>idonc-computation</module>
 
 </modules>
 </project>
