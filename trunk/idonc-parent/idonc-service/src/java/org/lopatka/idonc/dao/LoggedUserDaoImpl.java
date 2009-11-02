@@ -3,6 +3,9 @@ package org.lopatka.idonc.dao;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.LoggedUser;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -19,11 +22,13 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 	public boolean deleteLoggedUserById(Long id) {
 		logger.info("deletin LoggedUser information");
 		HibernateTemplate template = getHibernateTemplate();
-		LoggedUser toDelete = new LoggedUser();
-		toDelete.setId(id);
-		List<LoggedUser> returned = template.findByExample(toDelete);
-		if (returned.size() == 1) {
-			toDelete = returned.get(0);
+		Criteria loggCrit = getSession().createCriteria(LoggedUser.class);
+		Criterion crit = Restrictions.eq("id", id);
+		loggCrit.add(crit);
+		loggCrit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<LoggedUser> ret = loggCrit.list();
+		if (ret.size() == 1) {
+			LoggedUser toDelete = ret.get(0);
 			template.delete(toDelete);
 			return true;
 		}else {
@@ -34,9 +39,11 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 
 	@SuppressWarnings("unchecked")
 	public LoggedUser getLoggedUserBySession(String sessionId) {
-		LoggedUser example = new LoggedUser();
-		example.setSessionId(sessionId);
-		List<LoggedUser> ret = getHibernateTemplate().findByExample(example);
+		Criteria loggCrit = getSession().createCriteria(LoggedUser.class);
+		Criterion crit = Restrictions.eq("sessionId", sessionId);
+		loggCrit.add(crit);
+		loggCrit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<LoggedUser> ret = loggCrit.list();
 		if (ret.size() == 1) {
 			return ret.get(0);
 		} else {
@@ -46,9 +53,11 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 
 	@SuppressWarnings("unchecked")
 	public LoggedUser getLoggedUserByUser(IdoncUser user) {
-		LoggedUser example = new LoggedUser();
-		example.setUser(user);
-		List<LoggedUser> ret = getHibernateTemplate().findByExample(example);
+		Criteria loggCrit = getSession().createCriteria(LoggedUser.class);
+		Criterion crit = Restrictions.eq("user", user);
+		loggCrit.add(crit);
+		loggCrit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<LoggedUser> ret = loggCrit.list();
 		if(ret.size() == 1) {
 			return ret.get(0);
 		} else {

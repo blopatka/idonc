@@ -4,7 +4,7 @@ package org.lopatka.idonc.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
@@ -15,16 +15,17 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 	public int count() {
 		Criteria crit = getSession().createCriteria(IdoncProject.class);
 		crit.setProjection(Projections.rowCount());
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		Integer result = (Integer) crit.uniqueResult();
 		return result;
 	}
 
 	//@SuppressWarnings("unchecked")
-	public List<IdoncProject> get() {
-		Criteria  crit = getSession().createCriteria(IdoncProject.class);
-		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-
-        return crit.list();
+	public List<IdoncProject> get(int first, int count) {
+		Query query = getSession().createQuery("from IdoncProject");
+		query.setFirstResult(first);
+		query.setMaxResults(count);
+		return query.list();
 	}
 
 	public IdoncProject load(int id) {
@@ -43,7 +44,6 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 	public IdoncProject save(IdoncProject project) {
 		return (IdoncProject) getSession().merge(project);
 	}
-
 
 
 }

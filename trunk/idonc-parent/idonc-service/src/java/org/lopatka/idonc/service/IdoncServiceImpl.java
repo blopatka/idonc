@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.lopatka.idonc.dao.LoggedUserDao;
 import org.lopatka.idonc.dao.ProjectDao;
 import org.lopatka.idonc.dao.UserCredentialDao;
@@ -20,7 +19,7 @@ import org.lopatka.idonc.model.data.IdoncResult;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.LoggedUser;
 import org.lopatka.idonc.model.user.UserCredential;
-import org.lopatka.idonc.service.utils.PasswordHasher;
+import org.lopatka.idonc.model.util.PasswordHasher;
 
 public class IdoncServiceImpl implements IdoncService, Serializable {
 
@@ -227,8 +226,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 	public List getProjects(String username, String sessionId, int first,
 			int count) throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
-			List<IdoncProject> projects = projectDao.get();
-			return projectDao.get();
+			return projectDao.get(first, count);
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
 		}

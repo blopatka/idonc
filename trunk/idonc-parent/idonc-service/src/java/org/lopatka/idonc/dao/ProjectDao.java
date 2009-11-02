@@ -9,7 +9,7 @@ import org.lopatka.idonc.model.data.IdoncProject;
 public interface ProjectDao {
 
 	@SuppressWarnings("unchecked")
-	List get();
+	List get(int first, int count);
 
 	IdoncProject load(int id);
 

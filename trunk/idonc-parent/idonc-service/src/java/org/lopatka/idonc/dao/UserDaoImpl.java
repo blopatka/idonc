@@ -1,9 +1,9 @@
 package org.lopatka.idonc.dao;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -15,6 +15,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
 	public int count() {
 		Criteria crit = getSession().createCriteria(IdoncUser.class);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		crit.setProjection(Projections.rowCount());
 		Integer count = (Integer) crit.uniqueResult();
 		return count;
@@ -26,10 +27,11 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	public List<IdoncUser> get(int first, int count) {
-		Criteria crit = getSession().createCriteria(IdoncUser.class);
-		crit.setMaxResults(count);
-		crit.setFirstResult(first);
-		return crit.list();
+
+		Query query = getSession().createQuery("from IdoncUser");
+		query.setFirstResult(first);
+		query.setMaxResults(count);
+		return query.list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -52,9 +54,10 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 		Criteria criteria = getSession().createCriteria(IdoncUser.class);
 		Criterion crit = Restrictions.eq("userName", username);
 		criteria.add(crit);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		IdoncUser user = (IdoncUser) criteria.uniqueResult();
 		return user;
-		
+
 	}
 
 }
