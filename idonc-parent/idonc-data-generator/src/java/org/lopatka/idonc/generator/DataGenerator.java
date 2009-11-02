@@ -35,7 +35,7 @@ public class DataGenerator
 	private static final String[] USERNAMES = {"andy", "gary", "lisa", "bart",
 			"homer", "marge", "maggie", "krusty", "opek", "opiszon", "kasia",
 			"kacha", "koteczek", "pies", "kot", "sowa", "jaszczurka", "slon",
-			"kon", "swinia", "koza", "krowa", "grab", "dab", "orzech", "jablon",
+			"kon", "swiniak", "koza", "krowa", "grab", "dab", "orzech", "jablon",
 			"wisnia", "grusza", "modrzew", "sosna"};
 	private static final String[] FIRSTNAMES = { "Jacob", "Emily", "Michael",
 			"Sarah", "Matthew", "Brianna", "Nicholas", "Samantha",
