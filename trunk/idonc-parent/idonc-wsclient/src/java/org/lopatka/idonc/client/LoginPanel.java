@@ -1,7 +1,5 @@
 package org.lopatka.idonc.client;
 
-import java.util.List;
-
 import info.clearthought.layout.TableLayout;
 
 import javax.swing.ActionMap;
@@ -33,7 +31,8 @@ public class LoginPanel extends JPanel {
 
 	public LoginPanel() {
 		setBounds(0, 0, 400, 400);
-		double size[][] = {{10, 100, 10, 100, 100, TableLayout.FILL}, {10, 20, 10, 20, 10, 20, TableLayout.FILL}};
+		double size[][] = {{10, 100, 10, 100, 100, TableLayout.FILL},
+				{10, 20, 10, 20, 10, 20, TableLayout.FILL}};
 		setLayout(new TableLayout(size));
 		initComponents();
 	}

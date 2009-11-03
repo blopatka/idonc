@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
+import org.lopatka.idonc.model.user.IdoncUser;
 
 public interface ProjectDao {
 
