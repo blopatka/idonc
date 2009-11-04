@@ -149,8 +149,8 @@ public class MainFrame extends JFrame {
 
 	@Action
 	public void quit() {
-		AppSession.idoncService.logoutUser(session.getLoggedUser().getUser().getUserName(), session.getLoggedUser().getSessionId());
 		Application.getInstance().exit();
+//		AppSession.idoncService.logoutUser(session.getLoggedUser().getUser().getUserName(), session.getLoggedUser().getSessionId());
 	}
 
 	@Action
