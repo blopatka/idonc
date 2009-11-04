@@ -88,9 +88,11 @@ public class LoginPanel extends JPanel {
 			if(lU != null) {
 				session.setLoggedUser(lU);
 				IdoncProject proj = AppSession.idoncService.getContributedProject(username, session.getLoggedUser().getSessionId());
-				IdoncPart parts = AppSession.idoncService.getPartToProcess(username, session.getLoggedUser().getSessionId());
+				session.setProject(proj);
+				//IdoncPart parts = AppSession.idoncService.getPartToProcess(username, session.getLoggedUser().getSessionId());
 				//zalogowano użytkownika, można przejść do karty calculations
 				session.switchCard(AppSession.CALCULATION_PANEL);
+				((CalculationPanel)session.getCalculationPanel()).refresh();
 			}
 		}
 	}

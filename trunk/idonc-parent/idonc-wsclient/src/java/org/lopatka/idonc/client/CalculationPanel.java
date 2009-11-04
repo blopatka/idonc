@@ -8,6 +8,7 @@ import javax.swing.JTable;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
+import org.lopatka.idonc.model.data.IdoncProject;
 
 public class CalculationPanel extends JPanel {
 
@@ -88,5 +89,11 @@ public class CalculationPanel extends JPanel {
 		add(partValuesGrid, "1, 9, 4, 9");
 
 
+	}
+
+	public void refresh() {
+		IdoncProject project = session.getProject();
+		projectNameText.setText(project.getName());
+		projectWebsiteText.setText(project.getWebsite());
 	}
 }

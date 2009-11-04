@@ -51,7 +51,10 @@ public class MainIdoncApp extends SingleFrameApplication {
 	@Override
 	protected void shutdown() {
 		super.shutdown();
-		//tutaj dodać wylogowanie i inne ewentualne pierdoły ;-)
+		// tutaj dodać wylogowanie i inne ewentualne pierdoły ;-)
+		AppSession.idoncService.logoutUser(AppSession.getInstance()
+				.getLoggedUser().getUser().getUserName(), AppSession
+				.getInstance().getLoggedUser().getSessionId());
 		System.out.println("End of work - cleaning");
 	}
 

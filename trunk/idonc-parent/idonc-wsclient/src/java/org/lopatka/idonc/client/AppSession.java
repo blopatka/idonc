@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.lopatka.idonc.model.data.IdoncProject;
 import org.lopatka.idonc.model.user.LoggedUser;
 import org.lopatka.idonc.service.IdoncService;
 import org.springframework.context.ApplicationContext;
@@ -28,6 +29,7 @@ public class AppSession {
 	private LoggedUser loggedUser;
 	private CardLayout cardLayout;
 	private JPanel cardPanel;
+	private IdoncProject project;
 
 	static {
 		springContext = new ClassPathXmlApplicationContext("client-applicationContext.xml");
@@ -96,5 +98,12 @@ public class AppSession {
 		cardLayout.show(cardPanel, newCard);
 	}
 
+	public void setProject(IdoncProject proj) {
+		this.project = proj;
+	}
 
+	public IdoncProject getProject() {
+		return project;
+	}
+	
 }
