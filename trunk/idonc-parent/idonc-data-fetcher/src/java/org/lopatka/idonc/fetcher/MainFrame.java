@@ -1,12 +1,18 @@
 package org.lopatka.idonc.fetcher;
 
+import info.clearthought.layout.TableLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-import info.clearthought.layout.TableLayout;
-
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.ActionMap;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -18,10 +24,17 @@ import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
+import org.lopatka.idonc.model.data.IdoncPart;
+import org.lopatka.idonc.model.data.IdoncProject;
 
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
+	private List<IdoncProject> projects;
+	private EntityManagerFactory emf;
+	private EntityManager em;
+
 	private JPanel mainPanel;
 	private JLabel projectLabel;
 	private JComboBox projectCombo;
@@ -38,6 +51,8 @@ public class MainFrame extends JFrame {
 	}
 
 	private void initComponents() {
+    	projects = getProjects();
+
 		ResourceMap resourceMap = Application.getInstance(DataFetcher.class)
 				.getContext().getResourceMap(MainFrame.class);
 
@@ -62,6 +77,7 @@ public class MainFrame extends JFrame {
 		projectCombo = new JComboBox();
 		projectCombo.setName(resourceMap.getString("projectCombo.name"));
 		mainPanel.add(projectCombo, "3, 1, 5, 1");
+		projectCombo.setModel(new ProjectComboBoxModel(projects));
 
 		dataTypeLabel = new JLabel();
 		dataTypeLabel.setName(resourceMap.getString("dataTypeLabel.name"));
@@ -71,6 +87,11 @@ public class MainFrame extends JFrame {
 		dataTypeCombo = new JComboBox();
 		dataTypeCombo.setName(resourceMap.getString("dataTypeCombo.name"));
 		mainPanel.add(dataTypeCombo, "3, 3, 5, 3");
+
+		List<DataType> types = new ArrayList<DataType>();
+		types.add(new DataType(0, resourceMap.getString("dataType.input")));
+		types.add(new DataType(0, resourceMap.getString("dataType.result")));
+		dataTypeCombo.setModel(new DataTypeComboBoxModel(types));
 
 		fileLabel = new JLabel();
 		fileLabel.setName(resourceMap.getString("fileLabel.name"));
@@ -96,11 +117,39 @@ public class MainFrame extends JFrame {
 
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("fetching data");
+				if(projectCombo.getSelectedItem() != null && dataTypeCombo.getSelectedItem() != null) {
+					IdoncProject proj = (IdoncProject) projectCombo.getSelectedItem();
+						System.out.println("pobieranie");
+						int selItem = ((DataType)projectCombo.getSelectedItem()).getVal();
+						switch (selItem) {
+						case 0:
+							List<IdoncPart> parts = getInputData(proj);
+							break;
+						case 1:
+							getResultData(proj);
+							break;
+						default:
+							break;
+						}
+				}
 			}
 		});
 
 		pack();
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<IdoncProject> getProjects() {
+		emf = Persistence.createEntityManagerFactory("idonc");
+    	em = emf.createEntityManager();
+
+		List<IdoncProject> projects = em.createQuery("select distinct p from IdoncProject p").getResultList();
+
+
+    	em.close();
+    	emf.close();
+
+    	return projects;
 	}
 
 	@Action
@@ -120,4 +169,98 @@ public class MainFrame extends JFrame {
 		}
 	}
 
+	private List<IdoncPart> getInputData(IdoncProject project) {
+		emf = Persistence.createEntityManagerFactory("idonc");
+    	em = emf.createEntityManager();
+
+		//TODO napisac query ktory zaczyta CZESCI DO OBLICZENIA w danym projekcie
+    	List<IdoncPart> parts = em.createQuery("select distinct part from IdoncPart part left join fetch part.longDataList").setParameter("project", project).getResultList();
+
+    	em.close();
+    	emf.close();
+    	return parts;
+	}
+
+	private List<IdoncPart> getResultData(IdoncProject project) {
+		emf = Persistence.createEntityManagerFactory("idonc");
+    	em = emf.createEntityManager();
+
+    	//TODO napisac query ktory zaczyta OBLICZONE WYNIKI danego projektu
+    	List<IdoncPart> parts = em.createQuery("select distinct project.part from IdoncPart part left join fetch part.results").setParameter("project", project).getResultList();
+
+    	em.close();
+    	emf.close();
+
+    	return parts;
+	}
+
+	private class ProjectComboBoxModel extends DefaultComboBoxModel {
+
+		private static final long serialVersionUID = 1L;
+		private List<IdoncProject> projects;
+
+		public ProjectComboBoxModel(List<IdoncProject> projects) {
+			this.projects = projects;
+		}
+
+		public Object getElementAt(int index) {
+			return projects.get(index);
+		}
+
+		public int getSize() {
+			return projects.size();
+		}
+
+	}
+
+	private class DataTypeComboBoxModel extends DefaultComboBoxModel {
+
+		private static final long serialVersionUID = 1L;
+		private List<DataType> types;
+
+		public DataTypeComboBoxModel(List<DataType> types) {
+			this.types = types;
+		}
+
+		@Override
+		public Object getElementAt(int index) {
+			return types.get(index);
+		}
+
+		@Override
+		public int getSize() {
+			return types.size();
+		}
+	}
+
+	private class DataType {
+		private int val;
+		private String text;
+
+		public DataType(int val, String text) {
+			this.val = val;
+			this.text = text;
+		}
+
+		public int getVal() {
+			return val;
+		}
+
+		public void setVal(int val) {
+			this.val = val;
+		}
+
+		public String getText() {
+			return text;
+		}
+
+		public void setText(String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return text;
+		}
+	}
 }
