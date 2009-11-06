@@ -3,14 +3,16 @@ package org.lopatka.idonc.model.data;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cache;
@@ -19,11 +21,12 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.validator.NotNull;
 import org.lopatka.idonc.model.user.IdoncUser;
 
 @Entity(name="PARTS")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class IdoncPart implements Serializable, Comparable {
+public class IdoncPart implements Serializable, Comparable<IdoncPart> {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +40,6 @@ public class IdoncPart implements Serializable, Comparable {
 
     @Column(name="NAME")
 	private String name;
-
 
 	@OneToMany
 	@Cascade({CascadeType.ALL})
@@ -77,9 +79,6 @@ public class IdoncPart implements Serializable, Comparable {
     )
     private List<IdoncUser> lockedUsers;
 
-//    @ManyToOne(optional=false)
-//    @JoinColumn(name="PROJECT_ID")
-//    private IdoncProject project;
 
 	public Long getNumber() {
 		return number;
@@ -137,20 +136,21 @@ public class IdoncPart implements Serializable, Comparable {
 		this.id = id;
 	}
 
-	public int compareTo(Object o) {
-		// TODO do zaimplementowania !! (porównanie timestampów
+
+	public int compareTo(IdoncPart o) {
+		if(this == o) {
+			return 0;
+		}
+
+		if(this.id < o.id) {
+			return -1;
+		}
+
+		if(this.id > o.id) {
+			return 1;
+		}
+
 		return 0;
 	}
-
-//	public IdoncProject getProject() {
-//		return project;
-//	}
-//
-//	public void setProject(IdoncProject project) {
-//		this.project = project;
-//	}
-	
-	
-
 
 }

@@ -143,4 +143,9 @@ public class IdoncProject implements Serializable {
 		this.computationClassName = computationClassName;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+
 }

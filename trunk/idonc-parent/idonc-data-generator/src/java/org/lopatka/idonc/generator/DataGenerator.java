@@ -27,10 +27,10 @@ import org.lopatka.idonc.model.util.PasswordHasher;
  */
 public class DataGenerator
 {
-	private static final String[] PROJECTNAMES = {"Proof of Concept", "Liczba Pi", "Spin"};
-	private static final String[] PROJECT_DESCRIPTIONS = {"Projekt pokazujacy ze dziala wymiana informacji miedzy serwerem a klientem", "Projekt oblicza liczbe Pi", "projekt oblicza Spiny ;-)"};
-	private static final String[] PROJECT_WEBSITE = {"www.poc.example.com", "www.pi.example.com", "www.spin.example.com"};
-	private static final String[] PROJECT_CLASS_NAME = {"org.lopatka.idonc.computation.poc.PocComputation", "org.lopatka.idonc.computation.pi.PiComputation", "org.lopatka.idonc.computation.spin.SpinComputation"};
+	private static final String[] PROJECTNAMES = {"Proof of Concept", "Proof of Concept II", "Liczba Pi", "Spin"};
+	private static final String[] PROJECT_DESCRIPTIONS = {"Projekt pokazujacy ze dziala wymiana informacji miedzy serwerem a klientem - ze sprawdzeniem poprawnosci wyniku", "Projekt pokazujacy ze dziala wymiana informacji miedzy serwerem a klientem - bez potwierdzania poprawnosci wyniku", "Projekt oblicza liczbe Pi", "projekt oblicza Spiny ;-)"};
+	private static final String[] PROJECT_WEBSITE = {"www.poc.example.com", "www.poc2.example.com", "www.pi.example.com", "www.spin.example.com"};
+	private static final String[] PROJECT_CLASS_NAME = {"org.lopatka.idonc.computation.poc.PocComputation", "org.lopatka.idonc.computation.poc.Poc2Computation", "org.lopatka.idonc.computation.pi.PiComputation", "org.lopatka.idonc.computation.ising.IsingComputation"};
 
 	private static final String[] USERNAMES = {"andy", "gary", "lisa", "bart",
 			"homer", "marge", "maggie", "krusty", "opek", "opiszon", "kasia",
@@ -176,12 +176,12 @@ public class DataGenerator
 			IdoncPart part = new IdoncPart();
 			part.setName("wait " + timeToWait + "msec");
 			part.setNumber(new Long(i));
+
 			List<IdoncLongData> dataList = new ArrayList<IdoncLongData>();
 			IdoncLongData data = new IdoncLongData();
-			data.setValue(timeToWait);
+			data.setValue(Long.toString(timeToWait));
 			dataList.add(data);
 			part.setLongDataList(dataList);
-			//part.setProject(project);
 			list.add(part);
 		}
 		return list;

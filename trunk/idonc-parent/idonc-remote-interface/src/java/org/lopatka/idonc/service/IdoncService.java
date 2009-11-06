@@ -27,8 +27,6 @@ public interface IdoncService {
 
 	public List<String> getUserNameList(String username, String sessionId) throws IdoncException;
 
-	public void updateUser(String username, String sessionId, IdoncUser user) throws IdoncException;
-
 	public List getUsers(String username, String sessionId, int first, int count) throws IdoncException;
 
 	public int countUsers(String username, String sessionId) throws IdoncException;

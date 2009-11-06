@@ -1,13 +1,19 @@
 package org.lopatka.idonc.client;
 
+import java.awt.BorderLayout;
+
 import info.clearthought.layout.TableLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneLayout;
+import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
+import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
 
 public class CalculationPanel extends JPanel {
@@ -45,6 +51,9 @@ public class CalculationPanel extends JPanel {
 	}
 
 	private void initComponents() {
+		ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
+		.getContext().getResourceMap(CalculationPanel.class);
+
 		projectNameLabel = new JLabel();
 		projectNameText = new JLabel();
 		projectWebsiteLabel = new JLabel();
@@ -53,10 +62,12 @@ public class CalculationPanel extends JPanel {
 		partNameText = new JLabel();
 		partNumberLabel = new JLabel();
 		partNumberText = new JLabel();
-		partValuesGrid = new JTable();
+		String data[][] = {{}};
+		String col[] = {resourceMap.getString("partValues.grid.columnName.id"), resourceMap.getString("partValues.grid.columnName.value")};
+		DefaultTableModel model = new DefaultTableModel(data, col);
+		partValuesGrid = new JTable(model);
 
-		ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
-				.getContext().getResourceMap(CalculationPanel.class);
+
 
 		projectNameLabel.setName(resourceMap.getString("projectName.label.name"));
 		projectNameLabel.setText(resourceMap.getString("projectName.label.text"));
@@ -86,14 +97,27 @@ public class CalculationPanel extends JPanel {
 		partNumberText.setName(resourceMap.getString("partNumber.text.name"));
 		add(partNumberText, "3, 7");
 
-		add(partValuesGrid, "1, 9, 4, 9");
 
-
+		partValuesGrid.setName(resourceMap.getString("partValues.grid.name"));
+		JScrollPane gridScroll = new JScrollPane(partValuesGrid);
+		add(gridScroll, "1, 9, 4, 9");
 	}
 
 	public void refresh() {
 		IdoncProject project = session.getProject();
 		projectNameText.setText(project.getName());
 		projectWebsiteText.setText(project.getWebsite());
+	}
+
+	public void loadPart() {
+		IdoncPart part = AppSession.idoncService.getPartToProcess(session.getLoggedUser().getUser().getUserName(), session.getLoggedUser().getSessionId());
+		session.setCalculatedPart(part);
+
+		ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
+		.getContext().getResourceMap(CalculationPanel.class);
+		partValuesGrid.setModel(new IdoncPartTableModel(part, resourceMap));
+
+		//TODO begin calculations !!
+		//here do something
 	}
 }
