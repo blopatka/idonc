@@ -60,4 +60,10 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
 	}
 
+
+	@SuppressWarnings("unchecked")
+	public List<IdoncUser> getAllUsers() {
+		return getSession().createQuery("select distinct u from IdoncUser u").list();
+	}
+
 }

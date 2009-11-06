@@ -51,7 +51,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 	private List<IdoncPart> initializeParts(List<IdoncPart> parts) {
 		Hibernate.initialize(parts);
 		for(IdoncPart part : parts) {
-			Hibernate.initialize(part.getLongDataList());
+			//Hibernate.initialize(part.getLongDataList());
 			Hibernate.initialize(part.getLockedUsers());
 			Hibernate.initialize(part.getUsersProcessing());
 			Hibernate.initialize(part.getResults());

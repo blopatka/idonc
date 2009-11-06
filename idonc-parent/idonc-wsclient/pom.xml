@@ -87,6 +87,7 @@
         </resources>
         <plugins>
             <plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptorRefs>
@@ -94,7 +95,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.lopatka.idonc.client.Main</mainClass>
+                            <mainClass>org.lopatka.idonc.client.MainIdoncApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -160,17 +160,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 	public List<IdoncUser> getUserList(String username, String sessionId)
 			throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
-			// TODO Auto-generated method stub
-			return null;
-		} else {
-			throw new IdoncAuthorizationException("user not authorized");
-		}
-	}
-
-	public void updateUser(String username, String sessionId, IdoncUser user)
-			throws IdoncException {
-		if (checkUserAuthorized(username, sessionId)) {
-			// TODO Auto-generated method stub
+			return userDao.getAllUsers();
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
 		}
@@ -179,8 +169,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 	public IdoncUser getUserDetails(String queriedUsername, String username,
 			String sessionId) throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
-			// TODO Auto-generated method stub
-			return null;
+				return userDao.findByUsername(queriedUsername);
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
 		}
@@ -189,8 +178,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 	public List<String> getUserNameList(String username, String sessionId)
 			throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
-			// TODO Auto-generated method stub
-			return null;
+				return userDao.getUniqueUsernames();
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
 		}
@@ -287,6 +275,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 				//nie ma ustawionego projektu
 				return null;
 			}
+			//TODO napisac usluge do pobierania odpowiedniej czesci do obliczen
 			/*
 			 * algorytm pobierania czesci do obliczen
 			 * 1. sprawdzic do jakiego projektu nalezy klient (jezeli nie nalezy do zadnego, zwrocic null
@@ -307,6 +296,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 	public void returnProcessingResult(String username, String sessionId,
 			IdoncResult result) throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
+			//TODO napisac usluge obslugujaca zwrocony wynik obliczen
 			/*
 			 * algorytm zwrócenia wyniku obliczen
 			 * 1. jesli nikt wczesniej nie zwrocil wyniki dla tego parta, to wpisac wynik

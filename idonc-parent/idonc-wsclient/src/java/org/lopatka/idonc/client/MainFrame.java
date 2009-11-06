@@ -155,6 +155,7 @@ public class MainFrame extends JFrame {
 
 	@Action
 	public void beginWork() {
+		((CalculationPanel)session.getCalculationPanel()).loadPart();
 		System.out.println("begin work");
 	}
 
