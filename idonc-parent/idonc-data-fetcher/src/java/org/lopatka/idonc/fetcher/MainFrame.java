@@ -5,12 +5,14 @@ import info.clearthought.layout.TableLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.ActionMap;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -24,16 +26,17 @@ import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
+import org.lopatka.idonc.model.data.IdoncLongData;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
+import org.lopatka.idonc.model.data.IdoncResult;
 
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	private List<IdoncProject> projects;
-	private EntityManagerFactory emf;
-	private EntityManager em;
+	private EntityManager em = ApplicationSession.getInstance().getEm();
 
 	private JPanel mainPanel;
 	private JLabel projectLabel;
@@ -51,13 +54,13 @@ public class MainFrame extends JFrame {
 	}
 
 	private void initComponents() {
-    	projects = getProjects();
+		projects = getProjects();
 
 		ResourceMap resourceMap = Application.getInstance(DataFetcher.class)
 				.getContext().getResourceMap(MainFrame.class);
 
 		ActionMap actionMap = Application.getInstance(DataFetcher.class)
-		.getContext().getActionMap(MainFrame.class, this);
+				.getContext().getActionMap(MainFrame.class, this);
 
 		double[][] size = { { 10, 100, 10, 180, 10, 30, 10, TableLayout.FILL },
 				{ 10, 20, 10, 20, 10, 20, 10, 20, 10, TableLayout.FILL } };
@@ -90,7 +93,7 @@ public class MainFrame extends JFrame {
 
 		List<DataType> types = new ArrayList<DataType>();
 		types.add(new DataType(0, resourceMap.getString("dataType.input")));
-		types.add(new DataType(0, resourceMap.getString("dataType.result")));
+		types.add(new DataType(1, resourceMap.getString("dataType.result")));
 		dataTypeCombo.setModel(new DataTypeComboBoxModel(types));
 
 		fileLabel = new JLabel();
@@ -104,8 +107,10 @@ public class MainFrame extends JFrame {
 		mainPanel.add(fileNameField, "3, 5");
 
 		fileChooseButton = new JButton();
-		fileChooseButton.setName(resourceMap.getString("fileChooseButton.name"));
-		fileChooseButton.setText(resourceMap.getString("fileChooseButton.text"));
+		fileChooseButton
+				.setName(resourceMap.getString("fileChooseButton.name"));
+		fileChooseButton
+				.setText(resourceMap.getString("fileChooseButton.text"));
 		fileChooseButton.setAction(actionMap.get("chooseFile"));
 		mainPanel.add(fileChooseButton, "5, 5");
 
@@ -117,20 +122,31 @@ public class MainFrame extends JFrame {
 
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(projectCombo.getSelectedItem() != null && dataTypeCombo.getSelectedItem() != null) {
-					IdoncProject proj = (IdoncProject) projectCombo.getSelectedItem();
-						System.out.println("pobieranie");
-						int selItem = ((DataType)projectCombo.getSelectedItem()).getVal();
-						switch (selItem) {
-						case 0:
-							List<IdoncPart> parts = getInputData(proj);
-							break;
-						case 1:
-							getResultData(proj);
-							break;
-						default:
-							break;
-						}
+				if (projectCombo.getSelectedItem() != null
+						&& dataTypeCombo.getSelectedItem() != null) {
+					IdoncProject proj = (IdoncProject) projectCombo
+							.getSelectedItem();
+					System.out.println("pobieranie");
+					int selItem = ((DataType) dataTypeCombo.getSelectedItem())
+							.getVal();
+					switch (selItem) {
+					case 0:
+						List<IdoncPart> parts = getInputData(proj);
+						writeToFile(proj, parts, false);
+						fileNameField.setText("");
+						fileNameField.setToolTipText("");
+						startButton.setEnabled(false);
+						break;
+					case 1:
+						List<IdoncPart> parts1 = getResultData(proj);
+						writeToFile(proj, parts1, true);
+						fileNameField.setText("");
+						fileNameField.setToolTipText("");
+						startButton.setEnabled(false);
+						break;
+					default:
+						break;
+					}
 				}
 			}
 		});
@@ -140,16 +156,9 @@ public class MainFrame extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private List<IdoncProject> getProjects() {
-		emf = Persistence.createEntityManagerFactory("idonc");
-    	em = emf.createEntityManager();
-
-		List<IdoncProject> projects = em.createQuery("select distinct p from IdoncProject p").getResultList();
-
-
-    	em.close();
-    	emf.close();
-
-    	return projects;
+		List<IdoncProject> projects = em.createQuery(
+				"select distinct p from IdoncProject p").getResultList();
+		return projects;
 	}
 
 	@Action
@@ -158,10 +167,17 @@ public class MainFrame extends JFrame {
 		JFileChooser fC = new JFileChooser();
 		fC.showSaveDialog(this);
 		selFile = fC.getSelectedFile();
-		if(selFile != null) {
-			fileNameField.setText(selFile.toString());
-			fileNameField.setToolTipText(selFile.toString());
-			startButton.setEnabled(true);
+		if (selFile != null) {
+			try {
+				fileNameField.setText(selFile.getCanonicalPath());
+				fileNameField.setToolTipText(selFile.toString());
+				startButton.setEnabled(true);
+			} catch (IOException e) {
+				e.printStackTrace();
+				fileNameField.setText("");
+				fileNameField.setToolTipText("");
+				startButton.setEnabled(false);
+			}
 		} else {
 			fileNameField.setText("");
 			fileNameField.setToolTipText("");
@@ -169,29 +185,64 @@ public class MainFrame extends JFrame {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<IdoncPart> getInputData(IdoncProject project) {
-		emf = Persistence.createEntityManagerFactory("idonc");
-    	em = emf.createEntityManager();
-
-		//TODO napisac query ktory zaczyta CZESCI DO OBLICZENIA w danym projekcie
-    	List<IdoncPart> parts = em.createQuery("select distinct part from IdoncPart part left join fetch part.longDataList").setParameter("project", project).getResultList();
-
-    	em.close();
-    	emf.close();
-    	return parts;
+		List<IdoncProject> projects = em
+				.createQuery(
+						"select distinct proj from IdoncProject proj left join fetch proj.partsToProcess where proj.id = :id")
+				.setParameter("id", project.getId()).setFirstResult(0)
+				.setMaxResults(1).getResultList();
+		return projects.get(0).getPartsToProcess();
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<IdoncPart> getResultData(IdoncProject project) {
-		emf = Persistence.createEntityManagerFactory("idonc");
-    	em = emf.createEntityManager();
+		List<IdoncProject> projects = em
+				.createQuery(
+						"select distinct proj from IdoncProject proj left join fetch proj.processedParts where proj.id = :id")
+				.setParameter("id", project.getId()).setFirstResult(0)
+				.setMaxResults(1).getResultList();
+		return projects.get(0).getProcessedParts();
+	}
 
-    	//TODO napisac query ktory zaczyta OBLICZONE WYNIKI danego projektu
-    	List<IdoncPart> parts = em.createQuery("select distinct project.part from IdoncPart part left join fetch part.results").setParameter("project", project).getResultList();
+	private void writeToFile(IdoncProject proj, List<IdoncPart> parts,
+			boolean isResult) {
+		try {
+			FileOutputStream fOS = new FileOutputStream(selFile);
+			PrintStream stream = new PrintStream(fOS);
+			if (proj != null && parts != null) {
+				stream.println("<project>");
+				stream.println("	<name>" + proj.getName() + "</name>");
+				stream.println("	<dataType>" + (isResult == true ? "result" : "input") +"</dataType>");
+				for (IdoncPart part : parts) {
+					stream.println("	<part>");
+					stream.println("		<number>" + part.getNumber()
+							+ "</number>");
+					stream.println("			<data>");
+					if (isResult) {
+						for (IdoncResult result : part.getResults()) {
+							stream.println("				<value>" + result.getVal()
+									+ "</value>");
+						}
+					} else {
+						for (IdoncLongData data : part.getLongDataList()) {
+							stream.println("				<value>" + data.getValue()
+									+ "</value>");
+						}
+					}
+					stream.println("			</data>");
+					stream.println("	</part>");
+				}
+				stream.println("</project>");
+			}
+			stream.close();
+			fOS.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    	em.close();
-    	emf.close();
-
-    	return parts;
 	}
 
 	private class ProjectComboBoxModel extends DefaultComboBoxModel {

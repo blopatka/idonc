@@ -3,6 +3,9 @@ package org.lopatka.idonc.fetcher;
 import java.awt.Component;
 import java.util.EventObject;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 import org.jdesktop.application.Application;
@@ -64,5 +67,20 @@ public class DataFetcher extends SingleFrameApplication
 		this.ctx = getContext();
 		ResourceManager mgr = ctx.getResourceManager();
 		resource = mgr.getResourceMap(DataFetcher.class);
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("idonc");
+    	EntityManager em = emf.createEntityManager();
+    	ApplicationSession session = ApplicationSession.getInstance();
+    	session.setEmf(emf);
+    	session.setEm(em);
 	}
+
+	@Override
+	protected void shutdown() {
+		ApplicationSession session = ApplicationSession.getInstance();
+		session.getEm().close();
+		session.getEmf().close();
+	}
+	
+	
 }
