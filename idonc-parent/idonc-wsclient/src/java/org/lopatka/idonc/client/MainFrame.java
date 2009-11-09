@@ -5,7 +5,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ActionMap;
-import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,7 +25,6 @@ public class MainFrame extends JFrame {
 
 	private JPanel cards;
 
-	private ActionMap mainPaneActionsMap;
 	private JMenuBar mainMenuBar;
 	private JMenu fileMenu;
 	private JMenuItem loginMenuItem;
@@ -42,7 +40,6 @@ public class MainFrame extends JFrame {
 	private void initComponents() {
 		session.setMainFrame(this);
 
-		//mainPanel = new MainPanel();
 		mainMenuBar = new JMenuBar();
 		fileMenu = new JMenu();
 		loginMenuItem = new JMenuItem();
@@ -58,14 +55,11 @@ public class MainFrame extends JFrame {
 
 		setTitle(resourceMap.getString("Form.title"));
 		setName(resourceMap.getString("Form.name"));
-		//mainPanel.setName(resourceMap.getString("MainPanel.name"));
 		mainMenuBar.setName(resourceMap.getString("MenuBar.name"));
 		fileMenu.setText(resourceMap.getString("FileMenu.text"));
 		fileMenu.setName(resourceMap.getString("FileMenu.name"));
 
-//		mainPaneActionsMap = Application.getInstance(MainIdoncApp.class)
-//				.getContext().getActionMap(MainPanel.class, mainPanel);
-//		loginMenuItem.setAction(mainPaneActionsMap.get("loginUser"));
+
 
 		ActionMap actionMap = Application.getInstance(MainIdoncApp.class)
 		.getContext().getActionMap(MainFrame.class, this);
@@ -115,9 +109,9 @@ public class MainFrame extends JFrame {
 
 		cards = new JPanel(new CardLayout());
 		session.setCardLayout((CardLayout)cards.getLayout(), cards);
-		cards.add(session.getMainPanel(), session.MAIN_PANEL);
-		cards.add(session.getLoginPanel(), session.LOGIN_PANEL);
-		cards.add(session.getCalculationPanel(), session.CALCULATION_PANEL);
+		cards.add(session.getMainPanel(), AppSession.MAIN_PANEL);
+		cards.add(session.getLoginPanel(), AppSession.LOGIN_PANEL);
+		cards.add(session.getCalculationPanel(), AppSession.CALCULATION_PANEL);
 
 		add(cards);
 
@@ -139,12 +133,12 @@ public class MainFrame extends JFrame {
 
 	@Action
 	public void showLoginScreen() {
-		session.switchCard(session.LOGIN_PANEL);
+		session.switchCard(AppSession.LOGIN_PANEL);
 	}
 
 	@Action
 	public void cancelLogin() {
-		session.switchCard(session.MAIN_PANEL);
+		session.switchCard(AppSession.MAIN_PANEL);
 	}
 
 	@Action

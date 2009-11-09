@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.AbstractLink;
@@ -19,7 +18,6 @@ import org.apache.wicket.markup.html.resources.StyleSheetReference;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.lopatka.idonc.web.page.component.BasePage;
 
 /**
  * Author: Julian Sinai http://javathoughts.capesugarbird.com
@@ -56,7 +54,7 @@ public class SuckerfishMenuPanel extends Panel
 		add(new SubMenuListView("topmenuitems", new PropertyModel(this,
 				"topMenuItems")));
 	}
-	
+
 	public final ResourceReference suckerFishStyle() {
 		return new CompressedResourceReference(SuckerfishMenuPanel.class, "SuckerfishMenuPanel.css");
 	}

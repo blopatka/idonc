@@ -16,6 +16,7 @@ public class MainPanel extends JPanel{
 		label = new JLabel();
 		label.setText("witamy w aplikacji IDONC");
 		add(label);
+		//TODO
 		//jak zrobi się logowanie, to trzeba tez zrobic wylogowanie - ale to podczas zamykania okienka,
 		//czyli w evencie zamykajacym aplikację (na X), oraz podczas zalogowania, jeżeli jakieś info
 		//o zalogowanym użytkowniku jest w aplikacji :-)

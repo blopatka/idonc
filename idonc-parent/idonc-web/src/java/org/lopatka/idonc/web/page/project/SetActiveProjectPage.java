@@ -25,6 +25,8 @@ public class SetActiveProjectPage extends BasePage {
 		super(params);
 		this.setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
+			private static final long serialVersionUID = -2720398180900894289L;
+
 			@Override
 			protected Object load() {
 				String projectName = getPageParameters().getString("projectname");

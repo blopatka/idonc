@@ -8,10 +8,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.lopatka.idonc.model.data.IdoncProject;
-import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.web.IdoncSession;
 import org.lopatka.idonc.web.page.component.BasePage;
 
