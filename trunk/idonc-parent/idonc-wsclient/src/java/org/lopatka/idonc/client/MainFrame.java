@@ -155,6 +155,7 @@ public class MainFrame extends JFrame {
 
 	@Action
 	public void stopWork() {
+		session.setCalculationInterrupted(true);
 		System.out.println("stop work");
 	}
 

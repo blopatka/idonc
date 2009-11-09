@@ -32,6 +32,7 @@ public class AppSession {
 	private JPanel cardPanel;
 	private IdoncProject project;
 	private IdoncPart calculatedPart;
+	private boolean interruptCalculation;
 
 	static {
 		springContext = new ClassPathXmlApplicationContext("client-applicationContext.xml");
@@ -114,6 +115,14 @@ public class AppSession {
 
 	public IdoncPart getCalculatedPart() {
 		return calculatedPart;
+	}
+
+	public boolean isCalculationInterrupted() {
+		return this.interruptCalculation;
+	}
+
+	public void setCalculationInterrupted(boolean interrupt) {
+		this.interruptCalculation = interrupt;
 	}
 
 

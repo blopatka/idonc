@@ -1,11 +1,15 @@
 package org.lopatka.idonc.client;
 
+import java.util.concurrent.ExecutionException;
+
 import info.clearthought.layout.TableLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.application.Application;
@@ -109,16 +113,53 @@ public class CalculationPanel extends JPanel {
 	}
 
 	public void loadPart() {
-		IdoncPart part = AppSession.idoncService.getPartToProcess(session.getLoggedUser().getUser().getUserName(), session.getLoggedUser().getSessionId());
-		session.setCalculatedPart(part);
-
-		ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
-		.getContext().getResourceMap(CalculationPanel.class);
-		partValuesGrid.setModel(new IdoncPartTableModel(part, resourceMap));
 
 		IComputation algorithm = ComputationManager.getInstance().getComputationForProject(session.getProject());
 		algorithm.isResultConfirmationRequired();
+
 		//TODO begin calculations !!
-		//here do something
+		CalculationThread thr = new CalculationThread(algorithm);
+		thr.execute();
+
+	}
+
+	private class CalculationThread extends SwingWorker<Boolean, Object>{
+
+		private IComputation algorithm;
+
+		public CalculationThread(IComputation algorithm) {
+			this.algorithm = algorithm;
+		}
+
+		@Override
+		protected Boolean doInBackground() throws Exception {
+			for(;;){
+				IdoncPart part = AppSession.idoncService.getPartToProcess(session.getLoggedUser().getUser().getUserName(), session.getLoggedUser().getSessionId());
+
+				ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
+				.getContext().getResourceMap(CalculationPanel.class);
+				partValuesGrid.setModel(new IdoncPartTableModel(part, resourceMap));
+
+				algorithm.computeData(part);
+				if(session.isCalculationInterrupted()) {
+					break;
+				}
+			}
+			return false;
+		}
+
+		@Override
+		protected void done() {
+			try {
+				session.setCalculationInterrupted(get());
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException ignore) {
+			}
+		}
+
+
+
 	}
 }
