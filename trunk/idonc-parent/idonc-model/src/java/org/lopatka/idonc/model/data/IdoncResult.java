@@ -29,7 +29,7 @@ public class IdoncResult implements Serializable {
 
     @Lob @Basic(fetch=FetchType.EAGER)
     @Column(name="VAL")
-    private Long val;
+    private String val;
 
     public long getId() {
         return id;
@@ -39,11 +39,11 @@ public class IdoncResult implements Serializable {
         this.id = id;
     }
 
-	public Long getVal() {
+	public String getValue() {
 		return val;
 	}
 
-	public void setVal(Long val) {
+	public void setValue(String val) {
 		this.val = val;
 	}
 

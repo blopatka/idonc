@@ -47,10 +47,6 @@ public class LoginPanel extends JPanel {
 		ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
 		.getContext().getResourceMap(LoginPanel.class);
 
-		ActionMap actionMap = Application.getInstance(MainIdoncApp.class)
-		.getContext().getActionMap(MainFrame.class, session.getMainFrame());
-
-
 		ActionMap actions = Application.getInstance(MainIdoncApp.class).getContext().getActionMap(LoginPanel.class, this);
 
 		usernameLabel.setName(resourceMap.getString("username.label.name"));

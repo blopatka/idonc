@@ -14,14 +14,14 @@ public class AnnotationSessionFactoryBean extends LocalSessionFactoryBean {
 //    private static final Logger LOG = Logger.getLogger(AnnotationSessionFactoryBean.class);
 
     private List<String> annotatedClasses_;
-    
+
     /**
      * @return the classes.
      */
-    public List getAnnotatedClasses() {
+    public List<String> getAnnotatedClasses() {
         return annotatedClasses_;
     }
-    
+
     /**
      * @param classes The classes to set.
      */
@@ -44,7 +44,7 @@ public class AnnotationSessionFactoryBean extends LocalSessionFactoryBean {
 
         for (String className : annotatedClasses_) {
             try {
-                Class clazz = config.getClass().getClassLoader().loadClass(className);
+                Class<?> clazz = config.getClass().getClassLoader().loadClass(className);
                 ((AnnotationConfiguration)config).addAnnotatedClass(clazz);
 
 //                if (LOG.isDebugEnabled()) {

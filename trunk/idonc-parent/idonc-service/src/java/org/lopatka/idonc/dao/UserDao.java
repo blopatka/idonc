@@ -12,8 +12,7 @@ public interface UserDao {
 
 	public void delete(long id);
 
-	@SuppressWarnings("unchecked")
-	public List get(int first, int count);
+	public List<IdoncUser> get(int first, int count);
 
 	public IdoncUser findByUsername(String username);
 

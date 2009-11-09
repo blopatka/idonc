@@ -193,7 +193,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 		}
 	}
 
-	public List getUsers(String username, String sessionId, int first, int count)
+	public List<IdoncUser> getUsers(String username, String sessionId, int first, int count)
 			throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
 			return userDao.get(first, count);
@@ -211,7 +211,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 		}
 	}
 
-	public List getProjects(String username, String sessionId, int first,
+	public List<IdoncProject> getProjects(String username, String sessionId, int first,
 			int count) throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
 			return projectDao.get(first, count);

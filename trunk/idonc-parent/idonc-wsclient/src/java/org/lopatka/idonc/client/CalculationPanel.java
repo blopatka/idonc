@@ -1,18 +1,17 @@
 package org.lopatka.idonc.client;
 
-import java.awt.BorderLayout;
-
 import info.clearthought.layout.TableLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ScrollPaneLayout;
 import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
+import org.lopatka.idonc.computation.ComputationManager;
+import org.lopatka.idonc.computation.IComputation;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
 
@@ -117,6 +116,8 @@ public class CalculationPanel extends JPanel {
 		.getContext().getResourceMap(CalculationPanel.class);
 		partValuesGrid.setModel(new IdoncPartTableModel(part, resourceMap));
 
+		IComputation algorithm = ComputationManager.getInstance().getComputationForProject(session.getProject());
+		algorithm.isResultConfirmationRequired();
 		//TODO begin calculations !!
 		//here do something
 	}

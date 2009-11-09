@@ -3,16 +3,13 @@ package org.lopatka.idonc.model.data;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cache;
@@ -21,7 +18,6 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
-import org.hibernate.validator.NotNull;
 import org.lopatka.idonc.model.user.IdoncUser;
 
 @Entity(name="PARTS")

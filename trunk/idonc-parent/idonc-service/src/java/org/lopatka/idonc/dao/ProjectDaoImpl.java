@@ -9,7 +9,6 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
-import org.lopatka.idonc.model.user.IdoncUser;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
@@ -22,7 +21,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		return result;
 	}
 
-	//@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<IdoncProject> get(int first, int count) {
 		Query query = getSession().createQuery("from IdoncProject");
 		query.setFirstResult(first);
@@ -51,7 +50,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 	private List<IdoncPart> initializeParts(List<IdoncPart> parts) {
 		Hibernate.initialize(parts);
 		for(IdoncPart part : parts) {
-			//Hibernate.initialize(part.getLongDataList());
+			Hibernate.initialize(part.getLongDataList());
 			Hibernate.initialize(part.getLockedUsers());
 			Hibernate.initialize(part.getUsersProcessing());
 			Hibernate.initialize(part.getResults());

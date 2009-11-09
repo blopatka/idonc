@@ -2,12 +2,10 @@ package org.lopatka.idonc.web.page.component;
 
 import java.util.Locale;
 
-import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.link.PageLink;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.lopatka.idonc.web.IdoncSession;
 import org.lopatka.idonc.web.page.HomePage;
