@@ -1,6 +1,6 @@
-package org.idonc.computation.ising;
+package org.lopatka.idonc.computation.ising;
 
-import org.idonc.computation.IComputation;
+import org.lopatka.idonc.computation.IComputation;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncResult;
 
