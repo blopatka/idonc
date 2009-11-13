@@ -1,14 +1,13 @@
 package org.lopatka.idonc.client;
 
-import java.util.concurrent.ExecutionException;
-
 import info.clearthought.layout.TableLayout;
+
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +17,7 @@ import org.lopatka.idonc.computation.ComputationManager;
 import org.lopatka.idonc.computation.IComputation;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
+import org.lopatka.idonc.model.data.IdoncResult;
 
 public class CalculationPanel extends JPanel {
 
@@ -133,14 +133,18 @@ public class CalculationPanel extends JPanel {
 
 		@Override
 		protected Boolean doInBackground() throws Exception {
+			String username = session.getLoggedUser().getUser().getUserName();
+			String sessionId = session.getLoggedUser().getSessionId();
+			boolean requiresConfirmation = algorithm.isResultConfirmationRequired();
 			for(;;){
-				IdoncPart part = AppSession.idoncService.getPartToProcess(session.getLoggedUser().getUser().getUserName(), session.getLoggedUser().getSessionId());
+				IdoncPart part = AppSession.idoncService.getPartToProcess(username, sessionId, requiresConfirmation);
 
 				ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
 				.getContext().getResourceMap(CalculationPanel.class);
 				partValuesGrid.setModel(new IdoncPartTableModel(part, resourceMap));
 
-				algorithm.computeData(part);
+				IdoncResult result = algorithm.computeData(part);
+				AppSession.idoncService.returnProcessingResult(username, sessionId, part, result, requiresConfirmation);
 				if(session.isCalculationInterrupted()) {
 					break;
 				}

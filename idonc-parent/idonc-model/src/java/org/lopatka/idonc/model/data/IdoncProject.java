@@ -49,19 +49,23 @@ public class IdoncProject implements Serializable {
     @Column(name = "COMPUTATION_CLASS_NAME")
     private String computationClassName;
 
-    @OneToMany
+    @OneToMany(mappedBy="project")
     @Cascade({CascadeType.ALL})
-    @JoinTable(name= "PROJECT_PARTS_TO_PROCESS",
-    		joinColumns = {@JoinColumn(name="PROJECT_ID")},
-    		inverseJoinColumns = @JoinColumn(name = "PART_ID"))
-    private List<IdoncPart> partsToProcess;
+    private List<IdoncPart> parts;
 
-    @OneToMany
-    @Cascade({CascadeType.ALL})
-    @JoinTable(name = "PROJECT_PROCESSED_PARTS",
-    		joinColumns = {@JoinColumn(name = "PROJECT_ID")},
-    		inverseJoinColumns = @JoinColumn(name = "PART_ID"))
-    private List<IdoncPart> processedParts;
+//    @OneToMany
+//    @Cascade({CascadeType.ALL})
+//    @JoinTable(name= "PROJECT_PARTS_TO_PROCESS",
+//    		joinColumns = {@JoinColumn(name="PROJECT_ID")},
+//    		inverseJoinColumns = @JoinColumn(name = "PART_ID"))
+//    private List<IdoncPart> parts;
+
+//    @OneToMany
+//    @Cascade({CascadeType.ALL})
+//    @JoinTable(name = "PROJECT_PROCESSED_PARTS",
+//    		joinColumns = {@JoinColumn(name = "PROJECT_ID")},
+//    		inverseJoinColumns = @JoinColumn(name = "PART_ID"))
+//    private List<IdoncPart> processedParts;
 
 
     @OneToMany(cascade={javax.persistence.CascadeType.ALL}, fetch=FetchType.EAGER)
@@ -98,21 +102,21 @@ public class IdoncProject implements Serializable {
     }
 
 
-    public List<IdoncPart> getPartsToProcess() {
-        return partsToProcess;
+    public List<IdoncPart> getParts() {
+        return parts;
     }
 
-    public void setPartsToProcess(List<IdoncPart> partsToProcess) {
-        this.partsToProcess = partsToProcess;
+    public void setParts(List<IdoncPart> parts) {
+        this.parts = parts;
     }
 
-    public List<IdoncPart> getProcessedParts() {
-        return processedParts;
-    }
-
-    public void setProcessedParts(List<IdoncPart> processedParts) {
-        this.processedParts = processedParts;
-    }
+//    public List<IdoncPart> getProcessedParts() {
+//        return processedParts;
+//    }
+//
+//    public void setProcessedParts(List<IdoncPart> processedParts) {
+//        this.processedParts = processedParts;
+//    }
 
 
     public int getId() {

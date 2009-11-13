@@ -14,6 +14,7 @@ import javax.persistence.Persistence;
 import org.lopatka.idonc.model.data.IdoncLongData;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
+import org.lopatka.idonc.model.data.PartType;
 import org.lopatka.idonc.model.user.Address;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.UserCredential;
@@ -146,7 +147,7 @@ public class DataGenerator
     	for(int i = 1; i <= PROJECTNAMES.length ;i++)
     	{
     		IdoncProject project = em.find(IdoncProject.class, new Integer(i));
-    		project.setPartsToProcess(generatePartsForPOCProject(project));
+    		project.setParts(generatePartsForPOCProject(project));
     		em.persist(project);
     	}
     	tx.commit();
@@ -176,6 +177,8 @@ public class DataGenerator
 			IdoncPart part = new IdoncPart();
 			part.setName("wait " + timeToWait + "msec");
 			part.setNumber(new Long(i));
+			part.setPartType(PartType.NEW);
+			part.setProject(project);
 
 			List<IdoncLongData> dataList = new ArrayList<IdoncLongData>();
 			IdoncLongData data = new IdoncLongData();

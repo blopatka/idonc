@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
+import org.lopatka.idonc.model.data.IdoncResult;
 
 public interface ProjectDao {
 
@@ -19,5 +20,15 @@ public interface ProjectDao {
 	IdoncProject save(IdoncProject project);
 
 	List<IdoncPart> getParts(IdoncProject project);
+
+	IdoncPart getPartWithConfirmation(String username, IdoncProject project);
+
+	IdoncPart getPartWithoutConfirmation(IdoncProject project);
+
+	void returnProcessingResultWithConfirmation(String username, IdoncPart part,
+			IdoncResult result);
+
+	void returnProcessingResultWithoutConfirmation(IdoncPart part,
+			IdoncResult result);
 
 }
