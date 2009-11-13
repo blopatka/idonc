@@ -8,9 +8,9 @@
 		<class>org.lopatka.idonc.model.user.Address</class>
 		<class>org.lopatka.idonc.model.user.LoggedUser</class>
 		<class>org.lopatka.idonc.model.user.UserCredential</class>
+		<class>org.lopatka.idonc.model.data.IdoncProject</class>
 		<class>org.lopatka.idonc.model.data.IdoncLongData</class>
 		<class>org.lopatka.idonc.model.data.IdoncPart</class>
-		<class>org.lopatka.idonc.model.data.IdoncProject</class>
 		<class>org.lopatka.idonc.model.data.IdoncResult</class>
 		<properties>
 

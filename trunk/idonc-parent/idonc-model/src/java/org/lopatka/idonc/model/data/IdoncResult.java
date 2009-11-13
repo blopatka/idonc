@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -28,8 +29,11 @@ public class IdoncResult implements Serializable {
     private long id;
 
     @Lob @Basic(fetch=FetchType.EAGER)
-    @Column(name="VAL")
-    private String val;
+    @Column(name="VALUE")
+    private String value;
+
+    @OneToOne(optional = false, mappedBy = "result")
+    private IdoncPart parent;
 
     public long getId() {
         return id;
@@ -40,11 +44,20 @@ public class IdoncResult implements Serializable {
     }
 
 	public String getValue() {
-		return val;
+		return value;
 	}
 
 	public void setValue(String val) {
-		this.val = val;
+		this.value = val;
 	}
+
+	public IdoncPart getParent() {
+		return parent;
+	}
+
+	public void setParent(IdoncPart parent) {
+		this.parent = parent;
+	}
+
 
 }

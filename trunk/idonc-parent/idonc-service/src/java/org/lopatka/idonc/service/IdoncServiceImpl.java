@@ -20,6 +20,7 @@ import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.LoggedUser;
 import org.lopatka.idonc.model.user.UserCredential;
 import org.lopatka.idonc.model.util.PasswordHasher;
+import org.springframework.transaction.annotation.Transactional;
 
 public class IdoncServiceImpl implements IdoncService, Serializable {
 
@@ -261,55 +262,39 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 		}
 	}
 
-	public IdoncPart getPartToProcess(String username, String sessionId)
+//	@Transactional(readOnly = false)
+	public IdoncPart getPartToProcess(String username, String sessionId, boolean requiresConfirmation)
 			throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
 			IdoncUser user = userDao.findByUsername(username);
 			IdoncProject project = user.getContributedProject();
 			if(project != null) {
 				//ma ustawiony projekt
-				List<IdoncPart> parts = projectDao.getParts(project);
-				Collections.sort(parts);
-				return parts.get(0);
+				IdoncPart part;
+				if (requiresConfirmation) {
+					part = projectDao.getPartWithConfirmation(username, project);
+				} else {
+					part = projectDao.getPartWithoutConfirmation(project);
+				}
+				return part;
 			} else {
 				//nie ma ustawionego projektu
 				return null;
 			}
-			//TODO napisac usluge do pobierania odpowiedniej czesci do obliczen
-			/*
-			 * algorytm pobierania czesci do obliczen
-			 * 1. sprawdzic do jakiego projektu nalezy klient (jezeli nie nalezy do zadnego, zwrocic null
-			 * 2. dla konkretnego projektu pobrac IdoncPart ktory spelnia ponizsze zalozenia
-			 *	a) jest najwczesniej dodanym elementem (najnizsze creationTimestamp)
-			 *	b) ma mniej niz 2 aktualnie liczacych uzytkownikow
-			 *	c) aktualny klient nie jest tym uzytkownikiem ktory w tej chwili liczy
-			 *	d) aktualny klient nie jest dodany do black listy
-			 *3. zwrocic IdoncPart ktory spelnia powyzsze warunki
-			 */
-
-			//throw new UnsupportedOperationException("not yet implemented");
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
 		}
 	}
 
-	public void returnProcessingResult(String username, String sessionId,
-			IdoncResult result) throws IdoncException {
+//	@Transactional(readOnly = false)
+	public void returnProcessingResult(String username, String sessionId, IdoncPart part,
+			IdoncResult result, boolean requiresConfirmation) throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
-			//TODO napisac usluge obslugujaca zwrocony wynik obliczen
-			/*
-			 * algorytm zwrócenia wyniku obliczen
-			 * 1. jesli nikt wczesniej nie zwrocil wyniki dla tego parta, to wpisac wynik
-			 * 2. jezeli ktos wczesniej liczyl tego parta to
-			 *	a) jezeli otrzymany wynik jest rozny od wyniku zapisanego przez innego uzytkownia nalezy
-			 *	   usunac wyniki obliczenia innego uzytkownika, do listy zablokowanych uzytkownikow, dodac
-			 *	   aktualnego, oraz tego ktory dodal wczesniej wynik (nie da sie stwierdzic ktory z nich dokonal
-			 *	   nieprawidlowych obliczen)
-			 *  b) jezeli wyniki sie zgadzaja to nalezy dodac wynik obliczen do parta, a nastepnie przesunac
-			 *     parta razem z wynikiem do processedParts w IdoncProject (tzn usunac z listy partsToProcess i dodac do
-			 *     processedParts)
-			 */
-			throw new UnsupportedOperationException("not yet implemented");
+			if(requiresConfirmation) {
+				projectDao.returnProcessingResultWithConfirmation(username, part, result);
+			} else {
+				projectDao.returnProcessingResultWithoutConfirmation(part, result);
+			}
 		} else {
 			throw new IdoncAuthorizationException("user not authorized");
 		}

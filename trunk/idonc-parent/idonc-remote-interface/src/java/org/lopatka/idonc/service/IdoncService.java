@@ -47,7 +47,7 @@ public interface IdoncService {
 
     public IdoncUser setContributedProject(String username, IdoncProject project, String sessionId) throws IdoncException;
 
-    public IdoncPart getPartToProcess(String username, String sessionId) throws IdoncException;
+    public IdoncPart getPartToProcess(String username, String sessionId, boolean confirmationRequired) throws IdoncException;
 
-    public void returnProcessingResult(String username, String sessionId, IdoncResult result) throws IdoncException;
+    public void returnProcessingResult(String username, String sessionId, IdoncPart part, IdoncResult result, boolean requiresConfirmation) throws IdoncException;
 }

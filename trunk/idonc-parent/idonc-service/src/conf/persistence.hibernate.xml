@@ -48,11 +48,12 @@
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="create*">PROPAGATION_REQUIRED,ISOLATION_READ_COMMITTED</prop>
-				<prop key="get*">PROPAGATION_REQUIRED,ISOLATION_READ_COMMITTED</prop>
-				<prop key="save*">PROPAGATION_REQUIRED</prop>
-				<prop key="delete*">PROPAGATION_REQUIRED</prop>
-				<prop key="*">PROPAGATION_REQUIRED, readOnly</prop>
+<!--				<prop key="create*">PROPAGATION_REQUIRED,ISOLATION_READ_COMMITTED</prop>-->
+<!--				<prop key="get*">PROPAGATION_REQUIRED,ISOLATION_READ_COMMITTED</prop>-->
+<!--				<prop key="save*">PROPAGATION_REQUIRED</prop>-->
+<!--				<prop key="delete*">PROPAGATION_REQUIRED</prop>-->
+<!--				<prop key="*">PROPAGATION_REQUIRED, readOnly</prop>-->
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
 	</bean>
