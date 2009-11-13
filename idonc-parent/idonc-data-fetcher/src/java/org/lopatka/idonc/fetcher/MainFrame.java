@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.swing.ActionMap;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -30,6 +31,7 @@ import org.lopatka.idonc.model.data.IdoncLongData;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
 import org.lopatka.idonc.model.data.IdoncResult;
+import org.lopatka.idonc.model.data.PartType;
 
 public class MainFrame extends JFrame {
 
@@ -187,22 +189,20 @@ public class MainFrame extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private List<IdoncPart> getInputData(IdoncProject project) {
-		List<IdoncProject> projects = em
-				.createQuery(
-						"select distinct proj from IdoncProject proj left join fetch proj.partsToProcess where proj.id = :id")
-				.setParameter("id", project.getId()).setFirstResult(0)
-				.setMaxResults(1).getResultList();
-		return projects.get(0).getPartsToProcess();
+		Query query = em.createQuery("select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType)");
+		query.setParameter("id", project.getId());
+		query.setParameter("partType", PartType.NEW);
+		List<IdoncPart> parts = query.getResultList();
+		return parts;
 	}
 
 	@SuppressWarnings("unchecked")
 	private List<IdoncPart> getResultData(IdoncProject project) {
-		List<IdoncProject> projects = em
-				.createQuery(
-						"select distinct proj from IdoncProject proj left join fetch proj.processedParts where proj.id = :id")
-				.setParameter("id", project.getId()).setFirstResult(0)
-				.setMaxResults(1).getResultList();
-		return projects.get(0).getProcessedParts();
+		Query query = em.createQuery("select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType)");
+		query.setParameter("id", project.getId());
+		query.setParameter("partType", PartType.PROCESSED);
+		List<IdoncPart> parts = query.getResultList();
+		return parts;
 	}
 
 	private void writeToFile(IdoncProject proj, List<IdoncPart> parts,
@@ -220,10 +220,11 @@ public class MainFrame extends JFrame {
 							+ "</number>");
 					stream.println("			<data>");
 					if (isResult) {
-						for (IdoncResult result : part.getResults()) {
-							stream.println("				<value>" + result.getValue()
-									+ "</value>");
-						}
+//						for (IdoncResult result : part.getResult()) {
+//							stream.println("				<value>" + result.getValue()
+//									+ "</value>");
+//						}
+						stream.println("				<value>" + part.getResult().getValue()+ "</value>");
 					} else {
 						for (IdoncLongData data : part.getLongDataList()) {
 							stream.println("				<value>" + data.getValue()
