@@ -9,6 +9,7 @@ import org.lopatka.idonc.model.data.IdoncResult;
 
 public class PocComputation implements IComputation {
 
+	@Override
 	public IdoncResult computeData(IdoncPart part) {
 		List<IdoncLongData> list = part.getLongDataList();
 		long resultValue = 0;
@@ -36,7 +37,8 @@ public class PocComputation implements IComputation {
 	}
 
 	private void waiting(long n) {
-
+		//FIXME usun ponizsza linijke
+		n = 1;
 		long t0, t1;
 
 		t0 = System.currentTimeMillis();
