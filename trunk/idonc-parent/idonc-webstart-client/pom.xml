@@ -43,7 +43,7 @@
 							<jarResources>
 								<jarResource>
 									<groupId>org.lopatka.idonc</groupId>
-									<artifactId>idonc-wsclient</artifactId>
+									<artifactId>idonc-client</artifactId>
 									<version>1.0-SNAPSHOT</version>
 									<mainClass>org.lopatka.idonc.client.MainIdoncApp</mainClass>
 								</jarResource>
