@@ -19,17 +19,17 @@ public class IdoncLongData implements Serializable {
 	@Id
     @Column(name="ID")
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Lob @Basic(fetch=FetchType.EAGER)
 	@Column(name="VALUE")
 	private String value;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

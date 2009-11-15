@@ -11,7 +11,7 @@ public interface ProjectDao {
 
 	List<IdoncProject> get(int first, int count);
 
-	IdoncProject load(int id);
+	IdoncProject load(Long id);
 
 	int count();
 

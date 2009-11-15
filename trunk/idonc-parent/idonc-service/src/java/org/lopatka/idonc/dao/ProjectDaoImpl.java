@@ -32,7 +32,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		return query.list();
 	}
 
-	public IdoncProject load(int id) {
+	public IdoncProject load(Long id) {
 		return (IdoncProject) getSession().get(IdoncProject.class, id);
 	}
 

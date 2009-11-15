@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.lopatka.idonc.dao.LoggedUserDao;
@@ -20,7 +19,6 @@ import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.LoggedUser;
 import org.lopatka.idonc.model.user.UserCredential;
 import org.lopatka.idonc.model.util.PasswordHasher;
-import org.springframework.transaction.annotation.Transactional;
 
 public class IdoncServiceImpl implements IdoncService, Serializable {
 
@@ -203,7 +201,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 		}
 	}
 
-	public IdoncUser loadUser(String username, String sessionId, long id)
+	public IdoncUser loadUser(String username, String sessionId, Long id)
 			throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
 			return userDao.load(id);
@@ -221,7 +219,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 		}
 	}
 
-	public IdoncProject loadProject(String username, String sessionId, int id)
+	public IdoncProject loadProject(String username, String sessionId, Long id)
 			throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
 			return projectDao.load(id);
