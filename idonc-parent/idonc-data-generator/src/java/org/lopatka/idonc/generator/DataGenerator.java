@@ -146,7 +146,7 @@ public class DataGenerator
     	tx.begin();
     	for(int i = 1; i <= PROJECTNAMES.length ;i++)
     	{
-    		IdoncProject project = em.find(IdoncProject.class, new Integer(i));
+    		IdoncProject project = em.find(IdoncProject.class, new Long(i));
     		project.setParts(generatePartsForPOCProject(project));
     		em.persist(project);
     	}

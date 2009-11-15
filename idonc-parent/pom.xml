@@ -44,5 +44,6 @@
     <module>idonc-wsclient</module>
     <module>idonc-computation</module>
     <module>idonc-data-fetcher</module>
+    <module>idonc-webstart-client</module>
   </modules>
 </project>

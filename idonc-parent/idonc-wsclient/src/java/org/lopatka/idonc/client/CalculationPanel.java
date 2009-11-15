@@ -139,6 +139,8 @@ public class CalculationPanel extends JPanel {
 			for(;;){
 				IdoncPart part = AppSession.idoncService.getPartToProcess(username, sessionId, requiresConfirmation);
 
+				partNameText.setText(part.getName());
+				partNumberText.setText(part.getNumber().toString());
 				ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
 				.getContext().getResourceMap(CalculationPanel.class);
 				partValuesGrid.setModel(new IdoncPartTableModel(part, resourceMap));

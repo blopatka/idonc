@@ -34,7 +34,7 @@ public class IdoncProject implements Serializable {
     @Id
     @Column(name = "PROJECT_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "NAME")
     @NotNull
@@ -52,21 +52,6 @@ public class IdoncProject implements Serializable {
     @OneToMany(mappedBy="project")
     @Cascade({CascadeType.ALL})
     private List<IdoncPart> parts;
-
-//    @OneToMany
-//    @Cascade({CascadeType.ALL})
-//    @JoinTable(name= "PROJECT_PARTS_TO_PROCESS",
-//    		joinColumns = {@JoinColumn(name="PROJECT_ID")},
-//    		inverseJoinColumns = @JoinColumn(name = "PART_ID"))
-//    private List<IdoncPart> parts;
-
-//    @OneToMany
-//    @Cascade({CascadeType.ALL})
-//    @JoinTable(name = "PROJECT_PROCESSED_PARTS",
-//    		joinColumns = {@JoinColumn(name = "PROJECT_ID")},
-//    		inverseJoinColumns = @JoinColumn(name = "PART_ID"))
-//    private List<IdoncPart> processedParts;
-
 
     @OneToMany(cascade={javax.persistence.CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinColumn(name="PROJECT_ID")
@@ -110,20 +95,11 @@ public class IdoncProject implements Serializable {
         this.parts = parts;
     }
 
-//    public List<IdoncPart> getProcessedParts() {
-//        return processedParts;
-//    }
-//
-//    public void setProcessedParts(List<IdoncPart> processedParts) {
-//        this.processedParts = processedParts;
-//    }
-
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

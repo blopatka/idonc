@@ -9,7 +9,7 @@ public class DetachableIdoncProjectModel extends LoadableDetachableModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private final int id;
+	private final Long id;
 
 	private final IdoncService service;
 

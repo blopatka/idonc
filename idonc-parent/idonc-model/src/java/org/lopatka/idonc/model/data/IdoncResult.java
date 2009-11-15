@@ -26,7 +26,7 @@ public class IdoncResult implements Serializable {
     @Id
     @Column(name="ID")
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Lob @Basic(fetch=FetchType.EAGER)
     @Column(name="VALUE")
@@ -35,11 +35,11 @@ public class IdoncResult implements Serializable {
     @OneToOne(optional = false, mappedBy = "result")
     private IdoncPart parent;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

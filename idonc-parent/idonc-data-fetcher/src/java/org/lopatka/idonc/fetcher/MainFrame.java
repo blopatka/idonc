@@ -30,7 +30,6 @@ import org.jdesktop.application.ResourceMap;
 import org.lopatka.idonc.model.data.IdoncLongData;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
-import org.lopatka.idonc.model.data.IdoncResult;
 import org.lopatka.idonc.model.data.PartType;
 
 public class MainFrame extends JFrame {

@@ -18,7 +18,16 @@
   	<resources>
   		<resource>
   			<directory>src/conf</directory>
+			<includes>
+				<include>**</include>
+			</includes>
   		</resource>
+		<resource>
+				<directory>src/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+		</resource>
   	</resources>
   	<plugins>
   		<plugin>

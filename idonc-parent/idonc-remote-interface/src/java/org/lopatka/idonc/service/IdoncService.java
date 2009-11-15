@@ -31,9 +31,9 @@ public interface IdoncService {
 
 	public int countUsers(String username, String sessionId) throws IdoncException;
 
-	public IdoncUser loadUser(String username, String sessionId, long id) throws IdoncException;
+	public IdoncUser loadUser(String username, String sessionId, Long id) throws IdoncException;
 
-	public IdoncProject loadProject(String username, String sessionId, int id) throws IdoncException;
+	public IdoncProject loadProject(String username, String sessionId, Long id) throws IdoncException;
 
 	public List<IdoncProject> getProjects(String username, String sessionId, int first, int count) throws IdoncException;
 

@@ -88,6 +88,15 @@
 		<resources>
 			<resource>
 				<directory>src/conf</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
 			</resource>
 		</resources>
 		<plugins>
@@ -99,24 +108,24 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-assembly-plugin</artifactId>-->
-<!--				<configuration>-->
-<!--					<descriptorRefs>-->
-<!--						<descriptorRef>jar-with-dependencies</descriptorRef>-->
-<!--					</descriptorRefs>-->
-<!--					<archive>-->
-<!--						<manifest>-->
-<!--							<mainClass>org.lopatka.idonc.client.MainIdoncApp</mainClass>-->
-<!--						</manifest>-->
-<!--					</archive>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>org.lopatka.idonc.client.MainIdoncApp</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo.webstart</groupId>
 				<artifactId>webstart-maven-plugin</artifactId>
-				<!--				<version>1.0-alpha-2-SNAPSHOT</version>-->
 				<executions>
 					<execution>
 						<phase>process-resources</phase>
@@ -171,6 +180,7 @@
 				</configuration>
 
 			</plugin>
+			-->
 		</plugins>
 	</build>
 </project>
