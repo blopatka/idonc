@@ -5,7 +5,7 @@
 	<artifactId>idonc-service</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>idonc-service</name>
+	<name>Idonc Service</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -63,7 +63,7 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<build>
-		<finalName>idonc-service</finalName>
+		<finalName>idoncService</finalName>
 		<sourceDirectory>src/java</sourceDirectory>
 		<testSourceDirectory>src/test</testSourceDirectory>
 		<resources>

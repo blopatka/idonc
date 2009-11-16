@@ -11,7 +11,6 @@ import org.apache.wicket.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authorization.strategies.role.Roles;
 import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.lopatka.idonc.service.ConverterService;
 import org.lopatka.idonc.model.data.IdoncProject;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.LoggedUser;
@@ -29,9 +28,6 @@ public class IdoncSession extends AuthenticatedWebSession {
 
 	@SpringBean(name="idoncService")
 	private IdoncService idoncService;
-
-	@SpringBean(name="converterService")
-	private ConverterService converterService;
 
 	public IdoncSession(Request request) {
 		super(request);
@@ -51,14 +47,6 @@ public class IdoncSession extends AuthenticatedWebSession {
 
 	public IdoncService getIdoncService() {
 		return this.idoncService;
-	}
-
-	public void setConverterService(ConverterService service) {
-		this.converterService = service;
-	}
-
-	public ConverterService getConverterService() {
-		return this.converterService;
 	}
 
 	public static IdoncSession get() {
