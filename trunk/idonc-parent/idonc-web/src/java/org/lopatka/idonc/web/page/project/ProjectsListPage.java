@@ -49,7 +49,7 @@ public class ProjectsListPage extends BasePage {
 				activateLink.setOutputMarkupPlaceholderTag(true);
 				item.add(activateLink);
 
-				if(currentUser.getContributedProject()!= null && (currentUser.getContributedProject().getId() == project.getId())) {
+				if(currentUser.getContributedProject()!= null && (currentUser.getContributedProject().getId().equals(project.getId()))) {
 					activateLink.setVisible(false);
 				}
 

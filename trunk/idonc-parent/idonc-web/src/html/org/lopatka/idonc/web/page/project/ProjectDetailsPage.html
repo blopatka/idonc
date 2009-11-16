@@ -5,27 +5,27 @@
 <div id="dane_projektu">
 	<form wicket:id="projectForm">
 		<div class="dataView">
-			<div><label id="title">Project details</label></div>
+			<div><label id="title"><wicket:message key="projectDetails.title"/></label></div>
 			<div>
-				<label>Project name:</label>
+				<label><wicket:message key="projectDetails.name"/></label>
 				<label wicket:id="name"></label>
 			</div>
 			<div>
-				<label>Website:</label>
+				<label><wicket:message key="projectDetails.website"/></label>
 				<label wicket:id="website"></label>
 			</div>
 			<div>
-				<label>Description:</label>
+				<label><wicket:message key="projectDetails.description"/></label>
 				<label wicket:id="description"></label>
 			</div>
 			<div>
-				Contributing users:
+				<wicket:message key="projectDetails.users"/>
 				<span wicket:id="listView">
-					<span wicket:id="userName">[name]</span><br/>
+					<span wicket:id="userName"></span><br/>
 				</span>
 			</div>
 			<div>
-				<input type="submit" wicket:id="backButton" value="Back" />
+				<input type="submit" wicket:id="backButton" wicket:message="value:projectDetails.backButton" />
 			</div>
 		</div>
 	</form>
