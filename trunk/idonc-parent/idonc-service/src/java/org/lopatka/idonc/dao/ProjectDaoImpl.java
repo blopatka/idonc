@@ -91,18 +91,18 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		userQuery.setMaxResults(1);
 		IdoncUser user = (IdoncUser) userQuery.list().get(0);
 
-		//pytamy o elementy ktore byly juz liczone
-		Query query = getSession().createQuery("select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType) and (parts.result is not null) and ((parts.userProcessing is not null) and (parts.userProcessing.id != :userId)) order by parts.id");
+		//pytamy o elementy ktore byly juz raz liczone (ale nie przez nas)
+		Query query = getSession().createQuery("select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType) and (parts.result is not null) and (parts.userProcessing is not null) and (parts.userProcessing.id != :userId) order by parts.id");
 		query.setParameter("id", project.getId());
-		query.setParameter("partType", PartType.NEW);
+		query.setParameter("partType", PartType.ONE_PROCESSING);
 		query.setParameter("userId", user.getId());
 		query.setFirstResult(0);
 		query.setMaxResults(1);
 		List resultList = query.list();
 		if(resultList.isEmpty()) {
 			//nie ma elementow ktore byly liczone i potrzebuja potwierdzenia
-			//pytamy o elementy
-			Query query2 = getSession().createQuery("select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType) order by parts.id");
+			//pytamy o nie liczone elementy
+			Query query2 = getSession().createQuery("select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and order by parts.id");
 			query2.setParameter("id", project.getId());
 			query2.setParameter("partType", PartType.NEW);
 			query2.setFirstResult(0);
@@ -110,6 +110,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 			IdoncPart part = (IdoncPart) query2.list().get(0);
 
 			part.setUserProcessing(user);
+			part.setPartType(PartType.ONE_PROCESSING);
 			getSession().update(part);
 
 			part = initializePart(part);
@@ -119,6 +120,10 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 			IdoncPart part = (IdoncPart) resultList.get(0);
 			part = initializePart(part);
 
+			part.setPartType(PartType.TWO_PROCESSING);
+			getSession().update(part);
+
+
 			return part;
 		}
 //		return null;
@@ -126,13 +131,20 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 
 	@Override
 	public IdoncPart getPartWithoutConfirmation(IdoncProject project) {
+		//pobranie elementu o statusie NEW
 		Query query = getSession().createQuery("select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType) order by parts.id");
 		query.setParameter("id", project.getId());
 		query.setParameter("partType", PartType.NEW);
 		query.setFirstResult(0);
 		query.setMaxResults(1);
 		IdoncPart part = (IdoncPart) query.list().get(0);
-		return initializePart(part);
+		initializePart(part);
+
+		//zerezerwowanie elementu, czyli nadanie mu statusu ONE_PROCESSING
+		part.setPartType(PartType.ONE_PROCESSING);
+		getSession().update(part);
+
+		return part;
 	}
 
 	@Override
@@ -155,6 +167,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 				//wynik inny, trzeba usunac wynik obliczen aby skierowac do ponownego obliczenia
 				tPart.setUserProcessing(null);
 				tPart.setResult(null);
+				tPart.setPartType(PartType.NEW);
 
 				//usuniecie niepotrzebnego wpisu z bazy
 				getSession().delete(tResult);
