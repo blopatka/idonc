@@ -9,8 +9,6 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean id="converterService" class="org.lopatka.idonc.service.ConverterServiceImpl"/>
-
     <bean id="idoncService" class="org.lopatka.idonc.service.IdoncServiceImpl">
         <property name="userDao" ref="userDao"/>
         <property name="userCredentialDao" ref="userCredentialDao"/>

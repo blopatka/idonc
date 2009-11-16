@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <jnlp
     spec="1.0+"
-    codebase="http://localhost:8282/idonc-webstart-client-1.0-SNAPSHOT/webstart"
+    codebase="http://localhost:8282/idoncClient/webstart"
     href="$outputFile">
   <information>
     <title>IDONC Webstart</title>
@@ -21,4 +21,4 @@
   </resources>
   <application-desc main-class="$mainClass">
   </application-desc>
-</jnlp> 
+</jnlp>

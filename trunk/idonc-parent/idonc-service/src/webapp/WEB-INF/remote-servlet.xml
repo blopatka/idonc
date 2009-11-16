@@ -3,15 +3,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
-       
-	<bean name="/ConverterService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-        <property name="service">
-            <ref bean="converterService"/>
-        </property>
-        <property name="serviceInterface">
-            <value>org.lopatka.idonc.service.ConverterService</value>
-        </property>
-    </bean>
 
     <bean name="/IdoncService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
         <property name="service">
@@ -21,14 +12,5 @@
             <value>org.lopatka.idonc.service.IdoncService</value>
         </property>
     </bean>
-    
-</beans>
 
-<!--	<bean name="/timeService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">-->
-<!--        <property name="service">-->
-<!--            <ref bean="timeService"/>-->
-<!--        </property>-->
-<!--        <property name="serviceInterface">-->
-<!--            <value>com.test.TimeService</value>-->
-<!--        </property>-->
-<!--    </bean>-->
+</beans>

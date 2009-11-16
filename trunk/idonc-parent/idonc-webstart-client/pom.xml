@@ -5,7 +5,7 @@
 	<artifactId>idonc-webstart-client</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>idonc-webstart-client</name>
+	<name>Idonc Webstart Client</name>
 	<url>http://maven.apache.org</url>
 	<parent>
 		<artifactId>idonc-parent</artifactId>
@@ -78,6 +78,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>idoncClient</finalName>
 	</build>
 	<dependencies>
 		<dependency>
