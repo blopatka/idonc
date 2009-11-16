@@ -2,17 +2,17 @@
 <head></head>
 <body>
 <wicket:extend>
-	<span wicket:id="navigator">navigation</span>
+	<span wicket:id="navigator"></span>
 	<table cellspacing="0" class="dataView">
 		<tr>
-			<th>Project name</th>
-			<th>action 1</th>
-			<th>action 2</th>
+			<th><wicket:message key="projectList.name"/></th>
+			<th><wicket:message key="projectList.action1"/></th>
+			<th><wicket:message key="projectList.action2"/></th>
 		</tr>
 		<tr wicket:id="pageable">
-			<td><span wicket:id="name">[projectname]</span></td>
-			<td><a href="#" wicket:id="details">[details]</a></td>
-			<td><a href="#" wicket:id="setActiveProject">[activate]</a></td>
+			<td><span wicket:id="name"></span></td>
+			<td><a href="#" wicket:id="details"><wicket:message key="projectList.details"/></a></td>
+			<td><a href="#" wicket:id="setActiveProject"><wicket:message key="projectList.activate"/></a></td>
 		</tr>
 	</table>
 </wicket:extend>
