@@ -18,15 +18,21 @@ html, body {
 	
 }
 
+#logo {
+	margin-right: 0px;	
+}
+
 #tresc {
 	width: 780px;
-	background-color: #fff;	
+	background-color: #fff;
+	min-height: 300px;	
 }
 
 #stopka {
 	background-color: #888;
 	clear: both;
 	width: 100%;
+	min-height: 1.5em;
 }
 
 #dane_usera {
