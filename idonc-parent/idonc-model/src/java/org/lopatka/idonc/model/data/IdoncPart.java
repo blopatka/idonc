@@ -50,15 +50,13 @@ public class IdoncPart implements Serializable, Comparable<IdoncPart> {
     @LazyToOne(LazyToOneOption.FALSE)
     private List<IdoncLongData> longDataList;
 
-	//FIXME czy tutaj na pewno unique ?
 	@ManyToOne
-	@JoinColumn(name = "RESULT_ID", unique=true)
+	@JoinColumn(name = "RESULT_ID")
 	@Cascade(CascadeType.ALL)
 	private IdoncResult result;
 
-	//FIXME czy tutaj na pewno unique ?
 	@ManyToOne
-	@JoinColumn(name="USER_PROCESSING_ID", unique=true)
+	@JoinColumn(name="USER_PROCESSING_ID")
 	private IdoncUser userProcessing;
 
     @ManyToOne

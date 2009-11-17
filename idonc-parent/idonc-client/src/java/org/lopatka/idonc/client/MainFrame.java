@@ -89,7 +89,7 @@ public class MainFrame extends JFrame {
 		beginWorkMenuItem.setText(resourceMap.getString("BeginWork.text"));
 		beginWorkMenuItem.setName(resourceMap.getString("BeginWork.name"));
 		beginWorkMenuItem.setIcon(resourceMap.getImageIcon("BeginWork.icon"));
-
+		beginWorkMenuItem.setEnabled(false);
 		actionsMenu.add(beginWorkMenuItem);
 
 		stopWorkMenuItem.setAction(actionMap.get("stopWork"));
@@ -97,6 +97,7 @@ public class MainFrame extends JFrame {
 		stopWorkMenuItem.setText(resourceMap.getString("StopWork.text"));
 		stopWorkMenuItem.setName(resourceMap.getString("StopWork.name"));
 		stopWorkMenuItem.setIcon(resourceMap.getIcon("StopWork.icon"));
+		stopWorkMenuItem.setEnabled(false);
 		actionsMenu.add(stopWorkMenuItem);
 
 		mainMenuBar.add(actionsMenu);
@@ -149,14 +150,31 @@ public class MainFrame extends JFrame {
 
 	@Action
 	public void beginWork() {
+		session.getMainFrame().setBeginWorkButtonEnabled(false);
+		session.getMainFrame().setStopWorkButtonEnabled(true);
 		((CalculationPanel)session.getCalculationPanel()).loadPart();
 		System.out.println("begin work");
 	}
 
 	@Action
 	public void stopWork() {
+		session.getMainFrame().setBeginWorkButtonEnabled(false);
+		session.getMainFrame().setStopWorkButtonEnabled(false);
+		session.getMainFrame().setLoginButtonEnabled(true);
 		session.setCalculationInterrupted(true);
 		System.out.println("stop work");
+	}
+
+	public void setBeginWorkButtonEnabled(boolean enable) {
+		this.beginWorkMenuItem.setEnabled(enable);
+	}
+
+	public void setStopWorkButtonEnabled(boolean enable) {
+		this.stopWorkMenuItem.setEnabled(enable);
+	}
+
+	public void setLoginButtonEnabled(boolean enable) {
+		this.loginMenuItem.setEnabled(enable);
 	}
 
 }
