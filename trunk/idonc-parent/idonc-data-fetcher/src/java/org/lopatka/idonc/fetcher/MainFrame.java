@@ -199,7 +199,7 @@ public class MainFrame extends JFrame {
 	private List<IdoncPart> getResultData(IdoncProject project) {
 		Query query = em.createQuery("select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType)");
 		query.setParameter("id", project.getId());
-		query.setParameter("partType", PartType.PROCESSED);
+		query.setParameter("partType", PartType.COMPLETED);
 		List<IdoncPart> parts = query.getResultList();
 		return parts;
 	}

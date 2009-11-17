@@ -25,7 +25,7 @@ public class AppSession {
 	private JPanel loginPanel;
 	private JPanel calculationPanel;
 
-	private JFrame mainFrame;
+	private MainFrame mainFrame;
 
 	private LoggedUser loggedUser;
 	private CardLayout cardLayout;
@@ -60,11 +60,11 @@ public class AppSession {
 		this.loggedUser = loggedUser;
 	}
 
-	public JFrame getMainFrame() {
+	public MainFrame getMainFrame() {
 		return mainFrame;
 	}
 
-	public void setMainFrame(JFrame mainFrame) {
+	public void setMainFrame(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 	}
 

@@ -52,9 +52,11 @@ public class MainIdoncApp extends SingleFrameApplication {
 	protected void shutdown() {
 		super.shutdown();
 		// tutaj dodać wylogowanie i inne ewentualne pierdoły ;-)
-		AppSession.idoncService.logoutUser(AppSession.getInstance()
-				.getLoggedUser().getUser().getUserName(), AppSession
-				.getInstance().getLoggedUser().getSessionId());
+		if (AppSession.getInstance().getLoggedUser() != null) {
+			AppSession.idoncService.logoutUser(AppSession.getInstance()
+					.getLoggedUser().getUser().getUserName(), AppSession
+					.getInstance().getLoggedUser().getSessionId());
+		}
 		System.out.println("End of work - cleaning");
 	}
 
