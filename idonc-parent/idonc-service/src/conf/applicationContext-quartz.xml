@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="idoncDatabaseCleaner" class="org.lopatka.idonc.service.utils.DatabaseCleaner">
+		<property name="userDao" ref="userDao"/>
+		<property name="projectDao" ref="projectDao"/>
+		<property name="loggedUserDao" ref="loggedUserDao"/>
+		<property name="userCredentialDao" ref="userCredentialDao" />
+	</bean>
+	
+	<bean id="idoncJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    	<property name="targetObject">
+    		<ref bean="idoncDatabaseCleaner"/>
+    	</property>
+    	<property name="targetMethod">
+    		<value>cleanDatabase</value>
+    	</property>
+    </bean>
+    
+    <bean id="idoncCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    	<property name="jobDetail">
+    		<ref bean="idoncJobDetail"/>
+    	</property>
+    	<property name="cronExpression">
+    		<value>0 0 0/1 * * ?</value>
+    	</property>
+    </bean>
+    
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    	<property name="autoStartup" value="true"/>
+    	<property name="waitForJobsToCompleteOnShutdown" value="true"/>
+    	<property name="quartzProperties">
+    		<props>
+    			<!-- Plugins -->
+    			<prop key="org.quartz.plugin.shutdownhook.class">
+    				org.quartz.plugins.management.ShutdownHookPlugin
+    			</prop>
+    			<prop key="org.quartz.plugin.shutdownhook.cleanShutdown">true</prop>
+    		</props>
+    	</property>
+    	<property name="triggers">
+    		<list>
+    			<ref bean="idoncCronTrigger"/>
+    		</list>
+    	</property>
+    </bean>
+</beans>

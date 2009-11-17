@@ -1,5 +1,6 @@
 package org.lopatka.idonc.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -116,6 +117,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 
 			part.setUserProcessing(user);
 			part.setPartType(PartType.PROCESSING);
+			part.setUpdated(System.currentTimeMillis());
 			getSession().update(part);
 
 			part = initializePart(part);
@@ -126,6 +128,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 			part = initializePart(part);
 
 			part.setPartType(PartType.PROCESSING);
+			part.setUpdated(System.currentTimeMillis());
 			getSession().update(part);
 
 			return part;
@@ -148,6 +151,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 
 		// zerezerwowanie elementu, czyli nadanie mu statusu ONE_PROCESSING
 		part.setPartType(PartType.PROCESSING);
+		part.setUpdated(System.currentTimeMillis());
 		getSession().update(part);
 
 		return part;
@@ -207,6 +211,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		}
 
 		// zapisanie zmodyfikowanego parta
+		tPart.setUpdated(System.currentTimeMillis());
 		getSession().update(tPart);
 
 	}
@@ -231,7 +236,38 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		tPart.setResult(tResult);
 
 		// zapisanie wyniku
+		tPart.setUpdated(System.currentTimeMillis());
 		getSession().update(tPart);
+	}
+	
+	@Override
+	public void resetForsakenParts() {
+		//resetujemy porzucone partsy, ktore nie zostaly przeliczone przez ostatnie 24h
+		Long cutTimestamp = System.currentTimeMillis() - (24 * 60 *60 * 1000);
+		
+		//przypadek gdy przerwano obliczenia bez potwierdzenia
+		String queryString1 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is null) and (part.result is null)";
+		Query query = getSession().createQuery(queryString1);
+		query.setParameter("searchPartType", PartType.PROCESSING);
+		query.setParameter("partType", PartType.NEW);
+		query.setLong("cutTime", cutTimestamp);
+		query.executeUpdate();
+		
+		//przypadek gdy przerwano obliczenia z potwierdzeniem przy pierwszym liczeniu
+		String queryString2 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType, part.userProcessing = null where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is not null) and (part.result is null)";
+		Query query2 = getSession().createQuery(queryString2);
+		query2.setParameter("searchPartType", PartType.PROCESSING);
+		query2.setParameter("partType", PartType.NEW);
+		query2.setLong("cutTime", cutTimestamp);
+		query2.executeUpdate();
+		
+		//przypadek gdy przerwano obliczenia z potwierdzeniem przy drugim liczeniu
+		String queryString3 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is not null) and (part.result is not null)";
+		Query query3 = getSession().createQuery(queryString3);
+		query3.setParameter("searchPartType", PartType.PROCESSING);
+		query3.setParameter("partType", PartType.NEW);
+		query3.setLong("cutTime", cutTimestamp);
+		query3.executeUpdate();
 	}
 
 }
