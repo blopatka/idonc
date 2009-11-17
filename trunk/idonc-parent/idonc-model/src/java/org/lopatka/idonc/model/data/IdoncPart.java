@@ -1,6 +1,7 @@
 package org.lopatka.idonc.model.data;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -65,10 +68,25 @@ public class IdoncPart implements Serializable, Comparable<IdoncPart> {
 
     @Enumerated(EnumType.STRING)
     private PartType partType;
+    
+    @Column(name="LAST_UPDATE")
+    private Long updated;
 
+    @PrePersist
+    @PreUpdate
+    protected void onCreate() {
+    	updated = new Date().getTime();
+    }
 
+    public Long getUpdated() {
+		return updated;
+	}
 
-    public IdoncUser getUserProcessing() {
+	public void setUpdated(Long updated) {
+		this.updated = updated;
+	}
+
+	public IdoncUser getUserProcessing() {
 		return userProcessing;
 	}
 

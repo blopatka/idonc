@@ -3,6 +3,7 @@
 <beans>
     <import resource="classpath:common.xml" />
     <import resource="classpath:persistence.hibernate.xml" />
+    <import resource="classpath:applicationContext-quartz.xml"/>
 
     <bean name="openSessionInViewInterceptor"
 		class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
@@ -15,4 +16,5 @@
         <property name="loggedUserDao" ref="loggedUserDao"/>
         <property name="projectDao" ref="projectDao"/>
     </bean>
+    
 </beans>

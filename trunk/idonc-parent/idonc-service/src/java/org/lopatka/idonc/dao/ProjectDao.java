@@ -31,4 +31,6 @@ public interface ProjectDao {
 	void returnProcessingResultWithoutConfirmation(IdoncPart part,
 			IdoncResult result);
 
+	void resetForsakenParts();
+
 }
