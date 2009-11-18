@@ -81,9 +81,6 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		 * liczy d) aktualny klient nie jest dodany do black listy
 		 */
 
-		// FIXME - poprawic query do pobierania parta do obliczen - w tej chwili
-		// nie uwzglednia faktu ze juz obliczal ten fragment (userprocessing) i
-		// sciaga tego samego parta 2 razy pod rzad
 		// pobieramy zalogowanego uzytkownika
 		Query userQuery = getSession()
 				.createQuery(
@@ -239,12 +236,12 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		tPart.setUpdated(System.currentTimeMillis());
 		getSession().update(tPart);
 	}
-	
+
 	@Override
 	public void resetForsakenParts() {
 		//resetujemy porzucone partsy, ktore nie zostaly przeliczone przez ostatnie 24h
 		Long cutTimestamp = System.currentTimeMillis() - (24 * 60 *60 * 1000);
-		
+
 		//przypadek gdy przerwano obliczenia bez potwierdzenia
 		String queryString1 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is null) and (part.result is null)";
 		Query query = getSession().createQuery(queryString1);
@@ -252,7 +249,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		query.setParameter("partType", PartType.NEW);
 		query.setLong("cutTime", cutTimestamp);
 		query.executeUpdate();
-		
+
 		//przypadek gdy przerwano obliczenia z potwierdzeniem przy pierwszym liczeniu
 		String queryString2 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType, part.userProcessing = null where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is not null) and (part.result is null)";
 		Query query2 = getSession().createQuery(queryString2);
@@ -260,7 +257,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		query2.setParameter("partType", PartType.NEW);
 		query2.setLong("cutTime", cutTimestamp);
 		query2.executeUpdate();
-		
+
 		//przypadek gdy przerwano obliczenia z potwierdzeniem przy drugim liczeniu
 		String queryString3 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is not null) and (part.result is not null)";
 		Query query3 = getSession().createQuery(queryString3);

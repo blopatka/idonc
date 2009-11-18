@@ -15,7 +15,9 @@ public interface IdoncService {
 
     public void logoutUser(String userName, String sessionId);
 
-	public boolean registerUser(IdoncUser user, String password);
+    public boolean checkUserExists(String username);
+
+    public boolean registerUser(IdoncUser user, String password);
 
 	public boolean editUser(IdoncUser user, String password);
 
@@ -50,4 +52,5 @@ public interface IdoncService {
     public IdoncPart getPartToProcess(String username, String sessionId, boolean confirmationRequired) throws IdoncException;
 
     public void returnProcessingResult(String username, String sessionId, IdoncPart part, IdoncResult result, boolean requiresConfirmation) throws IdoncException;
+
 }

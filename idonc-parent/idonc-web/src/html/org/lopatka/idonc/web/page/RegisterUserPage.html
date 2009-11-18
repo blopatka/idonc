@@ -2,11 +2,13 @@
 <link rel="stylesheet" type="text/css" href="css/login.css" />
 <body>
 <div id="rejestracja">
+	<center>
 	<form id="rejestracja_form" wicket:id="registerForm">
+	<label id="title"><h2><wicket:message key="register.title"/></h2></label>
+	<span wicket:id="feedback"/>
 	<table cellspacing="0" cellpadding="0" border="0">
 		<thead>
-			<tr><td><label id="title"><wicket:message key="register.title"/></label></td></tr>
-			<tr><td><label id="sectionTitle"><wicket:message key="register.loginData"/></label></td></tr>
+			<tr><td><label id="sectionTitle"><b><wicket:message key="register.loginData"/></b></label></td></tr>
 		</thead>
 		<tbody>
 			<tr>
@@ -25,7 +27,7 @@
 					id="rePassword" /></td>
 			</tr>
 			<tr>
-				<td><label id="sectionTitle"><wicket:message key="register.userData"/></label></td>
+				<td><label id="sectionTitle"><b><wicket:message key="register.userData"/></b></label></td>
 			</tr>
 			<tr>
 				<td><label for="firstName"><wicket:message key="register.firstName"/></label></td>
@@ -78,6 +80,7 @@
 		</tbody>
 	</table>
 	</form>
+	</center>
 </div>
 </body>
 </html>
