@@ -101,6 +101,16 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 		}
 	}
 
+	@Override
+	public boolean checkUserExists(String username) {
+		IdoncUser returned = userDao.findByUsername(username);
+		if(returned != null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	public boolean registerUser(IdoncUser user, String password) {
 		user = userDao.save(user);
 
