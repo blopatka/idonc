@@ -219,10 +219,6 @@ public class MainFrame extends JFrame {
 							+ "</number>");
 					stream.println("			<data>");
 					if (isResult) {
-//						for (IdoncResult result : part.getResult()) {
-//							stream.println("				<value>" + result.getValue()
-//									+ "</value>");
-//						}
 						stream.println("				<value>" + part.getResult().getValue()+ "</value>");
 					} else {
 						for (IdoncLongData data : part.getLongDataList()) {
