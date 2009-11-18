@@ -2,7 +2,6 @@ package org.lopatka.idonc.client;
 
 import java.awt.CardLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.lopatka.idonc.model.data.IdoncPart;

@@ -38,6 +38,9 @@ public class DataGenerator
 			"kacha", "koteczek", "pies", "kot", "sowa", "jaszczurka", "slon",
 			"kon", "swiniak", "koza", "krowa", "grab", "dab", "orzech", "jablon",
 			"wisnia", "grusza", "modrzew", "sosna"};
+
+	private static final String PASSWORD = "qwe123";
+
 	private static final String[] FIRSTNAMES = { "Jacob", "Emily", "Michael",
 			"Sarah", "Matthew", "Brianna", "Nicholas", "Samantha",
 			"Christopher", "Hailey", "Abner", "Abby", "Joshua", "Douglas",
@@ -109,7 +112,7 @@ public class DataGenerator
 			byte[] salt;
 			try {
 				salt = PasswordHasher.createSalt();
-				byte[] pass = PasswordHasher.getHash(1000, element, salt);
+				byte[] pass = PasswordHasher.getHash(1000, PASSWORD, salt);
 				cred.setSalt(PasswordHasher.byteToBase64(salt));
 				cred.setPassword(PasswordHasher.byteToBase64(pass));
 
