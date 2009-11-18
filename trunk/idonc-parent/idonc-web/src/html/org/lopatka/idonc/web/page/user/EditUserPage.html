@@ -3,19 +3,22 @@
 <wicket:extend>
 	<div id="edycja_usera">
 		<form wicket:id="editUserForm">
+		<label id="title"><h2><wicket:message key="userEdit.title"/></h2></label>
+		<span wicket:id="feedback" />
 		<table cellspacing="0" class="dataView">
 			<thead>
 				<tr>
-					<td><label id="title"><wicket:message key="userEdit.title"/></label></td>
-				</tr>
-				<tr>
-					<td><label id="sectionTitle"><wicket:message key="userEdit.loginData"/></label></td>
+					<td><label id="sectionTitle"><b><wicket:message key="userEdit.loginData"/></b></label></td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td><label for="username"><wicket:message key="userEdit.username"/></label></td>
 					<td><label wicket:id="usernameInput" id="username" ></label></td>
+				</tr>
+				<tr>
+					<td><label for="oldPassword"><wicket:message key="userEdit.oldPassword"/></label></td>
+					<td><input type="password" wicket:id="oldPasswordInput" id="oldPassword"/></td>
 				</tr>
 				<tr>
 					<td><label for="password"><wicket:message key="userEdit.password"/></label></td>
@@ -28,7 +31,7 @@
 						id="rePassword" /></td>
 				</tr>
 				<tr>
-					<td><label id="sectionTitle"><wicket:message key="userEdit.userData"/></label></td>
+					<td><label id="sectionTitle"><b><wicket:message key="userEdit.userData"/></b></label></td>
 				</tr>
 				<tr>
 					<td><label for="firstName"><wicket:message key="userEdit.firstName"/></label></td>
