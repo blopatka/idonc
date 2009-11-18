@@ -40,7 +40,6 @@ public class SetActiveProjectPage extends BasePage {
 
 	private void makeProjectAsActive() {
 		IdoncProject project = (IdoncProject) SetActiveProjectPage.this.getModelObject();
-		//TODO tutaj uzyc uslugi do ustawienie zalogowanego uzytkownika do danego projektu
 		IdoncUser user = idoncService.setContributedProject(session.getLoggedUserName(), project,  session.getSessionId());
 		LoggedUser lU = session.getLoggedUser();
 		lU.setUser(user);

@@ -37,7 +37,7 @@ public class Poc2Computation implements IComputation {
 	}
 
 	private void waiting(long n) {
-		//TODO - usunac to przypisanie zeby czekalo zadana liczbe milisekund
+		//FIXME - usunac ponizsza linijke
 		n = 1;
 		long t0, t1;
 

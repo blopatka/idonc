@@ -108,7 +108,6 @@ public class RegisterUserPage extends WebPage {
 
 				@Override
 				public void onSubmit() {
-					//FIXME check if username exists
 					if(checkPasswordsEquals(password, rePassword) && checkUsernameNotExist(usernameField)) {
 						boolean result = idoncService.registerUser(user, password);
 						if(!result) {
