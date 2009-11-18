@@ -11,10 +11,11 @@ public class DatabaseCleaner {
 	private UserCredentialDao userCredentialDao;
 	private LoggedUserDao loggedUserDao;
 	private ProjectDao projectDao;
-	
+
 	public void cleanDatabase() {
 		System.out.println("cleaning");
-		projectDao.resetForsakenParts();
+		projectDao.resetAbandonedParts();
+		loggedUserDao.resetAbandonedSessions();
 	}
 
 	public UserDao getUserDao() {
@@ -48,6 +49,6 @@ public class DatabaseCleaner {
 	public void setProjectDao(ProjectDao projectDao) {
 		this.projectDao = projectDao;
 	}
-	
-	
+
+
 }

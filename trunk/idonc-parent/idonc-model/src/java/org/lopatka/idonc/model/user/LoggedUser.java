@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -28,15 +30,32 @@ public class LoggedUser implements Serializable {
 	@Column(name="ID")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name="USER")
 	@LazyToOne(LazyToOneOption.FALSE)
 	private IdoncUser user;
-	
+
 	@Column(name="SESSION_ID")
 	@NotNull
 	private String sessionId;
+
+	@Column(name="LAST_UPDATED")
+	private Long updated;
+
+	@PrePersist
+	@PreUpdate
+	protected void onCreate() {
+		updated = System.currentTimeMillis();
+	}
+
+	public Long getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Long updated) {
+		this.updated = updated;
+	}
 
 	public Long getId() {
 		return id;
@@ -61,6 +80,6 @@ public class LoggedUser implements Serializable {
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-	
-	
+
+
 }

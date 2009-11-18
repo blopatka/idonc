@@ -1,7 +1,6 @@
 package org.lopatka.idonc.model.data;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -68,14 +67,14 @@ public class IdoncPart implements Serializable, Comparable<IdoncPart> {
 
     @Enumerated(EnumType.STRING)
     private PartType partType;
-    
+
     @Column(name="LAST_UPDATE")
     private Long updated;
 
     @PrePersist
     @PreUpdate
     protected void onCreate() {
-    	updated = new Date().getTime();
+    	updated = System.currentTimeMillis();
     }
 
     public Long getUpdated() {
