@@ -115,9 +115,7 @@ public class CalculationPanel extends JPanel {
 	public void loadPart() {
 
 		IComputation algorithm = ComputationManager.getInstance().getComputationForProject(session.getProject());
-		algorithm.isResultConfirmationRequired();
 
-		//TODO begin calculations !!
 		CalculationThread thr = new CalculationThread(algorithm);
 		thr.execute();
 
@@ -159,7 +157,6 @@ public class CalculationPanel extends JPanel {
 			try {
 				session.setCalculationInterrupted(get());
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException ignore) {
 			}

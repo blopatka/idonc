@@ -10,16 +10,16 @@ import org.lopatka.idonc.model.data.IdoncResult;
 public class IsingComputation implements IComputation {
 
 	public IdoncResult computeData(IdoncPart part) {
-		// TODO napisac metode do obliczania danych w projekcie ISING
-		
-		
+		// FIXME napisac metode do obliczania danych w projekcie ISING
+
+
 		return null;
 	}
 
 	public boolean isResultConfirmationRequired() {
 		return false;
 	}
-	
+
 	private int[][] readSpinArray(List<IdoncLongData> list) {
 		int dim = list.get(1).getValue().length();
 		int[][] array = new int[dim][dim];
@@ -29,24 +29,24 @@ public class IsingComputation implements IComputation {
 				array[i][j] = row.charAt(j) == '1' ? -1 : 1;
 			}
 		}
-		
+
 		return array;
 	}
-	
+
 	// change the following globals to suit your fancy:
     static int size = 100;          // lattice size; can be any divisor of maxSize
     static double T = 2.27;        // temperature in units of epsilon/k
-   
+
 
     // other globals:
-   
+
     static int[][] s;   // the array of spins
-        
+
     public static void main(String[] args) {
-    
+
         int i, j;       // indices into array of spins
         double Ediff;   // energy change upon flipping
-    
+
 
         // initialize array of spins:
         //losowanie wartosci spinow (mozna przeslac w usludze)
@@ -54,10 +54,10 @@ public class IsingComputation implements IComputation {
         for (i = 0; i < size; i++) {
             for (j = 0; j < size; j++) {
                 if (Math.random() < 0.5) s[i][j] = 1; else s[i][j] = -1;
-               
+
             }
         }
-        
+
         // main loop:
         while (true) {
             i = (int) (Math.random() * size);  // choose a random lattice site
@@ -74,7 +74,7 @@ public class IsingComputation implements IComputation {
             }
         }
     }
-    
+
     // given a lattice site, compute energy change from hypothetical flip; note pbc:
     private static double deltaU(int i, int j) {
         int leftS, rightS, topS, bottomS;  // values of neighboring spins
@@ -84,6 +84,6 @@ public class IsingComputation implements IComputation {
         if (j == size-1) bottomS = s[i][0]; else bottomS = s[i][j+1];
         return 2.0 * s[i][j] * (leftS + rightS + topS + bottomS);
     }
-    
+
 
 }
