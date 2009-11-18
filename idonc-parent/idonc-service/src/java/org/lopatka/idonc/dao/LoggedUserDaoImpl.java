@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.lopatka.idonc.model.data.PartType;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.LoggedUser;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -45,7 +47,10 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 		loggCrit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<LoggedUser> ret = loggCrit.list();
 		if (ret.size() == 1) {
-			return ret.get(0);
+			LoggedUser returnedUser = ret.get(0);
+			returnedUser.setUpdated(System.currentTimeMillis());
+			getSession().update(returnedUser);
+			return returnedUser;
 		} else {
 			return null;
 		}
@@ -59,7 +64,10 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 		loggCrit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<LoggedUser> ret = loggCrit.list();
 		if(ret.size() == 1) {
-			return ret.get(0);
+			LoggedUser returnedUser = ret.get(0);
+			returnedUser.setUpdated(System.currentTimeMillis());
+			getSession().update(returnedUser);
+			return returnedUser;
 		} else {
 			return null;
 		}
@@ -70,8 +78,23 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 		lU.setUser(user);
 		String sessionId = UUID.randomUUID().toString();
 		lU.setSessionId(sessionId);
+		lU.setUpdated(System.currentTimeMillis());
 		Long id = (Long) getHibernateTemplate().save(lU);
 		return (LoggedUser) getHibernateTemplate().get(LoggedUser.class, id);
 	}
+
+	@Override
+	public void resetAbandonedSessions() {
+		//usuwamy dane logowanie które nie byly odswiezane przez ostatnie 24h (porzucone sesje)
+		Long cutTimestamp = System.currentTimeMillis() - (24 * 60 * 60 * 1000);
+
+		//przypadek gdy przerwano obliczenia bez potwierdzenia
+		String queryString = "delete org.lopatka.idonc.model.user.LoggedUser lUser where lUser.updated < :cutTime";
+		Query query = getSession().createQuery(queryString);
+		query.setLong("cutTime", cutTimestamp);
+		query.executeUpdate();
+	}
+
+
 
 }

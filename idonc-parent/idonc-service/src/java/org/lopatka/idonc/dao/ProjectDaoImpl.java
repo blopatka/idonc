@@ -73,13 +73,6 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 	@Override
 	public IdoncPart getPartWithConfirmation(String username,
 			IdoncProject project) {
-		/*
-		 * TODO 2. dla konkretnego projektu pobrac IdoncPart ktory spelnia
-		 * ponizsze zalozenia a) jest najwczesniej dodanym elementem (najnizsze
-		 * creationTimestamp) b) ma mniej niz 2 aktualnie liczacych uzytkownikow
-		 * c) aktualny klient nie jest tym uzytkownikiem ktory w tej chwili
-		 * liczy d) aktualny klient nie jest dodany do black listy
-		 */
 
 		// pobieramy zalogowanego uzytkownika
 		Query userQuery = getSession()
@@ -157,7 +150,6 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 	@Override
 	public void returnProcessingResultWithConfirmation(String username,
 			IdoncPart part, IdoncResult result) {
-		// TODO
 
 		// pobrac parta odpowiedniego
 		IdoncPart tPart = (IdoncPart) getSession().get(IdoncPart.class,
@@ -238,7 +230,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 	}
 
 	@Override
-	public void resetForsakenParts() {
+	public void resetAbandonedParts() {
 		//resetujemy porzucone partsy, ktore nie zostaly przeliczone przez ostatnie 24h
 		Long cutTimestamp = System.currentTimeMillis() - (24 * 60 *60 * 1000);
 
