@@ -1,6 +1,5 @@
 package org.lopatka.idonc.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -70,6 +69,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		return part;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public IdoncPart getPartWithConfirmation(String username,
 			IdoncProject project) {
@@ -92,7 +92,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		query.setParameter("userId", user.getId());
 		query.setFirstResult(0);
 		query.setMaxResults(1);
-		List resultList = query.list();
+		List<IdoncPart> resultList = query.list();
 		if (resultList.isEmpty()) {
 			// nie ma elementow ktore byly liczone i potrzebuja potwierdzenia
 			// pytamy o nie liczone elementy
