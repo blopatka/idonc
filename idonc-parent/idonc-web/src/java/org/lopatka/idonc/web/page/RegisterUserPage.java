@@ -11,7 +11,6 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.hibernate.validator.LengthValidator;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.service.IdoncService;
 

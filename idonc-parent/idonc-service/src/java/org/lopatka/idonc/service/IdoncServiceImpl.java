@@ -132,25 +132,64 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 		return true;
 	}
 
-	public boolean editUser(IdoncUser user, String password) {
-		user = userDao.save(user);
-
+	@Override
+	public boolean changePassword(IdoncUser user, String oldPassword, String newPassword) {
 		UserCredential cred = userCredentialDao.get(user.getUserName());
-		cred.setUser(user);
-		byte[] salt;
-		try {
-			salt = PasswordHasher.createSalt();
-			byte[] pass = PasswordHasher.getHash(1000, password, salt);
-			cred.setSalt(PasswordHasher.byteToBase64(salt));
-			cred.setPassword(PasswordHasher.byteToBase64(pass));
-			userCredentialDao.save(cred);
-		} catch (NoSuchAlgorithmException e) {
-			return false;
-		} catch (UnsupportedEncodingException e) {
+		if (cred != null) {
+			byte[] storedHash = PasswordHasher.base64ToByte(cred
+					.getPassword());
+			byte[] storedSalt = PasswordHasher.base64ToByte(cred.getSalt());
+			try {
+				byte[] inputHash = PasswordHasher.getHash(1000, oldPassword,
+						storedSalt);
+				if (Arrays.equals(inputHash, storedHash)) {
+					//stare hasło się zgadza, można zmienić
+
+					byte[] salt = PasswordHasher.createSalt();
+					byte[] pass = PasswordHasher.getHash(1000, newPassword, salt);
+					cred.setSalt(PasswordHasher.byteToBase64(salt));
+					cred.setPassword(PasswordHasher.byteToBase64(pass));
+					userCredentialDao.save(cred);
+
+					return true;
+				} else {
+					return false;
+				}
+			} catch (NoSuchAlgorithmException e) {
+				return false;
+			} catch (UnsupportedEncodingException e) {
+				return false;
+			}
+		} else {
 			return false;
 		}
+	}
 
-		return true;
+	public boolean editUser(IdoncUser user, String password) {
+		UserCredential cred = userCredentialDao.get(user.getUserName());
+		if (cred != null) {
+			byte[] storedHash = PasswordHasher.base64ToByte(cred
+					.getPassword());
+			byte[] storedSalt = PasswordHasher.base64ToByte(cred.getSalt());
+			try {
+				byte[] inputHash = PasswordHasher.getHash(1000, password,
+						storedSalt);
+				if (Arrays.equals(inputHash, storedHash)) {
+					//stare hasło się zgadza, można edytować użytkownika
+
+					user = userDao.save(user);
+					return true;
+				} else {
+					return false;
+				}
+			} catch (NoSuchAlgorithmException e) {
+				return false;
+			} catch (UnsupportedEncodingException e) {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 
 	public boolean checkUserAuthorized(String username, String sessionId)
