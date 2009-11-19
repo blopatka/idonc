@@ -1,5 +1,6 @@
 package org.lopatka.idonc.computation.poc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.lopatka.idonc.computation.IComputation;
@@ -10,7 +11,7 @@ import org.lopatka.idonc.model.data.IdoncResult;
 public class PocComputation implements IComputation {
 
 	@Override
-	public IdoncResult computeData(IdoncPart part) {
+	public List<IdoncResult> computeData(IdoncPart part) {
 		List<IdoncLongData> list = part.getLongDataList();
 		long resultValue = 0;
 		for (IdoncLongData data : list) {
@@ -28,7 +29,10 @@ public class PocComputation implements IComputation {
 		}
 		IdoncResult result = new IdoncResult();
 		result.setValue(Long.toString(resultValue));
-		return result;
+
+		List<IdoncResult> res = new ArrayList<IdoncResult>();
+		res.add(result);
+		return res;
 	}
 
 	@Override

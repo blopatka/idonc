@@ -1,5 +1,6 @@
 package org.lopatka.idonc.computation.pi;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -10,13 +11,16 @@ import org.lopatka.idonc.model.data.IdoncResult;
 
 public class PiComputation implements IComputation {
 
-	public IdoncResult computeData(IdoncPart part) {
+	public List<IdoncResult> computeData(IdoncPart part) {
 		List<IdoncLongData> list = part.getLongDataList();
 		Integer iterations = Integer.valueOf(list.get(0).getValue());
 		Double PI = computePI(iterations);
 		IdoncResult result = new IdoncResult();
 		result.setValue(PI.toString());
-		return result;
+
+		List<IdoncResult> res = new ArrayList<IdoncResult>();
+		res.add(result);
+		return res;
 	}
 
 	@Override

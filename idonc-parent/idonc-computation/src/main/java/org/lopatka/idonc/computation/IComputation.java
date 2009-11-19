@@ -1,5 +1,7 @@
 package org.lopatka.idonc.computation;
 
+import java.util.List;
+
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncResult;
 
@@ -11,7 +13,7 @@ public interface IComputation {
 	 * @param part
 	 * @return
 	 */
-	IdoncResult computeData(IdoncPart part);
+	List<IdoncResult> computeData(IdoncPart part);
 
 	/**
 	 * metoda okreslajaca, czy otrzymany wynik powinien byc powtorzony przez innego

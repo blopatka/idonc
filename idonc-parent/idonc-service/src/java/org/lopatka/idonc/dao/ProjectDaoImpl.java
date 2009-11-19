@@ -53,9 +53,8 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		Hibernate.initialize(parts);
 		for (IdoncPart part : parts) {
 			Hibernate.initialize(part.getLongDataList());
-			// Hibernate.initialize(part.getLockedUsers());
 			Hibernate.initialize(part.getUserProcessing());
-			Hibernate.initialize(part.getResult());
+			Hibernate.initialize(part.getResults());
 		}
 		return parts;
 	}
@@ -63,9 +62,8 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 	private IdoncPart initializePart(IdoncPart part) {
 		Hibernate.initialize(part);
 		Hibernate.initialize(part.getLongDataList());
-		// Hibernate.initialize(part.getLockedUsers());
 		Hibernate.initialize(part.getUserProcessing());
-		Hibernate.initialize(part.getResult());
+		Hibernate.initialize(part.getResults());
 		return part;
 	}
 
@@ -86,7 +84,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		// pytamy o elementy ktore byly juz raz liczone (ale nie przez nas)
 		Query query = getSession()
 				.createQuery(
-						"select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType) and (parts.result is not null) and (parts.userProcessing is not null) and (parts.userProcessing.id != :userId) order by parts.id");
+						"select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType) and (parts.results is not empty) and (parts.userProcessing is not null) and (parts.userProcessing.id != :userId) order by parts.id");
 		query.setParameter("id", project.getId());
 		query.setParameter("partType", PartType.NEW);
 		query.setParameter("userId", user.getId());
@@ -98,7 +96,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 			// pytamy o nie liczone elementy
 			Query query2 = getSession()
 					.createQuery(
-							"select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType) and (parts.result is null) order by parts.id");
+							"select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project where (parts.project.id = :id) and (parts.partType = :partType) and (parts.results is empty) order by parts.id");
 			query2.setParameter("id", project.getId());
 			query2.setParameter("partType", PartType.NEW);
 			query2.setFirstResult(0);
@@ -149,7 +147,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 
 	@Override
 	public void returnProcessingResultWithConfirmation(String username,
-			IdoncPart part, IdoncResult result) {
+			IdoncPart part, List<IdoncResult> result) {
 
 		// pobrac parta odpowiedniego
 		IdoncPart tPart = (IdoncPart) getSession().get(IdoncPart.class,
@@ -157,10 +155,10 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		tPart = initializePart(tPart);
 
 		// sprawdzenie czy już jest obliczony wynik
-		IdoncResult tResult = tPart.getResult();
+		List<IdoncResult> tResult = tPart.getResults();
 		if (tResult != null) {
 			// jest juz wynik, nalezy sprawdzic czy sie zgadza z otrzymanym
-			if (tResult.getValue().equals(result.getValue())) {
+			if (checkResultsEqual(tResult, result)) {
 				// wynik ten sam, mozna potraktowac jako obliczony
 				tPart.setUserProcessing(null);
 				tPart.setPartType(PartType.COMPLETED);
@@ -168,20 +166,18 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 				// wynik inny, trzeba usunac wynik obliczen aby skierowac do
 				// ponownego obliczenia
 				tPart.setUserProcessing(null);
-				tPart.setResult(null);
+				tPart.setResults(null);
 				tPart.setPartType(PartType.NEW);
 
 				// usuniecie niepotrzebnego wpisu z bazy
-				getSession().delete(tResult);
+				Query delQuery = getSession().createQuery("delete org.lopatka.idonc.model.data.IdoncResult result where result in :resultList ");
+				delQuery.setParameter("resultList", tResult);
 			}
 
 		} else {
 			// jeszcze nie ma obliczonego wyniku, można zapisac otrzymany
-			result.setParent(tPart);
-			Long id = (Long) getSession().save(result);
-			IdoncResult t2Result = (IdoncResult) getSession().get(
-					IdoncResult.class, id);
-			tPart.setResult(t2Result);
+			//result.setParent(tPart);
+			tPart.setResults(result);
 			tPart.setPartType(PartType.NEW);
 
 			// sprawdzic czy zpisany uzytkownik to nasz uzytkownik
@@ -207,7 +203,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 
 	@Override
 	public void returnProcessingResultWithoutConfirmation(IdoncPart part,
-			IdoncResult result) {
+			List<IdoncResult> result) {
 		// pobranie odpowiedniego parta
 		IdoncPart tPart = (IdoncPart) getSession().get(IdoncPart.class,
 				part.getId());
@@ -216,13 +212,8 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		// ustawienie typu, jako przeliczony
 		tPart.setPartType(PartType.COMPLETED);
 
-		result.setParent(tPart);
-		Long id = (Long) getSession().save(result);
-		IdoncResult tResult = (IdoncResult) getSession().get(IdoncResult.class,
-				id);
-
 		// ustawienie wyniku
-		tPart.setResult(tResult);
+		tPart.setResults(result);
 
 		// zapisanie wyniku
 		tPart.setUpdated(System.currentTimeMillis());
@@ -235,7 +226,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		Long cutTimestamp = System.currentTimeMillis() - (24 * 60 *60 * 1000);
 
 		//przypadek gdy przerwano obliczenia bez potwierdzenia
-		String queryString1 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is null) and (part.result is null)";
+		String queryString1 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is null) and (part.results is empty)";
 		Query query = getSession().createQuery(queryString1);
 		query.setParameter("searchPartType", PartType.PROCESSING);
 		query.setParameter("partType", PartType.NEW);
@@ -243,7 +234,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		query.executeUpdate();
 
 		//przypadek gdy przerwano obliczenia z potwierdzeniem przy pierwszym liczeniu
-		String queryString2 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType, part.userProcessing = null where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is not null) and (part.result is null)";
+		String queryString2 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType, part.userProcessing = null where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is not null) and (part.results is empty)";
 		Query query2 = getSession().createQuery(queryString2);
 		query2.setParameter("searchPartType", PartType.PROCESSING);
 		query2.setParameter("partType", PartType.NEW);
@@ -251,12 +242,24 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		query2.executeUpdate();
 
 		//przypadek gdy przerwano obliczenia z potwierdzeniem przy drugim liczeniu
-		String queryString3 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is not null) and (part.result is not null)";
+		String queryString3 = "update org.lopatka.idonc.model.data.IdoncPart part set part.partType = :partType where (part.partType = :searchPartType) and (part.updated < :cutTime) and (part.userProcessing is not null) and (part.results is not empty)";
 		Query query3 = getSession().createQuery(queryString3);
 		query3.setParameter("searchPartType", PartType.PROCESSING);
 		query3.setParameter("partType", PartType.NEW);
 		query3.setLong("cutTime", cutTimestamp);
 		query3.executeUpdate();
+	}
+
+	private Boolean checkResultsEqual(List<IdoncResult> left, List<IdoncResult> right) {
+		if(left.size() == right.size()) {
+			for(int i = 0; i < left.size(); i++) {
+				if(! left.get(i).getValue().equals(right.get(i).getValue())) {
+					return Boolean.FALSE;
+				}
+			}
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
 	}
 
 }

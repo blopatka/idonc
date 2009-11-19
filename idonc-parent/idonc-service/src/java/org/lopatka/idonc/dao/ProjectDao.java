@@ -26,10 +26,10 @@ public interface ProjectDao {
 	IdoncPart getPartWithoutConfirmation(IdoncProject project);
 
 	void returnProcessingResultWithConfirmation(String username, IdoncPart part,
-			IdoncResult result);
+			List<IdoncResult> result);
 
 	void returnProcessingResultWithoutConfirmation(IdoncPart part,
-			IdoncResult result);
+			List<IdoncResult> result);
 
 	void resetAbandonedParts();
 
