@@ -147,12 +147,22 @@ public class DataGenerator
     	tx.commit();
 
     	tx.begin();
-    	for(int i = 1; i <= PROJECTNAMES.length ;i++)
-    	{
-    		IdoncProject project = em.find(IdoncProject.class, new Long(i));
-    		project.setParts(generatePartsForPOCProject(project));
-    		em.persist(project);
-    	}
+    	IdoncProject Poc1 = em.find(IdoncProject.class, new Long(1));
+    	Poc1.setParts(generatePartsForPOCProject(Poc1));
+    	em.persist(Poc1);
+
+    	IdoncProject Poc2 = em.find(IdoncProject.class, new Long(2));
+    	Poc2.setParts(generatePartsForPOCProject(Poc2));
+    	em.persist(Poc2);
+
+    	IdoncProject Pi = em.find(IdoncProject.class, new Long(3));
+    	Pi.setParts(generatePartsForPiProject(Pi));
+    	em.persist(Pi);
+
+    	IdoncProject Ising = em.find(IdoncProject.class, new Long(4));
+    	Ising.setParts(generatePartsForIsingProject(Ising));
+    	em.persist(Ising);
+
     	tx.commit();
 
     	em.close();
@@ -193,9 +203,97 @@ public class DataGenerator
 		return list;
 	}
 
+	private static List<IdoncPart> generatePartsForPiProject(IdoncProject project) {
+		List<IdoncPart> list = new ArrayList<IdoncPart>();
+		for(int i = 0; i < 1000; i++) {
+			long steps = getRandomStepsForPiProcessing();
+
+			IdoncPart part = new IdoncPart();
+			part.setName("calculate Pi in "+steps+" steps");
+			part.setNumber(new Long(i));
+			part.setPartType(PartType.NEW);
+			part.setProject(project);
+
+			List<IdoncLongData> dataList = new ArrayList<IdoncLongData>();
+			IdoncLongData data = new IdoncLongData();
+			data.setValue(Long.toString(steps));
+			dataList.add(data);
+			part.setLongDataList(dataList);
+			list.add(part);
+		}
+		return list;
+	}
+
+	private static long getRandomStepsForPiProcessing() {
+		//wylosuj iloœæ kroków (od 200 do 3000)
+		Random rand = new Random();
+		int s = rand.nextInt(2800);
+		return new Long(s+200);
+	}
+
+	private static List<IdoncPart> generatePartsForIsingProject(IdoncProject project) {
+		List<IdoncPart> list = new ArrayList<IdoncPart>();
+		for(int i = 0; i < 1000; i++) {
+			//tutaj utworzyc dane do przeliczania
+			Integer steps = getRandomStepsForIsingProcessing();
+			int size = getRandomIsingLatticeSize();
+
+			List<String> array = getRandomIsingLattice(size);
+
+			List<IdoncLongData> data = new ArrayList<IdoncLongData>();
+			IdoncLongData stepsData = new IdoncLongData();
+			stepsData.setValue(steps.toString());
+			data.add(stepsData);
+
+			for(String row : array) {
+				IdoncLongData rowData = new IdoncLongData();
+				rowData.setValue(row);
+				data.add(rowData);
+			}
+
+			IdoncPart part = new IdoncPart();
+			part.setName("calculate Ising 2d array of size "+size);
+			part.setNumber(new Long(i));
+			part.setPartType(PartType.NEW);
+			part.setProject(project);
+			part.setLongDataList(data);
+			list.add(part);
+		}
+		return list;
+	}
+
+	private static List<String> getRandomIsingLattice(int size) {
+		List<String> ret = new ArrayList<String>();
+		Random rand = new Random();
+		for (int x = 0; x < size; x++) {
+			StringBuffer buf = new StringBuffer();
+			for (int y = 0; y < size; y++) {
+				if(rand.nextBoolean()) {
+					buf.append('1');
+				} else {
+					buf.append('0');
+				}
+			}
+			ret.add(buf.toString());
+		}
+		return ret;
+	}
+
+	private static int getRandomStepsForIsingProcessing() {
+		Random rand = new Random();
+		int s = rand.nextInt(900);
+		return new Integer(s+100);
+	}
+
+	private static int getRandomIsingLatticeSize() {
+		Random rand = new Random();
+		int s = rand.nextInt(50);
+		return new Integer(s+20);
+	}
+
 	private static long getRandomTimeToWait() {
 		Random rand = new Random();
-		int t = rand.nextInt(56);
+		int t = rand.nextInt(26);
 		return new Long((t + 5) * 1000);
 	}
 }

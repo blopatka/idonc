@@ -53,5 +53,5 @@ public interface IdoncService {
 
     public IdoncPart getPartToProcess(String username, String sessionId, boolean confirmationRequired) throws IdoncException;
 
-    public void returnProcessingResult(String username, String sessionId, IdoncPart part, IdoncResult result, boolean requiresConfirmation) throws IdoncException;
+    public void returnProcessingResult(String username, String sessionId, IdoncPart part, List<IdoncResult> result, boolean requiresConfirmation) throws IdoncException;
 }

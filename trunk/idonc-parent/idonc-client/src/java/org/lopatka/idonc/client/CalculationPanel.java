@@ -2,6 +2,8 @@ package org.lopatka.idonc.client;
 
 import info.clearthought.layout.TableLayout;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JLabel;
@@ -143,8 +145,8 @@ public class CalculationPanel extends JPanel {
 				.getContext().getResourceMap(CalculationPanel.class);
 				partValuesGrid.setModel(new IdoncPartTableModel(part, resourceMap));
 
-				IdoncResult result = algorithm.computeData(part);
-				AppSession.idoncService.returnProcessingResult(username, sessionId, part, result, requiresConfirmation);
+				List<IdoncResult> results = algorithm.computeData(part);
+				AppSession.idoncService.returnProcessingResult(username, sessionId, part, results, requiresConfirmation);
 				if(session.isCalculationInterrupted()) {
 					break;
 				}

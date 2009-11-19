@@ -52,10 +52,15 @@ public class IdoncPart implements Serializable, Comparable<IdoncPart> {
     @LazyToOne(LazyToOneOption.FALSE)
     private List<IdoncLongData> longDataList;
 
-	@ManyToOne
-	@JoinColumn(name = "RESULT_ID")
-	@Cascade(CascadeType.ALL)
-	private IdoncResult result;
+	@OneToMany
+	@Cascade({CascadeType.ALL})
+    @JoinTable(
+        name="PART_RESULT_ELEMENTS",
+        joinColumns={@JoinColumn(name="PART_ID")},
+        inverseJoinColumns=@JoinColumn(name="RESULT_ID")
+    )
+    @LazyToOne(LazyToOneOption.FALSE)
+    private List<IdoncResult> results;
 
 	@ManyToOne
 	@JoinColumn(name="USER_PROCESSING_ID")
@@ -93,12 +98,12 @@ public class IdoncPart implements Serializable, Comparable<IdoncPart> {
 		this.userProcessing = userProcessing;
 	}
 
-	public IdoncResult getResult() {
-		return result;
+	public List<IdoncResult> getResults() {
+		return results;
 	}
 
-	public void setResult(IdoncResult result) {
-		this.result = result;
+	public void setResults(List<IdoncResult> results) {
+		this.results = results;
 	}
 
 	public PartType getPartType() {

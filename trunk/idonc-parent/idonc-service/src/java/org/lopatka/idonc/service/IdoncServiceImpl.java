@@ -335,7 +335,7 @@ public class IdoncServiceImpl implements IdoncService, Serializable {
 
 //	@Transactional(readOnly = false)
 	public void returnProcessingResult(String username, String sessionId, IdoncPart part,
-			IdoncResult result, boolean requiresConfirmation) throws IdoncException {
+			List<IdoncResult> result, boolean requiresConfirmation) throws IdoncException {
 		if (checkUserAuthorized(username, sessionId)) {
 			if(requiresConfirmation) {
 				projectDao.returnProcessingResultWithConfirmation(username, part, result);
