@@ -15,7 +15,7 @@ public interface IComputation {
 	 * @param part
 	 * @return
 	 */
-	List<IdoncResult> computeData(IdoncPart part);
+	List<IdoncResult> computeData(IdoncPart part, SwingWorker thread);
 
 	/**
 	 * metoda okreslajaca, czy otrzymany wynik powinien byc powtorzony przez innego

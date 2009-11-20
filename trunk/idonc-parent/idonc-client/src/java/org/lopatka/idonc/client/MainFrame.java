@@ -183,6 +183,7 @@ public class MainFrame extends JFrame {
 		session.getMainFrame().setBeginWorkButtonEnabled(true);
 		session.getMainFrame().setStopWorkButtonEnabled(false);
 		session.getMainFrame().setInterruptWorkButtonEnabled(false);
+		session.setCalculationStopped(true);
 		session.getThread().cancel(true);
 	}
 

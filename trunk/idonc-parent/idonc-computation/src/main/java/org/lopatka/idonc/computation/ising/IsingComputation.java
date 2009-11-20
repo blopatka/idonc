@@ -3,6 +3,8 @@ package org.lopatka.idonc.computation.ising;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingWorker;
+
 import org.lopatka.idonc.computation.IComputation;
 import org.lopatka.idonc.model.data.IdoncLongData;
 import org.lopatka.idonc.model.data.IdoncPart;
@@ -10,7 +12,7 @@ import org.lopatka.idonc.model.data.IdoncResult;
 
 public class IsingComputation implements IComputation {
 
-	public List<IdoncResult> computeData(IdoncPart part) {
+	public List<IdoncResult> computeData(IdoncPart part, SwingWorker thread) {
 		// FIXME napisac metode do obliczania danych w projekcie ISING
 		List<IdoncLongData> data = part.getLongDataList();
 		Integer steps = Integer.parseInt(data.get(0).getValue());
@@ -23,7 +25,10 @@ public class IsingComputation implements IComputation {
         double Ediff;   // energy change upon flipping
 
         for(int dx = 0; dx < steps; dx++) {
-            i = (int) (Math.random() * size);  // choose a random lattice site
+            if(thread.isCancelled()) {
+            	return null;
+            }
+        	i = (int) (Math.random() * size);  // choose a random lattice site
             j = (int) (Math.random() * size);
             Ediff = deltaU(i,j, size, spins);               // compute hypothetical energy change upon flipping
             if (Ediff <= 0.0) {                // if energy would decrease...
