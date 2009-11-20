@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import org.lopatka.idonc.client.CalculationPanel.CalculationThread;
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
 import org.lopatka.idonc.model.user.LoggedUser;
@@ -31,7 +32,9 @@ public class AppSession {
 	private JPanel cardPanel;
 	private IdoncProject project;
 	private IdoncPart calculatedPart;
-	private boolean interruptCalculation;
+	private boolean stopCalculation;
+
+	private CalculationThread thread;
 
 	static {
 		springContext = new ClassPathXmlApplicationContext("client-applicationContext.xml");
@@ -116,13 +119,22 @@ public class AppSession {
 		return calculatedPart;
 	}
 
-	public boolean isCalculationInterrupted() {
-		return this.interruptCalculation;
+	public boolean isCalculationStopped() {
+		return this.stopCalculation;
 	}
 
-	public void setCalculationInterrupted(boolean interrupt) {
-		this.interruptCalculation = interrupt;
+	public void setCalculationStopped(boolean stop) {
+		this.stopCalculation = stop;
 	}
+
+	public CalculationThread getThread() {
+		return thread;
+	}
+
+	public void setThread(CalculationThread thread) {
+		this.thread = thread;
+	}
+
 
 
 }

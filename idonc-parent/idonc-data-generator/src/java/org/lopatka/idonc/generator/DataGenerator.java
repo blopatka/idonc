@@ -228,7 +228,7 @@ public class DataGenerator
 		//wylosuj iloœæ kroków (od 200 do 3000)
 		Random rand = new Random();
 		int s = rand.nextInt(2800);
-		return new Long(s+200);
+		return new Long((s+200) * 10);
 	}
 
 	private static List<IdoncPart> generatePartsForIsingProject(IdoncProject project) {
@@ -282,7 +282,7 @@ public class DataGenerator
 	private static int getRandomStepsForIsingProcessing() {
 		Random rand = new Random();
 		int s = rand.nextInt(900);
-		return new Integer(s+100);
+		return new Integer(s+2000);
 	}
 
 	private static int getRandomIsingLatticeSize() {

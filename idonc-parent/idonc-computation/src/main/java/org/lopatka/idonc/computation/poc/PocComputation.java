@@ -41,8 +41,6 @@ public class PocComputation implements IComputation {
 	}
 
 	private void waiting(long n) {
-		//FIXME usun ponizsza linijke
-		n = 1;
 		long t0, t1;
 
 		t0 = System.currentTimeMillis();

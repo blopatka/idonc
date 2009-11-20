@@ -3,6 +3,8 @@ package org.lopatka.idonc.computation.poc;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingWorker;
+
 import org.lopatka.idonc.computation.IComputation;
 import org.lopatka.idonc.model.data.IdoncLongData;
 import org.lopatka.idonc.model.data.IdoncPart;
@@ -41,14 +43,17 @@ public class Poc2Computation implements IComputation {
 	}
 
 	private void waiting(long n) {
-		//FIXME - usunac ponizsza linijke
-		n = 1;
 		long t0, t1;
 
 		t0 = System.currentTimeMillis();
 
 		do {
 			t1 = System.currentTimeMillis();
+			try {
+				Thread.sleep(1L);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		} while (t1 - t0 < n);
 	}
 

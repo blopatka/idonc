@@ -52,15 +52,21 @@ public class IdoncPart implements Serializable, Comparable<IdoncPart> {
     @LazyToOne(LazyToOneOption.FALSE)
     private List<IdoncLongData> longDataList;
 
-	@OneToMany
+//	@OneToMany
+//	@Cascade({CascadeType.ALL})
+//    @JoinTable(
+//        name="PART_RESULT_ELEMENTS",
+//        joinColumns={@JoinColumn(name="PART_ID")},
+//        inverseJoinColumns=@JoinColumn(name="RESULT_ID")
+//    )
+//    @LazyToOne(LazyToOneOption.FALSE)
+//    private List<IdoncResult> results;
+
+
+	@OneToMany(mappedBy = "parentPart")
 	@Cascade({CascadeType.ALL})
-    @JoinTable(
-        name="PART_RESULT_ELEMENTS",
-        joinColumns={@JoinColumn(name="PART_ID")},
-        inverseJoinColumns=@JoinColumn(name="RESULT_ID")
-    )
-    @LazyToOne(LazyToOneOption.FALSE)
-    private List<IdoncResult> results;
+	private List<IdoncResult> results;
+
 
 	@ManyToOne
 	@JoinColumn(name="USER_PROCESSING_ID")

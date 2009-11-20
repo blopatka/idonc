@@ -3,6 +3,7 @@ package org.lopatka.idonc.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FlushMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
@@ -156,7 +157,7 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 
 		// sprawdzenie czy już jest obliczony wynik
 		List<IdoncResult> tResult = tPart.getResults();
-		if (tResult != null) {
+		if ((tResult != null) && (!tResult.isEmpty())) {
 			// jest juz wynik, nalezy sprawdzic czy sie zgadza z otrzymanym
 			if (checkResultsEqual(tResult, result)) {
 				// wynik ten sam, mozna potraktowac jako obliczony
@@ -170,13 +171,18 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 				tPart.setPartType(PartType.NEW);
 
 				// usuniecie niepotrzebnego wpisu z bazy
-				Query delQuery = getSession().createQuery("delete org.lopatka.idonc.model.data.IdoncResult result where result in :resultList ");
-				delQuery.setParameter("resultList", tResult);
+				Query delQuery = getSession().createQuery("delete org.lopatka.idonc.model.data.IdoncResult result where (result.parentPart = :parent)");
+				delQuery.setParameter("parent", tPart);
+				delQuery.executeUpdate();
 			}
 
 		} else {
 			// jeszcze nie ma obliczonego wyniku, można zapisac otrzymany
 			//result.setParent(tPart);
+			for(IdoncResult res : result) {
+				res.setParentPart(tPart);
+			}
+
 			tPart.setResults(result);
 			tPart.setPartType(PartType.NEW);
 
@@ -211,6 +217,14 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 
 		// ustawienie typu, jako przeliczony
 		tPart.setPartType(PartType.COMPLETED);
+
+//		FlushMode oldFlush = getSession().getFlushMode();
+//		getSession().setFlushMode(FlushMode.ALWAYS);
+		for(IdoncResult r : result) {
+			r.setParentPart(tPart);
+//			getSession().save(r);
+		}
+//		getSession().setFlushMode(oldFlush);
 
 		// ustawienie wyniku
 		tPart.setResults(result);
