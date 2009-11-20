@@ -12,16 +12,23 @@ import org.lopatka.idonc.model.data.IdoncResult;
 
 public class Poc2Computation implements IComputation {
 
+	private SwingWorker thread;
+	
 	@Override
-	public List<IdoncResult> computeData(IdoncPart part) {
+	public List<IdoncResult> computeData(IdoncPart part, SwingWorker thread) {
+		this.thread = thread;
+		boolean doCancel = false;
 		List<IdoncLongData> list = part.getLongDataList();
 		long resultValue = 0;
 		for (IdoncLongData data : list) {
+			if(thread.isCancelled()) {
+				return null;
+			}
 			try {
 				final long val = Long.parseLong(data.getValue());
 
 				System.out.println("sleeping: "+val);
-				waiting(val);
+				doCancel = !waiting(val);
 				System.out.println("waking");
 
 				resultValue += val;
@@ -29,12 +36,16 @@ public class Poc2Computation implements IComputation {
 				e.printStackTrace();
 			}
 		}
-		IdoncResult result = new IdoncResult();
-		result.setValue(Long.toString(resultValue));
+		if(!doCancel) {
+			IdoncResult result = new IdoncResult();
+			result.setValue(Long.toString(resultValue));
 
-		List<IdoncResult> res = new ArrayList<IdoncResult>();
-		res.add(result);
-		return res;
+			List<IdoncResult> res = new ArrayList<IdoncResult>();
+			res.add(result);
+			return res;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -42,19 +53,18 @@ public class Poc2Computation implements IComputation {
 		return false;
 	}
 
-	private void waiting(long n) {
+	private boolean waiting(long n) {
 		long t0, t1;
 
 		t0 = System.currentTimeMillis();
 
 		do {
-			t1 = System.currentTimeMillis();
-			try {
-				Thread.sleep(1L);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if(thread.isCancelled()) {
+				return false;
 			}
+			t1 = System.currentTimeMillis();
 		} while (t1 - t0 < n);
+		return true;
 	}
 
 }

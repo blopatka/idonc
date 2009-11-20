@@ -136,7 +136,7 @@ public class CalculationPanel extends JPanel {
 			String username = session.getLoggedUser().getUser().getUserName();
 			String sessionId = session.getLoggedUser().getSessionId();
 			boolean requiresConfirmation = algorithm.isResultConfirmationRequired();
-			for(;;){
+			while(!isCancelled()){
 				IdoncPart part = AppSession.idoncService.getPartToProcess(username, sessionId, requiresConfirmation);
 
 				partNameText.setText(part.getName());
@@ -145,9 +145,12 @@ public class CalculationPanel extends JPanel {
 				.getContext().getResourceMap(CalculationPanel.class);
 				partValuesGrid.setModel(new IdoncPartTableModel(part, resourceMap));
 
-				List<IdoncResult> results = algorithm.computeData(part);
-				AppSession.idoncService.returnProcessingResult(username, sessionId, part, results, requiresConfirmation);
+				List<IdoncResult> results = algorithm.computeData(part, this);
+				if(results != null) {
+					AppSession.idoncService.returnProcessingResult(username, sessionId, part, results, requiresConfirmation);
+				}
 				if(session.isCalculationStopped()) {
+					//zatrzymanie symulacji, zresetowac przyciski i umozliwic ponowne wznowienie
 					resetButtons();
 					session.setCalculationStopped(false);
 					break;
@@ -159,12 +162,16 @@ public class CalculationPanel extends JPanel {
 
 		private void resetButtons() {
 			session.getMainFrame().setBeginWorkButtonEnabled(true);
+			session.getMainFrame().setStopWorkButtonEnabled(false);
+			session.getMainFrame().setInterruptWorkButtonEnabled(false);
 		}
 
 		@Override
 		protected void done() {
+			session.setCalculationStopped(false);
 //			try {
-//				//session.setCalculationStopped(get());
+//				//obsługa przerwania obliczeń
+//				Boolean val = get();
 //			} catch (InterruptedException e) {
 //				e.printStackTrace();
 //			} catch (ExecutionException ignore) {
