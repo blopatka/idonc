@@ -2,7 +2,6 @@ package org.lopatka.idonc.client;
 
 import info.clearthought.layout.TableLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -118,12 +117,13 @@ public class CalculationPanel extends JPanel {
 
 		IComputation algorithm = ComputationManager.getInstance().getComputationForProject(session.getProject());
 
-		CalculationThread thr = new CalculationThread(algorithm);
-		thr.execute();
+		CalculationThread thread = new CalculationThread(algorithm);
+		session.setThread(thread);
+		thread.execute();
 
 	}
 
-	private class CalculationThread extends SwingWorker<Boolean, Object>{
+	public class CalculationThread extends SwingWorker<Boolean, Object>{
 
 		private IComputation algorithm;
 
@@ -147,23 +147,29 @@ public class CalculationPanel extends JPanel {
 
 				List<IdoncResult> results = algorithm.computeData(part);
 				AppSession.idoncService.returnProcessingResult(username, sessionId, part, results, requiresConfirmation);
-				if(session.isCalculationInterrupted()) {
+				if(session.isCalculationStopped()) {
+					resetButtons();
+					session.setCalculationStopped(false);
 					break;
 				}
 			}
 			return false;
 		}
 
-		@Override
-		protected void done() {
-			try {
-				session.setCalculationInterrupted(get());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException ignore) {
-			}
+
+		private void resetButtons() {
+			session.getMainFrame().setBeginWorkButtonEnabled(true);
 		}
 
+		@Override
+		protected void done() {
+//			try {
+//				//session.setCalculationStopped(get());
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			} catch (ExecutionException ignore) {
+//			}
+		}
 
 
 	}

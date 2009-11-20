@@ -2,6 +2,8 @@ package org.lopatka.idonc.computation;
 
 import java.util.List;
 
+import javax.swing.SwingWorker;
+
 import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncResult;
 

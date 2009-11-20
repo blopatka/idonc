@@ -36,7 +36,7 @@ public class IsingComputation implements IComputation {
             }
         }
 
-        List<IdoncResult> result = createResultFromArray(spins);
+        List<IdoncResult> result = createResultFromArray(spins, size);
 
 		return result;
 	}
@@ -45,11 +45,22 @@ public class IsingComputation implements IComputation {
 		return false;
 	}
 
-	private List<IdoncResult> createResultFromArray(int [][]spins) {
-		List<IdoncResult> res = new ArrayList<IdoncResult>();
-
-
-		return res;
+	private List<IdoncResult> createResultFromArray(int [][]spins, int size) {
+		List<IdoncResult> results = new ArrayList<IdoncResult>();
+		for(int i = 0; i < size; i ++) {
+			IdoncResult res = new IdoncResult();
+			StringBuffer buf = new StringBuffer();
+			for(int j = 0; j <size; j++) {
+				if(spins[i][j] == 1) {
+					buf.append('1');
+				} else {
+					buf.append('0');
+				}
+			}
+			res.setValue(buf.toString());
+			results.add(res);
+		}
+		return results;
 	}
 
 	private int[][] readSpinArray(List<IdoncLongData> list, int size) {

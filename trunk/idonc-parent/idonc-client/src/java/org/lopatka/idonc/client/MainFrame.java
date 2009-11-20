@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
 	private JMenu actionsMenu;
 	private JMenuItem beginWorkMenuItem;
 	private JMenuItem stopWorkMenuItem;
+	private JMenuItem interruptWorkMenuItem;
 
 	public MainFrame() {
 		initComponents();
@@ -47,6 +48,7 @@ public class MainFrame extends JFrame {
 		actionsMenu = new JMenu();
 		beginWorkMenuItem = new JMenuItem();
 		stopWorkMenuItem = new JMenuItem();
+		interruptWorkMenuItem = new JMenuItem();
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +102,13 @@ public class MainFrame extends JFrame {
 		stopWorkMenuItem.setEnabled(false);
 		actionsMenu.add(stopWorkMenuItem);
 
+		interruptWorkMenuItem.setAction(actionMap.get("interruptWork"));
+		interruptWorkMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
+		interruptWorkMenuItem.setText(resourceMap.getString("InterruptWork.text"));
+		interruptWorkMenuItem.setName(resourceMap.getString("InterruptWork.name"));
+		interruptWorkMenuItem.setEnabled(false);
+		actionsMenu.add(interruptWorkMenuItem);
+
 		mainMenuBar.add(actionsMenu);
 
 		setJMenuBar(mainMenuBar);
@@ -150,8 +159,10 @@ public class MainFrame extends JFrame {
 
 	@Action
 	public void beginWork() {
+		session.getMainFrame().setLoginButtonEnabled(false);
 		session.getMainFrame().setBeginWorkButtonEnabled(false);
 		session.getMainFrame().setStopWorkButtonEnabled(true);
+		session.getMainFrame().setInterruptWorkButtonEnabled(true);
 		((CalculationPanel)session.getCalculationPanel()).loadPart();
 		System.out.println("begin work");
 	}
@@ -160,9 +171,19 @@ public class MainFrame extends JFrame {
 	public void stopWork() {
 		session.getMainFrame().setBeginWorkButtonEnabled(false);
 		session.getMainFrame().setStopWorkButtonEnabled(false);
-		session.getMainFrame().setLoginButtonEnabled(true);
-		session.setCalculationInterrupted(true);
+		session.getMainFrame().setLoginButtonEnabled(false);
+		session.getMainFrame().setInterruptWorkButtonEnabled(false);
+		session.setCalculationStopped(true);
 		System.out.println("stop work");
+	}
+
+	@Action
+	public void interruptWork() {
+		session.getMainFrame().setLoginButtonEnabled(false);
+		session.getMainFrame().setBeginWorkButtonEnabled(true);
+		session.getMainFrame().setStopWorkButtonEnabled(false);
+		session.getMainFrame().setInterruptWorkButtonEnabled(false);
+		session.getThread().cancel(true);
 	}
 
 	public void setBeginWorkButtonEnabled(boolean enable) {
@@ -177,4 +198,7 @@ public class MainFrame extends JFrame {
 		this.loginMenuItem.setEnabled(enable);
 	}
 
+	public void setInterruptWorkButtonEnabled(boolean enable) {
+		this.interruptWorkMenuItem.setEnabled(enable);
+	}
 }
