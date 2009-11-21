@@ -46,4 +46,8 @@
     <module>idonc-data-fetcher</module>
     <module>idonc-webstart-client</module>
   </modules>
+ <properties>
+ 	<serverUrl>http://idonc.ath.cx:8989</serverUrl>
+		
+	</properties>
 </project>

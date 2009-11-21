@@ -225,7 +225,7 @@ public class DataGenerator
 	}
 
 	private static long getRandomStepsForPiProcessing() {
-		//wylosuj iloœæ kroków (od 200 do 3000)
+		//wylosuj ilos krokow (od 200 do 3000)
 		Random rand = new Random();
 		int s = rand.nextInt(2800);
 		return new Long((s+200) * 10);
