@@ -87,9 +87,10 @@
 		<testSourceDirectory>src/test</testSourceDirectory>
 		<resources>
 			<resource>
+				<filtering>true</filtering>
 				<directory>src/conf</directory>
 				<includes>
-					<include>**</include>
+					<include>**/*.xml</include>
 				</includes>
 			</resource>
 			<resource>
