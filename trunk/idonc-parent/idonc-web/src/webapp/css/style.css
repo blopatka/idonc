@@ -15,6 +15,22 @@ html, body {
 
 #naglowek {
 	background-color: #888;
+	width: 780px;
+	border: 1px solid;
+}
+
+#naglowek h2 {
+	width: 500px;	
+}
+
+#tytul {
+	text-align: center;
+}
+
+#jezyk {
+	float: right;
+	text-decoration: none;
+	height: 1.5em;
 	
 }
 
@@ -26,6 +42,11 @@ html, body {
 	width: 780px;
 	background-color: #fff;
 	min-height: 300px;	
+	height: auto !important;
+	height: 300px;
+	float: none;
+	margin: 0 auto;
+	border: 1px solid;
 }
 
 #stopka {
@@ -33,6 +54,7 @@ html, body {
 	clear: both;
 	width: 100%;
 	min-height: 1.5em;
+	border: 1px solid;
 }
 
 #dane_usera {
