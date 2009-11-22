@@ -16,6 +16,6 @@ public class HomePage extends BasePage {
 	}
 
 	private void initLayout() {
-		add(new Label("message",new ResourceModel("homePage.message")));
+		//add(new Label("message",new ResourceModel("homePage.message")));
 	}
 }

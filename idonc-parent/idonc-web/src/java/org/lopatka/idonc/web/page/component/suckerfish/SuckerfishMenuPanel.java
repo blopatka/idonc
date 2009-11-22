@@ -49,15 +49,15 @@ public class SuckerfishMenuPanel extends Panel
 		// Add the Suckerfish CSS
 //		add(HeaderContributor.forCss(SuckerfishMenuPanel.class,
 //				"SuckerfishMenuPanel.css"));
-		add(new StyleSheetReference("suckerfishStyle", suckerFishStyle()));
+//		add(new StyleSheetReference("suckerfishStyle", suckerFishStyle()));
 		// Add the top menus
 		add(new SubMenuListView("topmenuitems", new PropertyModel(this,
 				"topMenuItems")));
 	}
 
-	public final ResourceReference suckerFishStyle() {
-		return new CompressedResourceReference(SuckerfishMenuPanel.class, "SuckerfishMenuPanel.css");
-	}
+//	public final ResourceReference suckerFishStyle() {
+//		return new CompressedResourceReference(SuckerfishMenuPanel.class, "../css/SuckerfishMenuPanel.css");
+//	}
 
 	/** Add one menu item */
 	public void addMenu(final MenuItem menu)
