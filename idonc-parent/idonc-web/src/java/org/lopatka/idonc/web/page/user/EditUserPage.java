@@ -1,5 +1,8 @@
 package org.lopatka.idonc.web.page.user;
 
+import org.apache.wicket.authorization.Action;
+import org.apache.wicket.authorization.strategies.role.Roles;
+import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeAction;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -19,7 +22,8 @@ import org.lopatka.idonc.service.IdoncService;
 import org.lopatka.idonc.web.IdoncSession;
 import org.lopatka.idonc.web.page.component.BasePage;
 
-@AuthorizeInstantiation("ADMIN")
+@AuthorizeInstantiation(value = {Roles.ADMIN, Roles.USER})
+@AuthorizeAction(action = Action.RENDER, roles = {Roles.USER, Roles.ADMIN})
 public class EditUserPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;

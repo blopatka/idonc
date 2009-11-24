@@ -19,6 +19,7 @@
                 <value>org.lopatka.idonc.model.data.IdoncPart</value>
                 <value>org.lopatka.idonc.model.data.IdoncResult</value>
                 <value>org.lopatka.idonc.model.data.IdoncLongData</value>
+                <value>org.lopatka.idonc.model.user.IdoncAdmin</value>
 			</list>
 		</property>
 
@@ -90,6 +91,15 @@
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="target">
 			<bean class="org.lopatka.idonc.dao.ProjectDaoImpl">
+				<property name="sessionFactory" ref="sessionFactory"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="adminDao" parent="daoTxTemplate">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target">
+			<bean class="org.lopatka.idonc.dao.AdminDaoImpl">
 				<property name="sessionFactory" ref="sessionFactory"/>
 			</bean>
 		</property>

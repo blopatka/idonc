@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.authorization.Action;
+import org.apache.wicket.authorization.strategies.role.Roles;
+import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeAction;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -13,8 +15,6 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-import org.apache.wicket.markup.html.resources.StyleSheetReference;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -131,7 +131,17 @@ public class SuckerfishMenuPanel extends Panel
 		}
 	}
 
-	private final class MenuItemFragment extends Fragment
+	public static class AdminMenuItem extends MenuItem
+	{
+		public AdminMenuItem(String strLabel) {
+			super(strLabel);
+		}
+
+		private static final long serialVersionUID = 1L;
+
+	}
+
+	private class MenuItemFragment extends Fragment
 	{
 		private static final long serialVersionUID = 0L;
 
@@ -162,6 +172,18 @@ public class SuckerfishMenuPanel extends Panel
 			menuitemul.add(new SubMenuListView("menuitemlinks", menuItem
 					.getChildren()));
 		}
+	}
+
+
+	@AuthorizeAction(action = Action.RENDER, roles = {Roles.ADMIN})
+	private final class AdminMenuItemFragment extends MenuItemFragment
+	{
+		private static final long serialVersionUID = 1L;
+
+		public AdminMenuItemFragment(MenuItem menuItem) {
+			super(menuItem);
+		}
+
 	}
 
 	private final class LinkFragment extends Fragment
@@ -203,8 +225,15 @@ public class SuckerfishMenuPanel extends Panel
 		@Override
 		protected void populateItem(final ListItem item)
 		{
-			final MenuItem menuItem = (MenuItem) item.getModelObject();
-			item.add(new MenuItemFragment(menuItem));
+			if (item.getModelObject() instanceof AdminMenuItem) {
+				AdminMenuItem adminMenuItem = (AdminMenuItem) item.getModelObject();
+				item.add(new AdminMenuItemFragment(adminMenuItem));
+
+			} else {
+				final MenuItem menuItem = (MenuItem) item.getModelObject();
+				item.add(new MenuItemFragment(menuItem));
+			}
+
 		}
 	}
 }

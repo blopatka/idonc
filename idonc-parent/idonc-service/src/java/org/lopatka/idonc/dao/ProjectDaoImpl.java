@@ -276,4 +276,25 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		return Boolean.FALSE;
 	}
 
+	@Override
+	public List<IdoncPart> getInputData(Long id) {
+		String queryString = "select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project left join fetch parts.longDataList where (parts.project.id = :id) and (parts.partType = :partType)";
+		Query query = getSession().createQuery(queryString);
+		query.setParameter("id", id);
+		query.setParameter("partType", PartType.NEW);
+		List<IdoncPart> parts = query.list();
+
+		return parts;
+	}
+
+	@Override
+	public List<IdoncPart> getOutputData(Long id) {
+		String queryString = "select distinct parts from org.lopatka.idonc.model.data.IdoncPart parts left join fetch parts.project left join fetch parts.results where (parts.project.id = :id) and (parts.partType = :partType)";
+		Query query = getSession().createQuery(queryString);
+		query.setParameter("id", id);
+		query.setParameter("partType", PartType.COMPLETED);
+		List<IdoncPart> parts = query.list();
+		return parts;
+	}
+
 }

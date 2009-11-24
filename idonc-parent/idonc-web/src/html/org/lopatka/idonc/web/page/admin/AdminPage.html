@@ -1,0 +1,33 @@
+<html xmlns:wicket>
+<head></head>
+<body>
+<wicket:extend>
+	<h2><wicket:message key="admin.deleteUser"/></h2>
+	<span wicket:id="navigator"></span>
+	<table cellspacing="0" class="dataView">
+		<tr>
+			<th><wicket:message key="admin.userList.username"/></th>
+		</tr>
+		<tr wicket:id="pageable">
+			<td><span wicket:id="username"></span></td>
+			<td><a href="#" wicket:id="details"><wicket:message key="admin.userList.details"/></a></td>
+			<td><a href="#" wicket:id="delete"><wicket:message key="admin.userList.delete"/></a></td>
+		</tr>
+	</table>
+	<br />
+	<br />
+	<h2><wicket:message key="admin.getProjectData"/></h2>
+	<span wicket:id="navigator2"></span>
+	<table cellspacing="0" class="dataView">
+		<tr>
+			<th><wicket:message key="admin.projectList.name"/></th>
+		</tr>
+		<tr wicket:id="pageable2">
+			<td><span wicket:id="name"></span></td>
+			<td><a href="#" wicket:id="input"><wicket:message key="admin.projectList.input"/></a></td>
+			<td><a href="#" wicket:id="output"><wicket:message key="admin.projectList.output"/></a></td>
+		</tr>
+	</table>
+</wicket:extend>
+</body>
+</html>

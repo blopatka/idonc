@@ -33,4 +33,8 @@ public interface ProjectDao {
 
 	void resetAbandonedParts();
 
+	List<IdoncPart> getInputData(Long id);
+
+	List<IdoncPart> getOutputData(Long id);
+
 }

@@ -19,6 +19,14 @@ public class LoggedUserDaoImpl extends HibernateDaoSupport implements LoggedUser
 		getHibernateTemplate().delete(loggedUser);
 	}
 
+	@Override
+	public void deleteByIdoncUserId(Long id) {
+		String queryStr = "delete from LoggedUser where user.id = :id";
+		Query query = getSession().createQuery(queryStr);
+		query.setParameter("id", id);
+		query.executeUpdate();
+	}
+
 	@SuppressWarnings("unchecked")
 	public boolean deleteLoggedUserById(Long id) {
 		logger.info("deletin LoggedUser information");

@@ -16,4 +16,6 @@ public interface LoggedUserDao {
 	public LoggedUser createLoggedUser(IdoncUser user);
 
 	public void resetAbandonedSessions();
+
+	public void deleteByIdoncUserId(Long id);
 }

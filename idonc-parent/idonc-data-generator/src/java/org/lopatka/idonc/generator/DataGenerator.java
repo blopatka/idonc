@@ -16,6 +16,7 @@ import org.lopatka.idonc.model.data.IdoncPart;
 import org.lopatka.idonc.model.data.IdoncProject;
 import org.lopatka.idonc.model.data.PartType;
 import org.lopatka.idonc.model.user.Address;
+import org.lopatka.idonc.model.user.IdoncAdmin;
 import org.lopatka.idonc.model.user.IdoncUser;
 import org.lopatka.idonc.model.user.UserCredential;
 import org.lopatka.idonc.model.util.PasswordHasher;
@@ -126,6 +127,12 @@ public class DataGenerator
 			}
 
 		}
+
+		//dodanie uzytkownika admin
+		IdoncUser forAdmin = em.find(IdoncUser.class, new Long(1));
+		IdoncAdmin admin = new IdoncAdmin();
+		admin.setUser(forAdmin);
+		em.persist(admin);
 
 		for (int i = 0; i < PROJECTNAMES.length; i++) {
 			String projectName = PROJECTNAMES[i];

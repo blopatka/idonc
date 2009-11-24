@@ -3,6 +3,7 @@ package org.lopatka.idonc.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.lopatka.idonc.model.user.IdoncUser;
@@ -43,6 +44,14 @@ public class UserCredentialDaoImpl extends HibernateDaoSupport implements UserCr
 
 	public UserCredential save(UserCredential credential) {
 		return (UserCredential) getSession().merge(credential);
+	}
+
+	@Override
+	public void deleteByIdoncUserId(Long id) {
+		String queryStr = "delete from UserCredential where user.id = :id";
+		Query query = getSession().createQuery(queryStr);
+		query.setParameter("id", id);
+		query.executeUpdate();
 	}
 
 }

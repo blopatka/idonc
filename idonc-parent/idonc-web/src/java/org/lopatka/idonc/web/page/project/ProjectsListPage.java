@@ -1,6 +1,9 @@
 package org.lopatka.idonc.web.page.project;
 
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.authorization.Action;
+import org.apache.wicket.authorization.strategies.role.Roles;
+import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeAction;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -15,7 +18,8 @@ import org.lopatka.idonc.web.page.component.BasePage;
 import org.lopatka.idonc.web.page.dataproviders.ProjectDataProvider;
 import org.lopatka.idonc.service.IdoncService;
 
-@AuthorizeInstantiation("ADMIN")
+@AuthorizeInstantiation(value = {Roles.ADMIN, Roles.USER})
+@AuthorizeAction(action = Action.RENDER, roles = {Roles.USER, Roles.ADMIN})
 public class ProjectsListPage extends BasePage {
 
    private static final long serialVersionUID = 1L;
@@ -58,7 +62,7 @@ public class ProjectsListPage extends BasePage {
 			}
 
 		};
-		table.setItemsPerPage(2);
+		table.setItemsPerPage(10);
 		add(table);
 		add(new PagingNavigator("navigator", table));
 	}
