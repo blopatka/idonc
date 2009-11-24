@@ -15,6 +15,7 @@
         <property name="userCredentialDao" ref="userCredentialDao"/>
         <property name="loggedUserDao" ref="loggedUserDao"/>
         <property name="projectDao" ref="projectDao"/>
+        <property name="adminDao" ref="adminDao"/>
     </bean>
-    
+
 </beans>

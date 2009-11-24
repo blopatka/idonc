@@ -22,7 +22,10 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 	}
 
 	public void delete(long id) {
-		getSession().delete(load(id));
+		String queryStr = "delete from IdoncUser where id = :id";
+		Query query = getSession().createQuery(queryStr);
+		query.setParameter("id", id);
+		query.executeUpdate();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -64,6 +67,23 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 	@SuppressWarnings("unchecked")
 	public List<IdoncUser> getAllUsers() {
 		return getSession().createQuery("select distinct u from IdoncUser u").list();
+	}
+
+	@Override
+	public int countWithoutAdmins() {
+		String queryString = "select count(distinct u.userName) from IdoncUser u where (u not in (from IdoncAdmin))";
+		Query query = getSession().createQuery(queryString);
+		return ((Long) query.uniqueResult()).intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IdoncUser> getWithoutAdmins(int first, int count) {
+		String queryString = "select distinct u from IdoncUser u where (u not in (from IdoncAdmin))";
+		Query query = getSession().createQuery(queryString);
+		query.setFirstResult(first);
+		query.setMaxResults(count);
+		return query.list();
 	}
 
 }

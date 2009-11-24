@@ -10,6 +10,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.lopatka.idonc.web.IdoncSession;
 import org.lopatka.idonc.web.page.HomePage;
 import org.lopatka.idonc.web.page.LogoutPage;
+import org.lopatka.idonc.web.page.admin.AdminPage;
 import org.lopatka.idonc.web.page.component.suckerfish.SuckerfishMenuPanel;
 import org.lopatka.idonc.web.page.info.AboutPage;
 import org.lopatka.idonc.web.page.info.FaqPage;
@@ -112,6 +113,14 @@ public class HeaderPanel extends Panel {
 						AboutPage.class), new StringResourceModel(
 						"headermenu.projects.about", this, null).getString());
 
+		final SuckerfishMenuPanel.AdminMenuItem admin = new SuckerfishMenuPanel.AdminMenuItem(
+				new StringResourceModel("headermenu.admin", this,null).getString());
+
+		final SuckerfishMenuPanel.MenuItem adminPanel = new SuckerfishMenuPanel.MenuItem(
+				new BookmarkablePageLink(SuckerfishMenuPanel.LINK_ID,
+						AdminPage.class), new StringResourceModel(
+						"headermenu.admin.adminPanel", this, null).getString());
+
 		final SuckerfishMenuPanel.MenuItem logout = new SuckerfishMenuPanel.MenuItem(
 				new PageLink(SuckerfishMenuPanel.LINK_ID, LogoutPage.class),
 				new StringResourceModel("headermenu.logout", this, null)
@@ -131,7 +140,11 @@ public class HeaderPanel extends Panel {
 		info.addMenu(about);
 		menuBar.addMenu(info);
 
+		admin.addMenu(adminPanel);
+		menuBar.addMenu(admin);
+
 		menuBar.addMenu(logout);
 	}
+
 
 }

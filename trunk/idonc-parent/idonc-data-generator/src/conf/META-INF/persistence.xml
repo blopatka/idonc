@@ -12,6 +12,7 @@
 		<class>org.lopatka.idonc.model.data.IdoncLongData</class>
 		<class>org.lopatka.idonc.model.data.IdoncPart</class>
 		<class>org.lopatka.idonc.model.data.IdoncResult</class>
+		<class>org.lopatka.idonc.model.user.IdoncAdmin</class>
 		<properties>
 
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />

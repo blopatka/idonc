@@ -22,4 +22,8 @@ public interface UserDao {
 
 	public List<IdoncUser> getAllUsers();
 
+	public int countWithoutAdmins();
+
+	public List<IdoncUser> getWithoutAdmins(int first, int count);
+
 }

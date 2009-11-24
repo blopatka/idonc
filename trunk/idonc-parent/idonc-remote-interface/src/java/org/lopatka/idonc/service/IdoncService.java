@@ -43,6 +43,13 @@ public interface IdoncService {
 
 	public int countProjects(String username, String sessionId) throws IdoncException;
 
+
+	//uslugi dla admina
+
+	public boolean isAdmin(String loggedUserName, String sessionId);
+
+	public void deleteUser(IdoncUser delUser, String loggedUserName, String sessionId);
+
 	//public void addProject(String username, String sessionId, IdoncProject project) throws IdoncException;
 
     //Services for desktop client
@@ -54,4 +61,14 @@ public interface IdoncService {
     public IdoncPart getPartToProcess(String username, String sessionId, boolean confirmationRequired) throws IdoncException;
 
     public void returnProcessingResult(String username, String sessionId, IdoncPart part, List<IdoncResult> result, boolean requiresConfirmation) throws IdoncException;
+
+	public List<IdoncUser> getUsersWithoutAdmins(String username, String sessionId, int first, int count);
+
+	public int countUsersWithoutAdmins(String username, String sessionId);
+
+	public String getOutputDataForProject(Long id, String loggedUserName, String sessionId);
+
+	public String getInputDataForProject(Long id, String loggedUserName, String sessionId);
+
+
 }
