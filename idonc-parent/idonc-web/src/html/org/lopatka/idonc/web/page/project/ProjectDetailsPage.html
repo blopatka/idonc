@@ -5,7 +5,7 @@
 <div id="dane_projektu">
 	<form wicket:id="projectForm">
 		<div class="dataView">
-			<div><label id="title"><wicket:message key="projectDetails.title"/></label></div>
+			<div><h2><label id="title"><wicket:message key="projectDetails.title"/></label></h2></div>
 			<div>
 				<label><wicket:message key="projectDetails.name"/></label>
 				<label wicket:id="name"></label>
@@ -20,6 +20,7 @@
 			</div>
 			<div>
 				<wicket:message key="projectDetails.users"/>
+				<br />
 				<span wicket:id="listView">
 					<span wicket:id="userName"></span><br/>
 				</span>
