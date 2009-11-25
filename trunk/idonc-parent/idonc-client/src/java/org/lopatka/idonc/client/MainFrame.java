@@ -5,7 +5,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ActionMap;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -120,8 +119,8 @@ public class MainFrame extends JFrame {
 
 		mainMenuBar.add(actionsMenu);
 
-		helpMenu.setText(resourceMap.getString("ActionsMenu.text"));
-		helpMenu.setName(resourceMap.getString("ActionsMenu.name"));
+		helpMenu.setText(resourceMap.getString("HelpMenu.text"));
+		helpMenu.setName(resourceMap.getString("HelpMenu.name"));
 
 		aboutMenuItem.setAction(actionMap.get("showAbout"));
 		aboutMenuItem.setText(resourceMap.getString("About.text"));
@@ -143,19 +142,9 @@ public class MainFrame extends JFrame {
 		cards.add(session.getCalculationPanel(), AppSession.CALCULATION_PANEL);
 
 		add(cards);
-
-//		GroupLayout layout = new GroupLayout(getContentPane());
-//		getContentPane().setLayout(layout);
-//
-//		layout.setHorizontalGroup(layout.createParallelGroup(
-//				GroupLayout.Alignment.LEADING).addComponent(cards,
-//				GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE));
-//		layout.setVerticalGroup(layout.createParallelGroup(
-//				GroupLayout.Alignment.LEADING).addComponent(cards,
-//				GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE));
-
+		
 		pack();
-
+		
 
 
 	}
@@ -178,7 +167,6 @@ public class MainFrame extends JFrame {
 	@Action
 	public void quit() {
 		Application.getInstance().exit();
-//		AppSession.idoncService.logoutUser(session.getLoggedUser().getUser().getUserName(), session.getLoggedUser().getSessionId());
 	}
 
 	@Action
