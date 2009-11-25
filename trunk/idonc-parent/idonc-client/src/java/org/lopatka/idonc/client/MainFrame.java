@@ -5,10 +5,12 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ActionMap;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
@@ -33,6 +35,10 @@ public class MainFrame extends JFrame {
 	private JMenuItem beginWorkMenuItem;
 	private JMenuItem stopWorkMenuItem;
 	private JMenuItem interruptWorkMenuItem;
+	private JMenu helpMenu;
+	private JMenuItem aboutMenuItem;
+
+	private ResourceMap resourceMap;
 
 	public MainFrame() {
 		initComponents();
@@ -49,10 +55,12 @@ public class MainFrame extends JFrame {
 		beginWorkMenuItem = new JMenuItem();
 		stopWorkMenuItem = new JMenuItem();
 		interruptWorkMenuItem = new JMenuItem();
+		helpMenu = new JMenu();
+		aboutMenuItem = new JMenuItem();
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-		ResourceMap resourceMap = Application.getInstance(MainIdoncApp.class)
+		resourceMap = Application.getInstance(MainIdoncApp.class)
 		.getContext().getResourceMap(MainFrame.class);
 
 		setTitle(resourceMap.getString("Form.title"));
@@ -106,10 +114,21 @@ public class MainFrame extends JFrame {
 		interruptWorkMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
 		interruptWorkMenuItem.setText(resourceMap.getString("InterruptWork.text"));
 		interruptWorkMenuItem.setName(resourceMap.getString("InterruptWork.name"));
+		interruptWorkMenuItem.setIcon(resourceMap.getIcon("InterruptWork.icon"));
 		interruptWorkMenuItem.setEnabled(false);
 		actionsMenu.add(interruptWorkMenuItem);
 
 		mainMenuBar.add(actionsMenu);
+
+		helpMenu.setText(resourceMap.getString("ActionsMenu.text"));
+		helpMenu.setName(resourceMap.getString("ActionsMenu.name"));
+
+		aboutMenuItem.setAction(actionMap.get("showAbout"));
+		aboutMenuItem.setText(resourceMap.getString("About.text"));
+		aboutMenuItem.setName(resourceMap.getString("About.name"));
+		helpMenu.add(aboutMenuItem);
+
+		mainMenuBar.add(helpMenu);
 
 		setJMenuBar(mainMenuBar);
 
@@ -139,6 +158,11 @@ public class MainFrame extends JFrame {
 
 
 
+	}
+
+	@Action
+	public void showAbout() {
+		JOptionPane.showMessageDialog(this, resourceMap.getString("about.content"));
 	}
 
 	@Action
