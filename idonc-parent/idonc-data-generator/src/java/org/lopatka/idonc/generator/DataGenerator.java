@@ -97,7 +97,7 @@ public class DataGenerator
 			address.setStreet(randomString(STREETS));
 
 			String website = new StringBuilder().append("www.").append(user.getFirstName()).
-				append(".").append(user.getLastName()).append(randomString(DOMAINS)).toString();
+				append(".").append(user.getLastName()).append(".").append(randomString(DOMAINS)).toString();
 			address.setWebsite(website);
 			address.setZipCode(randomZipCode());
 			user.setAddress(address);
@@ -232,10 +232,9 @@ public class DataGenerator
 	}
 
 	private static long getRandomStepsForPiProcessing() {
-		//wylosuj ilos krokow (od 200 do 3000)
 		Random rand = new Random();
 		int s = rand.nextInt(2800);
-		return new Long((s+200) * 10);
+		return new Long((s+200) * 10000);
 	}
 
 	private static List<IdoncPart> generatePartsForIsingProject(IdoncProject project) {
@@ -289,7 +288,7 @@ public class DataGenerator
 	private static int getRandomStepsForIsingProcessing() {
 		Random rand = new Random();
 		int s = rand.nextInt(900);
-		return new Integer(s+2000);
+		return new Integer(10000 * (s+2000));
 	}
 
 	private static int getRandomIsingLatticeSize() {
