@@ -157,15 +157,6 @@ public class EditUserPage extends BasePage {
 
 			});
 
-			this.add(new Button("backButton") {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void onSubmit() {
-					setResponsePage(UserListPage.class);
-				}
-			});
-
 		}
 
 		private Boolean checkNewPasswords(String password, String rePassword) {

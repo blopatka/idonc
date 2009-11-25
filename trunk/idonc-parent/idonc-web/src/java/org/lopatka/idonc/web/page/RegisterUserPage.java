@@ -123,6 +123,7 @@ public class RegisterUserPage extends WebPage {
 
 				@Override
 				public void onSubmit() {
+					setDefaultFormProcessing(false);
 					setResponsePage(HomePage.class);
 				}
 			};
